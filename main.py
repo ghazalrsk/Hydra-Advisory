@@ -22,15 +22,17 @@ import os
 import json
 import logging
 from datetime import datetime
-from dotenv import load_dotenv
+
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass  # Railway injects env vars directly; dotenv not needed
 
 from collector import fetch_all_articles, fetch_stock_prices
 from claude_processor import process_with_claude
 from email_builder import build_email_html
 from mailchimp_sender import send_via_mailchimp
-
-# ── Setup ──────────────────────────────────────────────────────────────
-load_dotenv()
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s  %(levelname)s  %(message)s",
