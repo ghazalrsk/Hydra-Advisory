@@ -15,10 +15,3 @@
 
 [build]
 builder = "NIXPACKS"
-
-[deploy]
-startCommand = "python -c 'import time; time.sleep(86400)'"
-
-[[cronjobs]]
-schedule = "0 6 * * *"
-command = "python main.py"
