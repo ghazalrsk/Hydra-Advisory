@@ -1,0 +1,24 @@
+# HYDRA SUMMARY — Railway.app deployment configuration
+# --------------------------------------------------------
+# This file tells Railway how to run the pipeline.
+# Upload this file to Railway along with all the other files.
+#
+# The cron schedule below means: run every day at 06:00 UTC (7:00 Milan time in winter, 8:00 in summer).
+# Adjust the hour if you want a different send time.
+#
+# CRON FORMAT: minute hour day month weekday
+#   "0 6 * * *" = at 06:00 every day
+#   "0 5 * * *" = at 05:00 every day (for a 6am Milan delivery)
+#
+# IMPORTANT: Set your environment variables in Railway's dashboard
+# (Settings → Variables), NOT in this file. Never put real keys here.
+
+[build]
+builder = "NIXPACKS"
+
+[deploy]
+startCommand = "python main.py"
+
+[[cronjobs]]
+schedule = "0 6 * * *"
+command = "python main.py"
