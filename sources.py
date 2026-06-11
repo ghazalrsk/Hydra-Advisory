@@ -2,28 +2,13 @@
 HYDRA SUMMARY — Sources
 ------------------------
 Define every source here. The collector reads this file.
-
-HOW TO ADD A SOURCE:
-  1. Find the RSS feed URL for the publication (usually site.com/feed or site.com/rss)
-  2. Add it to the NEWS_SOURCES list below
-  3. Set the section: "news", "roles", or "both"
-
-HOW TO ADD A STOCK:
-  Add the ticker symbol to STOCK_TICKERS. The collector uses Yahoo Finance.
-  Format: "TICKER.EXCHANGE" — e.g. "MC.PA" for LVMH on Paris, "CFR.SW" for Richemont on Swiss.
 """
 
-# ── NEWS SOURCES ────────────────────────────────────────────────────────
-# Each entry: name, RSS url, section (news / roles / both)
 NEWS_SOURCES = [
+    # ── Tier 1: English-language trade ──────────────────────────────────
     {
         "name": "Business of Fashion",
         "rss": "https://www.businessoffashion.com/feed/",
-        "section": "news",
-    },
-    {
-        "name": "Vogue Business",
-        "rss": "https://www.voguebusiness.com/feed",
         "section": "news",
     },
     {
@@ -32,8 +17,19 @@ NEWS_SOURCES = [
         "section": "news",
     },
     {
+        "name": "Vogue Business",
+        "rss": "https://www.voguebusiness.com/feed",
+        "section": "news",
+    },
+    # ── Italian market ───────────────────────────────────────────────────
+    {
         "name": "Pambianco News",
         "rss": "https://www.pambianconews.com/feed/",
+        "section": "news",
+    },
+    {
+        "name": "MFF — Moda Finanza Fashion",
+        "rss": "https://www.mffashion.com/rss",
         "section": "news",
     },
     {
@@ -41,26 +37,40 @@ NEWS_SOURCES = [
         "rss": "https://www.ilsole24ore.com/rss/moda.xml",
         "section": "news",
     },
+    # ── Financial wire / broad market ────────────────────────────────────
+    {
+        "name": "Reuters",
+        "rss": "https://feeds.reuters.com/reuters/businessNews",
+        "section": "news",
+    },
+    {
+        "name": "Financial Times — Luxury",
+        "rss": "https://www.ft.com/luxury/rss",
+        "section": "news",
+    },
+    # ── Asia signals ─────────────────────────────────────────────────────
+    {
+        "name": "South China Morning Post",
+        "rss": "https://www.scmp.com/rss/91/feed",
+        "section": "news",
+    },
+    {
+        "name": "Nikkei Asia",
+        "rss": "https://asia.nikkei.com/rss/feed/nar",
+        "section": "news",
+    },
+    # ── European trade ───────────────────────────────────────────────────
+    {
+        "name": "Fashion Network",
+        "rss": "https://us.fashionnetwork.com/rss/news.xml",
+        "section": "news",
+    },
     {
         "name": "Luxury Society",
         "rss": "https://luxurysociety.com/en/articles/feed",
         "section": "news",
     },
-    {
-        "name": "Luxe Digital",
-        "rss": "https://luxe.digital/feed/",
-        "section": "news",
-    },
-    {
-        "name": "The Business of Luxury",
-        "rss": "https://www.ft.com/luxury/rss",
-        "section": "news",
-    },
-    {
-        "name": "Reuters Luxury",
-        "rss": "https://feeds.reuters.com/reuters/businessNews",
-        "section": "news",
-    },
+    # ── Group newsrooms ──────────────────────────────────────────────────
     {
         "name": "LVMH Newsroom",
         "rss": "https://www.lvmh.com/news-documents/news/feed/",
@@ -76,33 +86,23 @@ NEWS_SOURCES = [
         "rss": "https://www.richemont.com/media/press-releases/rss/",
         "section": "news",
     },
-    # Add more sources below ↓
-    # {
-    #     "name": "My New Source",
-    #     "rss": "https://example.com/feed",
-    #     "section": "news",
-    # },
 ]
 
 
 # ── STOCK TICKERS ────────────────────────────────────────────────────────
-# Format: { "display_name": "TICKER.EXCHANGE" }
-# Exchange suffixes: .PA = Paris, .SW = Swiss, .MI = Milan, .L = London
 STOCK_TICKERS = {
-    "LVMH":              "MC.PA",
-    "Kering":            "KER.PA",
-    "Hermès":            "RMS.PA",
-    "Richemont":         "CFR.SW",
-    "Moncler":           "MONC.MI",
+    "LVMH":               "MC.PA",
+    "Kering":             "KER.PA",
+    "Hermès":             "RMS.PA",
+    "Richemont":          "CFR.SW",
+    "Moncler":            "MONC.MI",
     "Brunello Cucinelli": "BC.MI",
-    "Burberry":          "BRBY.L",
-    "Ferragamo":         "SFER.MI",
+    "Burberry":           "BRBY.L",
+    "Ferragamo":          "SFER.MI",
 }
 
 
 # ── SECTOR DIARY ─────────────────────────────────────────────────────────
-# Static calendar of upcoming events.
-# Update this list each month. Claude will pick the next 3–4 relevant ones.
 SECTOR_DIARY = [
     {
         "event": "Salone del Mobile · Milan",
