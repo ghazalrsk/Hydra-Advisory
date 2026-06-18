@@ -21,7 +21,7 @@ Requirements:
 import os
 import json
 import logging
-from datetime import datetime
+from datetime import datetime, timezone
 
 try:
     from dotenv import load_dotenv
@@ -57,11 +57,12 @@ def run():
     # ── Step 2: Fetch stock prices ──────────────────────────────────────
     log.info("Step 2 · Fetching stock prices...")
     stocks = fetch_stock_prices()
+    numbers_timestamp = datetime.now(timezone.utc).strftime("as of %H:%M UTC")
     log.info(f"         {len(stocks)} stocks fetched")
 
     # ── Step 3: Claude processes everything ────────────────────────────
     log.info("Step 3 · Sending to Claude for processing...")
-    digest = process_with_claude(articles, stocks, today)
+    digest = process_with_claude(articles, stocks, today, numbers_timestamp)
     log.info(f"         Claude returned {len(digest.get('news', []))} news items + {len(digest.get('lead_items', []))} lead items")
 
     # ── Step 4: Build the email HTML ────────────────────────────────────

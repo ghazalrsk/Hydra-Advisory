@@ -68,9 +68,11 @@ def fetch_all_articles() -> list[dict]:
     return articles
 
 
-def fetch_stock_prices() -> list[dict]:
+def fetch_stock_prices(top_n: int = 5) -> list[dict]:
     """
-    Fetches today's price and daily change for each ticker in STOCK_TICKERS.
+    Fetches today's price and daily change for every ticker in STOCK_TICKERS,
+    then returns only the top_n with the highest absolute 24h % change
+    (the "biggest movers" for the Important Numbers section).
 
     Returns a list of dicts:
         name      — display name (e.g. "LVMH")
@@ -124,7 +126,8 @@ def fetch_stock_prices() -> list[dict]:
         except Exception as e:
             log.warning(f"  Failed to fetch {ticker}: {e}")
 
-    return stocks
+    stocks.sort(key=lambda s: abs(s["raw_change"]), reverse=True)
+    return stocks[:top_n]
 
 
 # ── Helpers ──────────────────────────────────────────────────────────────

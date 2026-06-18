@@ -90,6 +90,8 @@ NEWS_SOURCES = [
 
 
 # ── STOCK TICKERS ────────────────────────────────────────────────────────
+# Broad luxury-sector universe. Each morning, collector.py ranks all of these
+# by absolute 24h % change and keeps only the top 5 movers for the digest.
 STOCK_TICKERS = {
     "LVMH":               "MC.PA",
     "Kering":             "KER.PA",
@@ -99,6 +101,13 @@ STOCK_TICKERS = {
     "Brunello Cucinelli": "BC.MI",
     "Burberry":           "BRBY.L",
     "Ferragamo":          "SFER.MI",
+    "Prada Group":        "1913.HK",
+    "Tod's Group":        "TOD.MI",
+    "Swatch Group":       "UHR.SW",
+    "Tapestry":           "TPR",
+    "Capri Holdings":     "CPRI",
+    "L'Oréal":            "OR.PA",
+    "Estée Lauder":       "EL",
 }
 
 

@@ -15,7 +15,7 @@ from sources import SECTOR_DIARY
 log = logging.getLogger("hydra-summary.claude")
 
 
-def process_with_claude(articles: list[dict], stocks: list[dict], today: str) -> dict:
+def process_with_claude(articles: list[dict], stocks: list[dict], today: str, numbers_timestamp: str = "") -> dict:
     client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
     prompt = _build_prompt(articles, stocks, today)
     log.info(f"  Sending {len(articles)} articles to Claude...")
@@ -25,7 +25,9 @@ def process_with_claude(articles: list[dict], stocks: list[dict], today: str) ->
         messages=[{"role": "user", "content": prompt}],
     )
     raw = message.content[0].text
-    return _parse_response(raw)
+    result = _parse_response(raw)
+    result["numbers_timestamp"] = numbers_timestamp
+    return result
 
 
 def _build_prompt(articles: list[dict], stocks: list[dict], today: str) -> str:
@@ -122,7 +124,8 @@ Stories about other brands are included only if there is a clear market-wide imp
 SECTION E — NUMBERS
 ════════════════════════════════════════
 
-For the "numbers" section, select 4 stocks from the data with the most interesting movements or most relevant news today.
+The STOCK DATA below is already the 5 biggest movers (highest absolute 24h % change) in the luxury sector — selected programmatically, not by you.
+Return all 5, in the same order given, under "numbers". Do not add, drop, or reorder them.
 For each stock, write one sentence explaining WHY it moved (using the articles as context).
 If you cannot find a reason in the articles, write a brief factual note about the company's recent performance.
 
@@ -229,4 +232,5 @@ def _parse_response(raw: str) -> dict:
             "news": [],
             "roles": [],
             "diary": [],
+            "numbers_timestamp": "",
         }
