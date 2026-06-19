@@ -142,7 +142,7 @@ def _build_lead(items: list) -> str:
         title_html = f'<a href="{link}" style="color:{IN};text-decoration:none;">{text}</a>' if link else text
         src_html = (_source_link(primary, link) if link else primary) if primary else ""
         also_html = _also(also) if also else ""
-        prefix = f'<span style="{MONO}">{src_html}{also_html}</span> &middot; ' if src_html else ""
+        prefix = f'<span style="{MONO}font-size:11px;font-weight:400;">{src_html}{also_html}</span> &middot; ' if src_html else ""
 
         pad = "0 0 10px" if i == len(sliced) - 1 else "0 0 7px"
         rows += _row_table(f'<div style="padding:{pad};font-size:17px;font-weight:600;line-height:1.25;color:{IN};">{prefix}{title_html}</div>')
