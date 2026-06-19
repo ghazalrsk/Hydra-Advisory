@@ -38,7 +38,6 @@ def build_email_html(digest: dict, today: str) -> str:
     lead_html    = _build_lead(digest.get("lead_items", []))
     news_html    = _build_news(digest.get("news", []))
     diary_html   = _build_diary(digest.get("diary", []))
-    roles_html   = _build_roles(digest.get("roles", []))
     numbers_html = _build_numbers(digest.get("numbers", []), digest.get("numbers_timestamp", ""))
 
     return f"""<!DOCTYPE html>
@@ -51,26 +50,25 @@ def build_email_html(digest: dict, today: str) -> str:
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
-<body style="margin:0;padding:20px 12px 44px;background:{BG};{JOST}color:{IN};font-size:14px;line-height:1.45;">
+<body style="margin:0;padding:20px 12px 44px;background:{BG};{JOST}color:{IN};font-size:16px;line-height:1.45;">
 
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:580px;margin:0 auto;background:#ffffff;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;margin:0 auto;background:#ffffff;">
 <tr><td style="padding:0 0 6px;">
 
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-bottom:2px solid {B};">
     <tr>
-      <td style="padding:14px 20px 13px;font-weight:600;font-size:15px;color:{B};letter-spacing:.14em;text-transform:uppercase;">Hydra Brief</td>
-      <td align="right" style="padding:14px 20px 13px;{MONO}font-size:11px;color:{MU};white-space:nowrap;">{short_date}</td>
+      <td style="padding:16px 20px 15px;font-weight:600;font-size:18px;color:{B};letter-spacing:.1em;text-transform:uppercase;">Hydra Brief</td>
+      <td align="right" style="padding:16px 20px 15px;{MONO}font-size:13px;color:{MU};white-space:nowrap;">{short_date}</td>
     </tr>
   </table>
 
   {lead_html}
   {news_html}
   {diary_html}
-  {roles_html}
   {numbers_html}
 
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-top:1px solid {RU};margin-top:2px;">
-    <tr><td style="padding:13px 20px 0;{MONO}font-size:10px;color:{A0};">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-top:1px solid {RU};margin-top:8px;">
+    <tr><td style="padding:10px 20px 0;{MONO}font-size:11px;color:{A0};">
       <a href="https://hydra-advisory.com" style="color:{MU};">hydra-advisory.com</a> ·
       <a href="*|UNSUB|*" style="color:{MU};">Unsubscribe</a> · Hydra Advisory
     </td></tr>
@@ -89,16 +87,16 @@ def _eyebrow(label: str, right_label: str = "") -> str:
     if right_label:
         inner = (
             f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>'
-            f'<td style="{MONO}font-size:10.5px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:{CR};">{label}</td>'
-            f'<td align="right" style="{MONO}font-size:9px;font-weight:400;letter-spacing:.05em;text-transform:none;color:#d8c9a8;white-space:nowrap;">{right_label}</td>'
+            f'<td style="{MONO}font-size:12px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:{CR};">{label}</td>'
+            f'<td align="right" style="{MONO}font-size:10px;font-weight:400;letter-spacing:.05em;text-transform:none;color:#d8c9a8;white-space:nowrap;">{right_label}</td>'
             f'</tr></table>'
         )
     else:
         inner = label
     return (
         f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">'
-        f'<tr><td style="background:{B};padding:6px 20px;{MONO}font-size:10.5px;font-weight:500;'
-        f'letter-spacing:.18em;text-transform:uppercase;color:{CR};">{inner}</td></tr></table>'
+        f'<tr><td style="background:{B};padding:6px 20px;{MONO}font-size:12px;font-weight:500;'
+        f'letter-spacing:.16em;text-transform:uppercase;color:{CR};">{inner}</td></tr></table>'
     )
 
 
@@ -106,7 +104,7 @@ def _section(label: str, rows_html: str, right_label: str = "") -> str:
     return (
         _eyebrow(label, right_label)
         + f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">'
-        f'<tr><td style="padding:10px 20px 0;">{rows_html}</td></tr></table>'
+        f'<tr><td style="padding:8px 20px 0;">{rows_html}</td></tr></table>'
     )
 
 
@@ -116,7 +114,7 @@ def _row_table(inner: str) -> str:
 
 def _source_link(text: str, href: str) -> str:
     return (
-        f'<a href="{href}" style="{MONO}font-size:10px;color:{B};'
+        f'<a href="{href}" style="{MONO}font-size:11px;color:{B};'
         f'text-decoration:none;border-bottom:1px solid {G};white-space:nowrap;">{text}</a>'
     )
 
@@ -125,7 +123,7 @@ def _also(names: list) -> str:
     if not names:
         return ""
     joined = ", ".join(_esc(s) for s in names[:3])
-    return f'<span style="{MONO}font-size:10px;color:{A0};">· also {joined}</span>'
+    return f'<span style="color:{A0};"> · also {joined}</span>'
 
 
 # ── Section builders ──────────────────────────────────────────────────────
@@ -139,8 +137,8 @@ def _build_lead(items: list) -> str:
         text = _esc(item.get("text", ""))
         link = item.get("link", "")
         title_html = f'<a href="{link}" style="color:{IN};text-decoration:none;">{text}</a>' if link else text
-        pad = "0 0 12px" if i == len(sliced) - 1 else "0 0 9px"
-        rows += _row_table(f'<div style="padding:{pad};font-size:14px;font-weight:600;line-height:1.15;color:{IN};">{title_html}</div>')
+        pad = "0 0 10px" if i == len(sliced) - 1 else "0 0 7px"
+        rows += _row_table(f'<div style="padding:{pad};font-size:17px;font-weight:600;line-height:1.25;color:{IN};">{title_html}</div>')
     return _section("What You Should Know Today", rows)
 
 
@@ -148,7 +146,7 @@ def _build_news(items: list) -> str:
     if not items:
         return ""
     rows = ""
-    sliced = items[:7]
+    sliced = items[:4]
     for i, item in enumerate(sliced):
         headline = _esc(item.get("headline", ""))
         link     = item.get("link", "")
@@ -156,14 +154,16 @@ def _build_news(items: list) -> str:
         primary  = _esc(item.get("primary_source", ""))
         also     = item.get("also", [])
 
+        title_html = f'<a href="{link}" style="color:{IN};text-decoration:none;">{headline}</a>' if link else headline
         src = _source_link(primary, link) if link else primary
-        also_html = " " + _also(also) if also else ""
+        also_html = _also(also) if also else ""
         pad = "0 0 12px" if i == len(sliced) - 1 else "0 0 9px"
 
         rows += _row_table(
             f'<div style="padding:{pad};">'
-            f'<div style="font-size:14px;font-weight:600;line-height:1.15;color:{IN};">{headline}</div>'
-            f'<div style="font-size:13px;color:{D4};line-height:1.32;margin-top:1px;">{summary} {src}{also_html}</div>'
+            f'<div style="font-size:16px;font-weight:600;line-height:1.3;color:{IN};">{title_html}</div>'
+            f'<div style="font-size:14px;color:{D4};line-height:1.3;margin-top:2px;">{summary}</div>'
+            f'<div style="margin-top:2px;{MONO}font-size:11px;font-weight:400;color:{B};">{src}{also_html}</div>'
             f'</div>'
         )
     return _section("News", rows)
@@ -178,63 +178,64 @@ def _build_diary(items: list) -> str:
         event = _esc(item.get("event", ""))
         desc  = _esc(item.get("description", ""))
         dates = _esc(item.get("dates", ""))
-        pad = "0 0 12px" if i == len(sliced) - 1 else "0 0 8px"
+        pad = "0 0 10px" if i == len(sliced) - 1 else "0 0 7px"
         rows += (
             f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>'
-            f'<td style="padding:{pad};font-size:13px;line-height:1.3;">'
+            f'<td style="padding:{pad};font-size:15px;line-height:1.35;">'
             f'<div style="font-weight:500;">{event}</div>'
-            f'<div style="color:{MU};font-size:12px;">{desc}</div>'
+            f'<div style="color:{MU};font-size:13px;">{desc}</div>'
             f'</td>'
-            f'<td align="right" valign="top" style="padding:{pad};{MONO}font-size:10px;color:{B};white-space:nowrap;">{dates}</td>'
+            f'<td align="right" valign="top" style="padding:{pad};{MONO}font-size:12px;color:{B};white-space:nowrap;">{dates}</td>'
             f'</tr></table>'
         )
     return _section("Sector Diary", rows)
 
 
-def _build_roles(items: list) -> str:
-    if not items:
-        return ""
-    rows = ""
-    sliced = items[:5]
-    for i, item in enumerate(sliced):
-        title     = _esc(item.get("title", ""))
-        role_type = _esc(item.get("type", ""))
-        house     = _esc(item.get("house", ""))
-        pad = "0 0 12px" if i == len(sliced) - 1 else "0 0 8px"
-        rows += (
-            f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>'
-            f'<td style="padding:{pad};font-size:13px;line-height:1.3;">'
-            f'<div style="font-weight:500;">{title}</div>'
-            f'<div style="color:{MU};font-size:12px;">{house} · {role_type}</div>'
-            f'</td>'
-            f'</tr></table>'
-        )
-    return _section("Roles", rows)
-
-
 def _build_numbers(items: list, timestamp: str) -> str:
     if not items:
         return ""
-    rows = ""
-    sliced = items[:5]
-    for i, item in enumerate(sliced):
+    sliced = items[:6]
+
+    cards = []
+    for item in sliced:
         name      = _esc(item.get("name", ""))
         ticker    = _esc(item.get("ticker", ""))
         price     = _esc(item.get("price", ""))
         change    = _esc(item.get("change", ""))
         direction = item.get("direction", "flat")
-        context   = _esc(item.get("context", ""))
         colour    = GR if direction == "up" else (RD if direction == "down" else MU)
-        pad = "0 0 12px" if i == len(sliced) - 1 else "0 0 8px"
 
-        rows += (
-            f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>'
-            f'<td style="font-size:13.5px;line-height:1.32;color:{IN};">{name} <span style="color:{MU};font-size:12px;">· {ticker}</span></td>'
-            f'<td align="right" style="{MONO}font-size:13px;color:{B};white-space:nowrap;font-weight:500;">{price} <span style="color:{colour};">{change}</span></td>'
-            f'</tr></table>'
-            f'<div style="font-size:12px;color:{D4};line-height:1.3;padding:{pad};">{context}</div>'
+        card = (
+            f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border:1px solid {RU};">'
+            f'<tr><td style="padding:9px 12px 9px;">'
+            f'<div style="font-size:16px;font-weight:600;color:{IN};padding-bottom:2px;">{name}</div>'
+            f'<div style="{MONO}font-size:11px;color:{MU};padding-bottom:5px;">{ticker}</div>'
+            f'<div style="{MONO}font-size:17px;font-weight:600;color:{B};">{price}</div>'
+            f'<div style="{MONO}font-size:13px;color:{colour};padding-top:2px;">{change}</div>'
+            f'</td></tr></table>'
         )
-    return _section("Important Numbers", rows, right_label=_esc(timestamp))
+        cards.append(card)
+
+    rows = ""
+    for i in range(0, len(cards), 2):
+        left  = cards[i]
+        right = cards[i + 1] if i + 1 < len(cards) else ""
+        last_row = i + 2 >= len(cards)
+        bottom_pad = "0" if last_row else "6px"
+        rows += (
+            f'<tr>'
+            f'<td width="50%" style="padding:0 3px {bottom_pad} 0;">{left}</td>'
+            f'<td width="50%" style="padding:0 0 {bottom_pad} 3px;">{right}</td>'
+            f'</tr>'
+        )
+
+    grid = f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">{rows}</table>'
+
+    return (
+        _eyebrow("Important Numbers", _esc(timestamp))
+        + f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">'
+        f'<tr><td style="padding:8px 20px 0;">{grid}</td></tr></table>'
+    )
 
 
 def _esc(text: str) -> str:

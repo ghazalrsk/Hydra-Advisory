@@ -91,7 +91,7 @@ NEWS_SOURCES = [
 
 # ── STOCK TICKERS ────────────────────────────────────────────────────────
 # Broad luxury-sector universe. Each morning, collector.py ranks all of these
-# by absolute 24h % change and keeps only the top 5 movers for the digest.
+# by absolute 24h % change and keeps only the top 6 movers for the digest.
 STOCK_TICKERS = {
     "LVMH":               "MC.PA",
     "Kering":             "KER.PA",

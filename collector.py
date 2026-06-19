@@ -68,7 +68,7 @@ def fetch_all_articles() -> list[dict]:
     return articles
 
 
-def fetch_stock_prices(top_n: int = 5) -> list[dict]:
+def fetch_stock_prices(top_n: int = 6) -> list[dict]:
     """
     Fetches today's price and daily change for every ticker in STOCK_TICKERS,
     then returns only the top_n with the highest absolute 24h % change

@@ -124,8 +124,8 @@ Stories about other brands are included only if there is a clear market-wide imp
 SECTION E — NUMBERS
 ════════════════════════════════════════
 
-The STOCK DATA below is already the 5 biggest movers (highest absolute 24h % change) in the luxury sector — selected programmatically, not by you.
-Return all 5, in the same order given, under "numbers". Do not add, drop, or reorder them.
+The STOCK DATA below is already the 6 biggest movers (highest absolute 24h % change) in the luxury sector — selected programmatically, not by you.
+Return all 6, in the same order given, under "numbers". Do not add, drop, or reorder them.
 For each stock, write one sentence explaining WHY it moved (using the articles as context).
 If you cannot find a reason in the articles, write a brief factual note about the company's recent performance.
 
@@ -137,10 +137,8 @@ Lead items: one clause only — the headline fact, no elaboration.
   CORRECT: "Gucci creative director search enters final round"
   WRONG: "Gucci is reportedly in the final stages of a lengthy search following the departure of..."
 
-News summaries: exactly 1–2 sentences.
-  Sentence 1: key fact — who, what, when/where
-  Sentence 2: one-line implication or context
-  CORRECT: "Richemont has named a single CEO to oversee all specialist watchmakers. The move consolidates six MDs under one P&L, signalling a margin-first restructuring."
+News summaries: exactly ONE sentence, no longer than the headline itself.
+  CORRECT: "One executive now oversees all specialist watchmakers."
   WRONG: "In an exciting development, Richemont has made a bold strategic move..."
 
 BANNED WORDS — never use:
@@ -201,13 +199,6 @@ RETURN THIS EXACT JSON — no other text:
       "also": ["Other Source 1", "Other Source 2"]
     }}
   ],
-  "roles": [
-    {{
-      "title": "Role title",
-      "type": "New appointment",
-      "house": "Brand Name"
-    }}
-  ],
   "diary": [
     {{
       "event": "Event name · City",
@@ -230,7 +221,6 @@ def _parse_response(raw: str) -> dict:
             "lead_items": [{"text": "Digest generation encountered an issue — please check logs.", "link": ""}],
             "numbers": [],
             "news": [],
-            "roles": [],
             "diary": [],
             "numbers_timestamp": "",
         }
