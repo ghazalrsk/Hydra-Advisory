@@ -134,11 +134,18 @@ def _build_lead(items: list) -> str:
     rows = ""
     sliced = items[:3]
     for i, item in enumerate(sliced):
-        text = _esc(_truncate_words(item.get("text", ""), 6))
-        link = item.get("link", "")
+        text    = _esc(_truncate_words(item.get("text", ""), 6))
+        link    = item.get("link", "")
+        primary = _esc(item.get("primary_source", ""))
+        also    = item.get("also", [])
+
         title_html = f'<a href="{link}" style="color:{IN};text-decoration:none;">{text}</a>' if link else text
+        src_html = (_source_link(primary, link) if link else primary) if primary else ""
+        also_html = _also(also) if also else ""
+        prefix = f'<span style="{MONO}">{src_html}{also_html}</span> &middot; ' if src_html else ""
+
         pad = "0 0 10px" if i == len(sliced) - 1 else "0 0 7px"
-        rows += _row_table(f'<div style="padding:{pad};font-size:17px;font-weight:600;line-height:1.25;color:{IN};">{title_html}</div>')
+        rows += _row_table(f'<div style="padding:{pad};font-size:17px;font-weight:600;line-height:1.25;color:{IN};">{prefix}{title_html}</div>')
     return _section("What You Should Know Today", rows)
 
 

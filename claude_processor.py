@@ -57,6 +57,7 @@ Attribution format in output:
   primary_source: "BoF"
   also: ["WWD", "Pambianco"]
 Maximum 3 sources in the "also" list.
+This attribution is required for BOTH "lead_items" and "news" — every item in either array must carry primary_source (and also, if applicable).
 Brand press releases: use only if no editorial coverage exists. Label as "Brand announcement".
 
 ════════════════════════════════════════
@@ -182,9 +183,9 @@ RETURN THIS EXACT JSON — no other text:
 
 {{
   "lead_items": [
-    {{"text": "One-clause headline fact.", "link": "https://..."}},
-    {{"text": "One-clause headline fact.", "link": "https://..."}},
-    {{"text": "One-clause headline fact.", "link": "https://..."}}
+    {{"text": "One-clause headline fact.", "link": "https://...", "primary_source": "Publication Name", "also": ["Other Source 1"]}},
+    {{"text": "One-clause headline fact.", "link": "https://...", "primary_source": "Publication Name", "also": []}},
+    {{"text": "One-clause headline fact.", "link": "https://...", "primary_source": "Publication Name", "also": []}}
   ],
   "numbers": [
     {{
