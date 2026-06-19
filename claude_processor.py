@@ -142,10 +142,11 @@ News headlines: MAXIMUM 7 words.
   CORRECT: "Richemont names single CEO for watches"
   WRONG: "Richemont names a single CEO to oversee all specialist watchmaking divisions"
 
-News summaries: HARD LIMIT 9 words. ONE sentence, no exceptions, no matter how complex the story is.
+News summaries: 8-9 words, ONE complete sentence. REWRITE and COMPRESS the story down to its single most important fact — do not just chop a longer sentence in half. The summary must always read as a finished thought, never trail off mid-clause.
   CORRECT: "Permira-backed brand may file as soon as next week."
   WRONG: "The sustainable womenswear brand, majority-owned by Permira, may file documents as soon as next week with plans to go public in July."
-If you cannot compress a story into 9 words, cut detail — do not write a second sentence.
+  WRONG (chopped mid-sentence): "The sustainable womenswear brand, majority-owned by Permira, may file documents as…"
+Drop secondary details (ownership stakes, distant future plans, qualifiers) and keep only the single most newsworthy fact, phrased as a complete sentence within the word count.
   WRONG: "In an exciting development, Richemont has made a bold strategic move to consolidate its watch division leadership."
 
 BANNED WORDS — never use:

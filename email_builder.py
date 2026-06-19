@@ -142,10 +142,10 @@ def _build_lead(items: list) -> str:
         title_html = f'<a href="{link}" style="color:{IN};text-decoration:none;">{text}</a>' if link else text
         src_html = (_source_link(primary, link) if link else primary) if primary else ""
         also_html = _also(also) if also else ""
-        prefix = f'<span style="{MONO}font-size:11px;font-weight:400;">{src_html}{also_html}</span> &middot; ' if src_html else ""
+        suffix = f' <span style="{MONO}font-size:11px;font-weight:400;">{src_html}{also_html}</span>' if src_html else ""
 
         pad = "0 0 10px" if i == len(sliced) - 1 else "0 0 7px"
-        rows += _row_table(f'<div style="padding:{pad};font-size:17px;font-weight:600;line-height:1.25;color:{IN};">{prefix}{title_html}</div>')
+        rows += _row_table(f'<div style="padding:{pad};font-size:17px;font-weight:600;line-height:1.25;color:{IN};">{title_html}{suffix}</div>')
     return _section("What You Should Know Today", rows)
 
 
@@ -157,7 +157,7 @@ def _build_news(items: list) -> str:
     for i, item in enumerate(sliced):
         headline = _esc(_truncate_words(item.get("headline", ""), 7))
         link     = item.get("link", "")
-        summary  = _esc(_truncate_words(item.get("summary", ""), 9))
+        summary  = _esc(item.get("summary", ""))
         primary  = _esc(item.get("primary_source", ""))
         also     = item.get("also", [])
 
