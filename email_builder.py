@@ -206,12 +206,12 @@ def _build_numbers(items: list, timestamp: str) -> str:
         colour    = GR if direction == "up" else (RD if direction == "down" else MU)
 
         card = (
-            f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border:1px solid {RU};">'
-            f'<tr><td style="padding:9px 12px 9px;">'
-            f'<div style="font-size:16px;font-weight:600;color:{IN};padding-bottom:2px;">{name}</div>'
-            f'<div style="{MONO}font-size:11px;color:{MU};padding-bottom:5px;">{ticker}</div>'
-            f'<div style="{MONO}font-size:17px;font-weight:600;color:{B};">{price}</div>'
-            f'<div style="{MONO}font-size:13px;color:{colour};padding-top:2px;">{change}</div>'
+            f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border:1px solid {RU};table-layout:fixed;">'
+            f'<tr><td height="92" style="padding:9px 12px 9px;overflow:hidden;">'
+            f'<div style="font-size:16px;font-weight:600;color:{IN};padding-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{name}</div>'
+            f'<div style="{MONO}font-size:11px;color:{MU};padding-bottom:5px;white-space:nowrap;">{ticker}</div>'
+            f'<div style="{MONO}font-size:17px;font-weight:600;color:{B};white-space:nowrap;">{price}</div>'
+            f'<div style="{MONO}font-size:13px;color:{colour};padding-top:2px;white-space:nowrap;">{change}</div>'
             f'</td></tr></table>'
         )
         cards.append(card)
@@ -229,7 +229,7 @@ def _build_numbers(items: list, timestamp: str) -> str:
             f'</tr>'
         )
 
-    grid = f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">{rows}</table>'
+    grid = f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="table-layout:fixed;">{rows}</table>'
 
     return (
         _eyebrow("Important Numbers", _esc(timestamp))

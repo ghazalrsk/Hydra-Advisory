@@ -133,13 +133,17 @@ If you cannot find a reason in the articles, write a brief factual note about th
 SECTION F — WRITING RULES
 ════════════════════════════════════════
 
-Lead items: one clause only — the headline fact, no elaboration.
-  CORRECT: "Gucci creative director search enters final round"
-  WRONG: "Gucci is reportedly in the final stages of a lengthy search following the departure of..."
+Lead items: MAXIMUM 6 words. The headline fact only, no elaboration, no subordinate clauses.
+  CORRECT: "Gucci names new creative director"
+  WRONG: "Gucci creative director search enters final round after months of speculation"
 
-News summaries: exactly ONE sentence, no longer than the headline itself.
-  CORRECT: "One executive now oversees all specialist watchmakers."
-  WRONG: "In an exciting development, Richemont has made a bold strategic move..."
+News headlines: MAXIMUM 7 words.
+  CORRECT: "Richemont names single CEO for watches"
+  WRONG: "Richemont names a single CEO to oversee all specialist watchmaking divisions"
+
+News summaries: MAXIMUM 8 words, one short clause, no period needed mid-thought.
+  CORRECT: "One executive now oversees all watchmakers."
+  WRONG: "In an exciting development, Richemont has made a bold strategic move to consolidate its watch division leadership."
 
 BANNED WORDS — never use:
 iconic · stunning · exciting · bold · groundbreaking · luxury powerhouse · giant · titan

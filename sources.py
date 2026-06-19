@@ -115,32 +115,32 @@ STOCK_TICKERS = {
 SECTOR_DIARY = [
     {
         "event": "Salone del Mobile · Milan",
-        "description": "Design Week — brand activations across Brera and Tortona districts",
+        "description": "Design Week",
         "dates": "17–22 Jun 2026",
     },
     {
         "event": "Haute Couture Week · Paris",
-        "description": "F/W 2026 Haute Couture presentations",
+        "description": "Couture presentations",
         "dates": "1–5 Jul 2026",
     },
     {
         "event": "Watches & Wonders · Geneva",
-        "description": "Richemont-led annual watch fair — all major maisons present",
+        "description": "Annual watch fair",
         "dates": "9–15 Jul 2026",
     },
     {
         "event": "Bain Luxury Study · Summer Update",
-        "description": "Mid-year luxury market sizing — embargoed release",
+        "description": "Market sizing report",
         "dates": "Est. late Jun 2026",
     },
     {
         "event": "Milan Fashion Week · Women's S/S 2027",
-        "description": "Ready-to-wear collections",
+        "description": "Ready-to-wear",
         "dates": "16–22 Sep 2026",
     },
     {
         "event": "Paris Fashion Week · Women's S/S 2027",
-        "description": "Ready-to-wear collections",
+        "description": "Ready-to-wear",
         "dates": "25 Sep – 3 Oct 2026",
     },
 ]
