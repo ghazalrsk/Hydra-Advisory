@@ -134,7 +134,7 @@ def _build_lead(items: list) -> str:
     rows = ""
     sliced = items[:3]
     for i, item in enumerate(sliced):
-        text = _esc(item.get("text", ""))
+        text = _esc(_truncate_words(item.get("text", ""), 6))
         link = item.get("link", "")
         title_html = f'<a href="{link}" style="color:{IN};text-decoration:none;">{text}</a>' if link else text
         pad = "0 0 10px" if i == len(sliced) - 1 else "0 0 7px"
@@ -148,9 +148,9 @@ def _build_news(items: list) -> str:
     rows = ""
     sliced = items[:4]
     for i, item in enumerate(sliced):
-        headline = _esc(item.get("headline", ""))
+        headline = _esc(_truncate_words(item.get("headline", ""), 7))
         link     = item.get("link", "")
-        summary  = _esc(item.get("summary", ""))
+        summary  = _esc(_truncate_words(item.get("summary", ""), 9))
         primary  = _esc(item.get("primary_source", ""))
         also     = item.get("also", [])
 
@@ -236,6 +236,13 @@ def _build_numbers(items: list, timestamp: str) -> str:
         + f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">'
         f'<tr><td style="padding:8px 20px 0;">{grid}</td></tr></table>'
     )
+
+
+def _truncate_words(text: str, max_words: int) -> str:
+    words = str(text).split()
+    if len(words) <= max_words:
+        return str(text)
+    return " ".join(words[:max_words]).rstrip(".,;:") + "…"
 
 
 def _esc(text: str) -> str:

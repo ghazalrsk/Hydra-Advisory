@@ -141,8 +141,10 @@ News headlines: MAXIMUM 7 words.
   CORRECT: "Richemont names single CEO for watches"
   WRONG: "Richemont names a single CEO to oversee all specialist watchmaking divisions"
 
-News summaries: MAXIMUM 8 words, one short clause, no period needed mid-thought.
-  CORRECT: "One executive now oversees all watchmakers."
+News summaries: HARD LIMIT 9 words. ONE sentence, no exceptions, no matter how complex the story is.
+  CORRECT: "Permira-backed brand may file as soon as next week."
+  WRONG: "The sustainable womenswear brand, majority-owned by Permira, may file documents as soon as next week with plans to go public in July."
+If you cannot compress a story into 9 words, cut detail — do not write a second sentence.
   WRONG: "In an exciting development, Richemont has made a bold strategic move to consolidate its watch division leadership."
 
 BANNED WORDS — never use:
