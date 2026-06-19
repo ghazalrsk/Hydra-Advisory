@@ -127,8 +127,10 @@ SECTION E — NUMBERS
 
 The STOCK DATA below is already the 6 biggest movers (highest absolute 24h % change) in the luxury sector — selected programmatically, not by you.
 Return all 6, in the same order given, under "numbers". Do not add, drop, or reorder them.
-For each stock, write one sentence explaining WHY it moved (using the articles as context).
-If you cannot find a reason in the articles, write a brief factual note about the company's recent performance.
+For each stock, write a MAXIMUM 5-word fragment explaining WHY it moved (using the articles as context). No full sentence, no period needed — just the reason.
+  CORRECT: "Gains tied to easing trade tensions"
+  WRONG: "Shares rallied today amid broader luxury sector gains following the announcement of easing trade tensions between major markets"
+If you cannot find a reason in the articles, write a brief 5-word-max factual note about the company's recent performance.
 
 ════════════════════════════════════════
 SECTION F — WRITING RULES
@@ -195,7 +197,7 @@ RETURN THIS EXACT JSON — no other text:
       "price": "€618.40",
       "change": "▲ +2.3%",
       "direction": "up",
-      "context": "One sentence explaining the move or relevant context."
+      "context": "5-word-max reason for the move."
     }}
   ],
   "news": [

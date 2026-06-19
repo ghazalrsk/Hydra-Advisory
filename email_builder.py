@@ -164,13 +164,13 @@ def _build_news(items: list) -> str:
         title_html = f'<a href="{link}" style="color:{IN};text-decoration:none;">{headline}</a>' if link else headline
         src = _source_link(primary, link) if link else primary
         also_html = _also(also) if also else ""
+        src_html = f' <span style="{MONO}font-size:11px;font-weight:400;color:{B};">{src}{also_html}</span>' if src else ""
         pad = "0 0 12px" if i == len(sliced) - 1 else "0 0 9px"
 
         rows += _row_table(
             f'<div style="padding:{pad};">'
             f'<div style="font-size:16px;font-weight:600;line-height:1.3;color:{IN};">{title_html}</div>'
-            f'<div style="font-size:14px;color:{D4};line-height:1.3;margin-top:2px;">{summary}</div>'
-            f'<div style="margin-top:2px;{MONO}font-size:11px;font-weight:400;color:{B};">{src}{also_html}</div>'
+            f'<div style="font-size:14px;color:{D4};line-height:1.3;margin-top:2px;">{summary}{src_html}</div>'
             f'</div>'
         )
     return _section("News", rows)
@@ -202,47 +202,26 @@ def _build_numbers(items: list, timestamp: str) -> str:
     if not items:
         return ""
     sliced = items[:6]
-
-    cards = []
-    for item in sliced:
+    rows = ""
+    for i, item in enumerate(sliced):
         name      = _esc(item.get("name", ""))
         ticker    = _esc(item.get("ticker", ""))
         price     = _esc(item.get("price", ""))
         change    = _esc(item.get("change", ""))
         direction = item.get("direction", "flat")
+        context   = _esc(_truncate_words(item.get("context", ""), 5))
         colour    = GR if direction == "up" else (RD if direction == "down" else MU)
+        pad = "0" if i == len(sliced) - 1 else "0 0 8px"
 
-        card = (
-            f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border:1px solid {RU};table-layout:fixed;">'
-            f'<tr><td height="92" style="padding:9px 12px 9px;overflow:hidden;">'
-            f'<div style="font-size:16px;font-weight:600;color:{IN};padding-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{name}</div>'
-            f'<div style="{MONO}font-size:11px;color:{MU};padding-bottom:5px;white-space:nowrap;">{ticker}</div>'
-            f'<div style="{MONO}font-size:17px;font-weight:600;color:{B};white-space:nowrap;">{price}</div>'
-            f'<div style="{MONO}font-size:13px;color:{colour};padding-top:2px;white-space:nowrap;">{change}</div>'
-            f'</td></tr></table>'
-        )
-        cards.append(card)
-
-    rows = ""
-    for i in range(0, len(cards), 2):
-        left  = cards[i]
-        right = cards[i + 1] if i + 1 < len(cards) else ""
-        last_row = i + 2 >= len(cards)
-        bottom_pad = "0" if last_row else "6px"
         rows += (
-            f'<tr>'
-            f'<td width="50%" style="padding:0 3px {bottom_pad} 0;">{left}</td>'
-            f'<td width="50%" style="padding:0 0 {bottom_pad} 3px;">{right}</td>'
-            f'</tr>'
+            f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>'
+            f'<td style="font-size:16px;font-weight:600;color:{IN};">{name} <span style="color:{MU};{MONO}font-size:12px;font-weight:400;">&middot; {ticker}</span></td>'
+            f'<td align="right" style="{MONO}font-size:15px;color:{B};white-space:nowrap;font-weight:600;">{price} <span style="color:{colour};">{change}</span></td>'
+            f'</tr></table>'
+            f'<div style="font-size:13px;color:{D4};line-height:1.3;padding:{pad};">{context}</div>'
         )
 
-    grid = f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="table-layout:fixed;">{rows}</table>'
-
-    return (
-        _eyebrow("Important Numbers", _esc(timestamp))
-        + f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">'
-        f'<tr><td style="padding:8px 20px 0;">{grid}</td></tr></table>'
-    )
+    return _section("Important Numbers", rows, right_label=_esc(timestamp))
 
 
 def _truncate_words(text: str, max_words: int) -> str:
