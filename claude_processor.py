@@ -159,6 +159,7 @@ Brand name standards:
 
 SECTOR DIARY:
 From the diary list provided, select the 3–4 most immediately upcoming events closest to today's date.
+Each diary item must carry the "link" field copied exactly from the matching entry in the SECTOR DIARY list below.
 
 ════════════════════════════════════════
 ARTICLES ({len(articles)} total):
@@ -207,7 +208,8 @@ RETURN THIS EXACT JSON — no other text:
     {{
       "event": "Event name · City",
       "description": "One-line description.",
-      "dates": "Date range"
+      "dates": "Date range",
+      "link": "Copy the exact 'link' value for this event from the SECTOR DIARY list above."
     }}
   ]
 }}

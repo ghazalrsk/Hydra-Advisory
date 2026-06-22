@@ -117,30 +117,36 @@ SECTOR_DIARY = [
         "event": "Salone del Mobile · Milan",
         "description": "Design Week",
         "dates": "17–22 Jun 2026",
+        "link": "https://www.salonemilano.it",
     },
     {
         "event": "Haute Couture Week · Paris",
         "description": "Couture presentations",
         "dates": "1–5 Jul 2026",
+        "link": "https://fhcm.paris",
     },
     {
         "event": "Watches & Wonders · Geneva",
         "description": "Annual watch fair",
         "dates": "9–15 Jul 2026",
+        "link": "https://www.watchesandwonders.com",
     },
     {
         "event": "Bain Luxury Study · Summer Update",
         "description": "Market sizing report",
         "dates": "Est. late Jun 2026",
+        "link": "https://www.bain.com/insights/topics/luxury-goods-and-fashion/",
     },
     {
         "event": "Milan Fashion Week · Women's S/S 2027",
         "description": "Ready-to-wear",
         "dates": "16–22 Sep 2026",
+        "link": "https://www.cameramoda.it",
     },
     {
         "event": "Paris Fashion Week · Women's S/S 2027",
         "description": "Ready-to-wear",
         "dates": "25 Sep – 3 Oct 2026",
+        "link": "https://fhcm.paris",
     },
 ]

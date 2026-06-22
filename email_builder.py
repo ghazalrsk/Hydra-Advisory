@@ -24,6 +24,7 @@ D4 = "#4a4a4a"   # dark grey text
 A0 = "#a0a0a0"   # also / dim
 GR = "#2f7d4f"   # green (up)
 RD = "#9a3b3b"   # red (down)
+LG = "#f7f6f4"   # light grey row highlight
 MONO = "font-family:'DM Mono',monospace;"
 JOST = "font-family:'Jost',sans-serif;"
 
@@ -45,6 +46,8 @@ def build_email_html(digest: dict, today: str) -> str:
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<meta name="supported-color-schemes" content="light">
 <title>Hydra Brief · {today}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -87,8 +90,8 @@ def _eyebrow(label: str, right_label: str = "") -> str:
     if right_label:
         inner = (
             f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>'
-            f'<td style="{MONO}font-size:12px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:{CR};">{label}</td>'
-            f'<td align="right" style="{MONO}font-size:10px;font-weight:400;letter-spacing:.05em;text-transform:none;color:#d8c9a8;white-space:nowrap;">{right_label}</td>'
+            f'<td style="{MONO}font-size:12px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:{CR} !important;">{label}</td>'
+            f'<td align="right" style="{MONO}font-size:10px;font-weight:400;letter-spacing:.05em;text-transform:none;color:#d8c9a8 !important;white-space:nowrap;">{right_label}</td>'
             f'</tr></table>'
         )
     else:
@@ -96,7 +99,7 @@ def _eyebrow(label: str, right_label: str = "") -> str:
     return (
         f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">'
         f'<tr><td style="background:{B};padding:6px 20px;{MONO}font-size:12px;font-weight:500;'
-        f'letter-spacing:.16em;text-transform:uppercase;color:{CR};">{inner}</td></tr></table>'
+        f'letter-spacing:.16em;text-transform:uppercase;color:{CR} !important;">{inner}</td></tr></table>'
     )
 
 
@@ -117,13 +120,6 @@ def _source_link(text: str, href: str) -> str:
         f'<a href="{href}" style="{MONO}font-size:13px;color:{B};'
         f'text-decoration:none;border-bottom:1px solid {G};white-space:nowrap;">{text}</a>'
     )
-
-
-def _also(names: list) -> str:
-    if not names:
-        return ""
-    joined = ", ".join(_esc(s) for s in names[:3])
-    return f'<span style="color:{A0};"> · also {joined}</span>'
 
 
 def _also_slash(names: list) -> str:
@@ -148,7 +144,7 @@ def _build_lead(items: list) -> str:
 
         title_html = f'<a href="{link}" style="color:{IN};text-decoration:none;">{text}</a>' if link else text
         src_html = (_source_link(primary, link) if link else primary) if primary else ""
-        also_html = _also(also) if also else ""
+        also_html = _also_slash(also) if also else ""
         suffix = f' <span style="{MONO}font-size:13px;font-weight:400;color:{MU};">{src_html}{also_html}</span>' if src_html else ""
 
         pad = "0 0 10px" if i == len(sliced) - 1 else "0 0 7px"
@@ -164,6 +160,7 @@ def _build_news(items: list) -> str:
         return ""
     rows = ""
     sliced = items[:10]
+    n = len(sliced)
     for i, item in enumerate(sliced):
         headline = _esc(_truncate_words(item.get("headline", ""), 8))
         link     = item.get("link", "")
@@ -174,20 +171,19 @@ def _build_news(items: list) -> str:
         src = _source_link(primary, link) if link else primary
         also_html = _also_slash(also) if also else ""
         src_html = f' <span style="{MONO}font-size:13px;font-weight:400;color:{MU};">{src}{also_html}</span>' if src else ""
-        pad = "6px 8px 6px" if i == len(sliced) - 1 else "6px 8px"
-        bg = f'background:#f7f6f4;border-radius:3px;' if i % 2 == 0 else ""
+        bg = f'background:{LG};' if i % 2 == 0 else ""
+        pad_top = "10px" if i == 0 else "8px"
+        pad_bottom = "12px" if i == n - 1 else "8px"
 
         rows += (
             f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">'
-            f'<tr><td style="{bg}padding:{pad};">'
+            f'<tr><td style="{bg}padding:{pad_top} 20px {pad_bottom};">'
             f'<div style="font-size:15px;font-weight:400;line-height:1.35;color:{IN};'
             f'white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'
             f'&bull;&nbsp; {title_html}{src_html}</div>'
             f'</td></tr></table>'
         )
-        if i < len(sliced) - 1:
-            rows += '<div style="height:4px;line-height:4px;font-size:0;">&nbsp;</div>'
-    return _section("News", rows, side_padding=12)
+    return _eyebrow("News") + rows
 
 
 def _build_diary(items: list) -> str:
@@ -199,6 +195,8 @@ def _build_diary(items: list) -> str:
         event = _esc(item.get("event", ""))
         desc  = _esc(item.get("description", ""))
         dates = _esc(item.get("dates", ""))
+        link  = item.get("link", "")
+        dates_html = f'<a href="{link}" style="color:inherit;text-decoration:none;">{dates}</a>' if link else dates
         pad = "0 0 10px" if i == len(sliced) - 1 else "0 0 7px"
         rows += (
             f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>'
@@ -206,7 +204,7 @@ def _build_diary(items: list) -> str:
             f'<div style="font-weight:500;">{event}</div>'
             f'<div style="color:{MU};font-size:14px;">{desc}</div>'
             f'</td>'
-            f'<td align="right" valign="top" style="padding:{pad};{MONO}font-size:13px;color:{B};white-space:nowrap;">{dates}</td>'
+            f'<td align="right" valign="top" style="padding:{pad};{MONO}font-size:13px;color:{B};white-space:nowrap;">{dates_html}</td>'
             f'</tr></table>'
         )
     return _section("Sector Diary", rows)
@@ -217,6 +215,7 @@ def _build_numbers(items: list, timestamp: str) -> str:
         return ""
     sliced = items[:6]
     rows = ""
+    n = len(sliced)
     for i, item in enumerate(sliced):
         name      = _esc(item.get("name", ""))
         ticker    = _esc(item.get("ticker", ""))
@@ -225,17 +224,22 @@ def _build_numbers(items: list, timestamp: str) -> str:
         direction = item.get("direction", "flat")
         context   = _esc(_truncate_words(item.get("context", ""), 5))
         colour    = GR if direction == "up" else (RD if direction == "down" else MU)
-        pad = "0" if i == len(sliced) - 1 else "0 0 8px"
+        bg = f'background:{LG};' if i % 2 == 0 else ""
+        pad_top = "10px" if i == 0 else "8px"
+        pad_bottom = "12px" if i == n - 1 else "8px"
 
         rows += (
+            f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">'
+            f'<tr><td style="{bg}padding:{pad_top} 20px {pad_bottom};">'
             f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>'
             f'<td style="font-size:15px;font-weight:400;color:{IN};">{name} <span style="color:{MU};{MONO}font-size:13px;font-weight:400;">&middot; {ticker}</span></td>'
             f'<td align="right" style="{MONO}font-size:13px;color:{B};white-space:nowrap;font-weight:400;">{price} <span style="color:{colour};">{change}</span></td>'
             f'</tr></table>'
-            f'<div style="font-size:14px;color:{MU};line-height:1.3;padding:{pad};">{context}</div>'
+            f'<div style="font-size:14px;color:{MU};line-height:1.3;margin-top:2px;">{context}</div>'
+            f'</td></tr></table>'
         )
 
-    return _section("Important Numbers", rows, right_label=_esc(timestamp))
+    return _eyebrow("Important Numbers", right_label=_esc(timestamp)) + rows
 
 
 def _truncate_words(text: str, max_words: int) -> str:
