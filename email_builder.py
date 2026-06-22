@@ -168,7 +168,7 @@ def _build_news(items: list) -> str:
         also_html = _also(also) if also else ""
         src_html = f' <span style="{MONO}font-size:12px;font-weight:400;color:{MU};">{src}{also_html}</span>' if src else ""
         pad = "6px 8px 6px" if i == len(sliced) - 1 else "6px 8px"
-        bg = f'background:#eeeae3;border-radius:3px;' if i % 2 == 0 else ""
+        bg = f'background:#f7f6f4;border-radius:3px;' if i % 2 == 0 else ""
 
         rows += (
             f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">'
