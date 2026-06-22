@@ -57,7 +57,7 @@ def build_email_html(digest: dict, today: str) -> str:
 
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-bottom:2px solid {B};">
     <tr>
-      <td style="padding:16px 20px 15px;font-weight:600;font-size:18px;color:{B};letter-spacing:.1em;text-transform:uppercase;">Hydra Brief</td>
+      <td style="padding:16px 20px 15px;font-weight:500;font-size:18px;color:{B};letter-spacing:.1em;text-transform:uppercase;">Hydra Brief</td>
       <td align="right" style="padding:16px 20px 15px;{MONO}font-size:13px;color:{MU};white-space:nowrap;">{short_date}</td>
     </tr>
   </table>
@@ -142,10 +142,13 @@ def _build_lead(items: list) -> str:
         title_html = f'<a href="{link}" style="color:{IN};text-decoration:none;">{text}</a>' if link else text
         src_html = (_source_link(primary, link) if link else primary) if primary else ""
         also_html = _also(also) if also else ""
-        suffix = f' <span style="{MONO}font-size:11px;font-weight:400;">{src_html}{also_html}</span>' if src_html else ""
+        suffix = f' <span style="{MONO}font-size:11px;font-weight:400;color:{MU};">{src_html}{also_html}</span>' if src_html else ""
 
         pad = "0 0 10px" if i == len(sliced) - 1 else "0 0 7px"
-        rows += _row_table(f'<div style="padding:{pad};font-size:17px;font-weight:600;line-height:1.25;color:{IN};">{title_html}{suffix}</div>')
+        rows += _row_table(
+            f'<div style="padding:{pad};font-size:16px;font-weight:400;line-height:1.35;color:{IN};">'
+            f'&bull;&nbsp; {title_html}{suffix}</div>'
+        )
     return _section("What You Should Know Today", rows)
 
 
@@ -153,25 +156,23 @@ def _build_news(items: list) -> str:
     if not items:
         return ""
     rows = ""
-    sliced = items[:4]
+    sliced = items[:10]
     for i, item in enumerate(sliced):
-        headline = _esc(_truncate_words(item.get("headline", ""), 7))
+        headline = _esc(_truncate_words(item.get("headline", ""), 8))
         link     = item.get("link", "")
-        summary  = _esc(item.get("summary", ""))
         primary  = _esc(item.get("primary_source", ""))
         also     = item.get("also", [])
 
         title_html = f'<a href="{link}" style="color:{IN};text-decoration:none;">{headline}</a>' if link else headline
         src = _source_link(primary, link) if link else primary
         also_html = _also(also) if also else ""
-        src_html = f' <span style="{MONO}font-size:11px;font-weight:400;color:{B};">{src}{also_html}</span>' if src else ""
-        pad = "0 0 12px" if i == len(sliced) - 1 else "0 0 9px"
+        src_html = f' <span style="{MONO}font-size:11px;font-weight:400;color:{MU};">{src}{also_html}</span>' if src else ""
+        pad = "0 0 12px" if i == len(sliced) - 1 else "0 0 7px"
 
         rows += _row_table(
-            f'<div style="padding:{pad};">'
-            f'<div style="font-size:16px;font-weight:600;line-height:1.3;color:{IN};">{title_html}</div>'
-            f'<div style="font-size:14px;color:{D4};line-height:1.3;margin-top:2px;">{summary}{src_html}</div>'
-            f'</div>'
+            f'<div style="padding:{pad};font-size:16px;font-weight:400;line-height:1.35;color:{IN};'
+            f'white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'
+            f'&bull;&nbsp; {title_html}{src_html}</div>'
         )
     return _section("News", rows)
 
@@ -215,10 +216,10 @@ def _build_numbers(items: list, timestamp: str) -> str:
 
         rows += (
             f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>'
-            f'<td style="font-size:16px;font-weight:600;color:{IN};">{name} <span style="color:{MU};{MONO}font-size:12px;font-weight:400;">&middot; {ticker}</span></td>'
-            f'<td align="right" style="{MONO}font-size:15px;color:{B};white-space:nowrap;font-weight:600;">{price} <span style="color:{colour};">{change}</span></td>'
+            f'<td style="font-size:16px;font-weight:400;color:{IN};">{name} <span style="color:{MU};{MONO}font-size:12px;font-weight:400;">&middot; {ticker}</span></td>'
+            f'<td align="right" style="{MONO}font-size:14px;color:{B};white-space:nowrap;font-weight:400;">{price} <span style="color:{colour};">{change}</span></td>'
             f'</tr></table>'
-            f'<div style="font-size:13px;color:{D4};line-height:1.3;padding:{pad};">{context}</div>'
+            f'<div style="font-size:13px;color:{MU};line-height:1.3;padding:{pad};">{context}</div>'
         )
 
     return _section("Important Numbers", rows, right_label=_esc(timestamp))

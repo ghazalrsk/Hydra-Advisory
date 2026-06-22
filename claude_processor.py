@@ -140,16 +140,11 @@ Lead items: MAXIMUM 6 words. The headline fact only, no elaboration, no subordin
   CORRECT: "Gucci names new creative director"
   WRONG: "Gucci creative director search enters final round after months of speculation"
 
-News headlines: MAXIMUM 7 words.
+News headlines: MAXIMUM 8 words, must fit on one line, no description follows — the headline alone must convey the whole point of the story.
   CORRECT: "Richemont names single CEO for watches"
   WRONG: "Richemont names a single CEO to oversee all specialist watchmaking divisions"
 
-News summaries: 8-9 words, ONE complete sentence. REWRITE and COMPRESS the story down to its single most important fact — do not just chop a longer sentence in half. The summary must always read as a finished thought, never trail off mid-clause.
-  CORRECT: "Permira-backed brand may file as soon as next week."
-  WRONG: "The sustainable womenswear brand, majority-owned by Permira, may file documents as soon as next week with plans to go public in July."
-  WRONG (chopped mid-sentence): "The sustainable womenswear brand, majority-owned by Permira, may file documents as…"
-Drop secondary details (ownership stakes, distant future plans, qualifiers) and keep only the single most newsworthy fact, phrased as a complete sentence within the word count.
-  WRONG: "In an exciting development, Richemont has made a bold strategic move to consolidate its watch division leadership."
+Return exactly 10 news items (after lead_items are excluded, per SECTION C).
 
 BANNED WORDS — never use:
 iconic · stunning · exciting · bold · groundbreaking · luxury powerhouse · giant · titan
@@ -202,8 +197,7 @@ RETURN THIS EXACT JSON — no other text:
   ],
   "news": [
     {{
-      "headline": "Full headline of the story.",
-      "summary": "1–2 sentence summary. Factual. Key development and one line of context.",
+      "headline": "Full headline of the story, 8 words max.",
       "link": "https://...",
       "primary_source": "Publication Name",
       "also": ["Other Source 1", "Other Source 2"]
