@@ -136,13 +136,15 @@ If you cannot find a reason in the articles, write a brief 5-word-max factual no
 SECTION F — WRITING RULES
 ════════════════════════════════════════
 
-Lead items: MAXIMUM 6 words. The headline fact only, no elaboration, no subordinate clauses.
+Lead items: MAXIMUM 6 words, HARD LIMIT — never exceed this. The headline fact only, no elaboration, no subordinate clauses.
   CORRECT: "Gucci names new creative director"
   WRONG: "Gucci creative director search enters final round after months of speculation"
+If the full story does not fit in 6 words, REWRITE and SUMMARISE it down to the core fact — never produce a longer phrase that would need to be cut off. The result must always read as a complete thought, never a sentence trailing into nothing.
 
-News headlines: MAXIMUM 8 words, must fit on one line, no description follows — the headline alone must convey the whole point of the story.
+News headlines: MAXIMUM 8 words, HARD LIMIT — never exceed this, must fit on one line, no description follows — the headline alone must convey the whole point of the story.
   CORRECT: "Richemont names single CEO for watches"
   WRONG: "Richemont names a single CEO to oversee all specialist watchmaking divisions"
+If the full story does not fit in 8 words, REWRITE and SUMMARISE it down to the core fact — never produce a longer phrase that would need to be cut off. The result must always read as a complete thought, never a sentence trailing into nothing.
 
 Return exactly 10 news items (after lead_items are excluded, per SECTION C).
 

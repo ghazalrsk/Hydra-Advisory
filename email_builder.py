@@ -53,9 +53,12 @@ def build_email_html(digest: dict, today: str) -> str:
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
-<body style="margin:0;padding:20px 12px 44px;background:{BG};{JOST}color:{IN};font-size:16px;line-height:1.45;">
+<body style="margin:0;padding:0;background:{BG};{JOST}color:{IN};font-size:16px;line-height:1.45;">
 
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;margin:0 auto;background:#ffffff;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="{BG}" style="background:{BG};">
+<tr><td align="center" style="padding:20px 12px 44px;">
+
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" align="center" style="max-width:600px;background:#ffffff;">
 <tr><td style="padding:0 0 6px;">
 
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-bottom:2px solid {B};">
@@ -76,6 +79,9 @@ def build_email_html(digest: dict, today: str) -> str:
       <a href="*|UNSUB|*" style="color:{MU};">Unsubscribe</a> · Hydra Advisory
     </td></tr>
   </table>
+
+</td></tr>
+</table>
 
 </td></tr>
 </table>
