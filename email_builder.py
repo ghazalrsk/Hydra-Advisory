@@ -114,7 +114,7 @@ def _row_table(inner: str) -> str:
 
 def _source_link(text: str, href: str) -> str:
     return (
-        f'<a href="{href}" style="{MONO}font-size:11px;color:{B};'
+        f'<a href="{href}" style="{MONO}font-size:12px;color:{B};'
         f'text-decoration:none;border-bottom:1px solid {G};white-space:nowrap;">{text}</a>'
     )
 
@@ -142,11 +142,11 @@ def _build_lead(items: list) -> str:
         title_html = f'<a href="{link}" style="color:{IN};text-decoration:none;">{text}</a>' if link else text
         src_html = (_source_link(primary, link) if link else primary) if primary else ""
         also_html = _also(also) if also else ""
-        suffix = f' <span style="{MONO}font-size:11px;font-weight:400;color:{MU};">{src_html}{also_html}</span>' if src_html else ""
+        suffix = f' <span style="{MONO}font-size:12px;font-weight:400;color:{MU};">{src_html}{also_html}</span>' if src_html else ""
 
         pad = "0 0 10px" if i == len(sliced) - 1 else "0 0 7px"
         rows += _row_table(
-            f'<div style="padding:{pad};font-size:16px;font-weight:400;line-height:1.35;color:{IN};">'
+            f'<div style="padding:{pad};font-size:15px;font-weight:400;line-height:1.35;color:{IN};">'
             f'&bull;&nbsp; {title_html}{suffix}</div>'
         )
     return _section("What You Should Know Today", rows)
@@ -166,11 +166,11 @@ def _build_news(items: list) -> str:
         title_html = f'<a href="{link}" style="color:{IN};text-decoration:none;">{headline}</a>' if link else headline
         src = _source_link(primary, link) if link else primary
         also_html = _also(also) if also else ""
-        src_html = f' <span style="{MONO}font-size:11px;font-weight:400;color:{MU};">{src}{also_html}</span>' if src else ""
+        src_html = f' <span style="{MONO}font-size:12px;font-weight:400;color:{MU};">{src}{also_html}</span>' if src else ""
         pad = "0 0 12px" if i == len(sliced) - 1 else "0 0 7px"
 
         rows += _row_table(
-            f'<div style="padding:{pad};font-size:16px;font-weight:400;line-height:1.35;color:{IN};'
+            f'<div style="padding:{pad};font-size:15px;font-weight:400;line-height:1.35;color:{IN};'
             f'white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'
             f'&bull;&nbsp; {title_html}{src_html}</div>'
         )
@@ -216,8 +216,8 @@ def _build_numbers(items: list, timestamp: str) -> str:
 
         rows += (
             f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>'
-            f'<td style="font-size:16px;font-weight:400;color:{IN};">{name} <span style="color:{MU};{MONO}font-size:12px;font-weight:400;">&middot; {ticker}</span></td>'
-            f'<td align="right" style="{MONO}font-size:14px;color:{B};white-space:nowrap;font-weight:400;">{price} <span style="color:{colour};">{change}</span></td>'
+            f'<td style="font-size:15px;font-weight:400;color:{IN};">{name} <span style="color:{MU};{MONO}font-size:12px;font-weight:400;">&middot; {ticker}</span></td>'
+            f'<td align="right" style="{MONO}font-size:12px;color:{B};white-space:nowrap;font-weight:400;">{price} <span style="color:{colour};">{change}</span></td>'
             f'</tr></table>'
             f'<div style="font-size:13px;color:{MU};line-height:1.3;padding:{pad};">{context}</div>'
         )
