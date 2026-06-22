@@ -100,11 +100,11 @@ def _eyebrow(label: str, right_label: str = "") -> str:
     )
 
 
-def _section(label: str, rows_html: str, right_label: str = "") -> str:
+def _section(label: str, rows_html: str, right_label: str = "", side_padding: int = 20) -> str:
     return (
         _eyebrow(label, right_label)
         + f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">'
-        f'<tr><td style="padding:8px 20px 0;">{rows_html}</td></tr></table>'
+        f'<tr><td style="padding:8px {side_padding}px 0;">{rows_html}</td></tr></table>'
     )
 
 
@@ -187,7 +187,7 @@ def _build_news(items: list) -> str:
         )
         if i < len(sliced) - 1:
             rows += '<div style="height:4px;line-height:4px;font-size:0;">&nbsp;</div>'
-    return _section("News", rows)
+    return _section("News", rows, side_padding=12)
 
 
 def _build_diary(items: list) -> str:
