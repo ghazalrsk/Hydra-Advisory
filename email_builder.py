@@ -126,6 +126,13 @@ def _also(names: list) -> str:
     return f'<span style="color:{A0};"> · also {joined}</span>'
 
 
+def _also_slash(names: list) -> str:
+    if not names:
+        return ""
+    joined = "/".join(_esc(s) for s in names[:3])
+    return f'/{joined}'
+
+
 # ── Section builders ──────────────────────────────────────────────────────
 
 def _build_lead(items: list) -> str:
@@ -165,16 +172,18 @@ def _build_news(items: list) -> str:
 
         title_html = f'<a href="{link}" style="color:{IN};text-decoration:none;">{headline}</a>' if link else headline
         src = _source_link(primary, link) if link else primary
-        also_html = _also(also) if also else ""
+        also_html = _also_slash(also) if also else ""
         src_html = f' <span style="{MONO}font-size:12px;font-weight:400;color:{MU};">{src}{also_html}</span>' if src else ""
         pad = "6px 8px 6px" if i == len(sliced) - 1 else "6px 8px"
         bg = f'background:#f7f6f4;border-radius:3px;' if i % 2 == 0 else ""
 
         rows += (
             f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">'
-            f'<tr><td style="{bg}padding:{pad};font-size:14px;font-weight:400;line-height:1.35;color:{IN};'
+            f'<tr><td style="{bg}padding:{pad};">'
+            f'<div style="font-size:14px;font-weight:400;line-height:1.35;color:{IN};'
             f'white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'
-            f'&bull;&nbsp; {title_html}{src_html}</td></tr></table>'
+            f'&bull;&nbsp; {title_html}{src_html}</div>'
+            f'</td></tr></table>'
         )
         if i < len(sliced) - 1:
             rows += '<div style="height:4px;line-height:4px;font-size:0;">&nbsp;</div>'
