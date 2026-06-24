@@ -52,23 +52,23 @@ def build_email_html(digest: dict, today: str) -> str:
 <title>Hydra Brief · {today}</title>
 <style>
 @media screen and (max-width: 600px) {{
-  .hdr-title    {{ font-size:20px !important; }}
-  .hdr-date     {{ font-size:15px !important; }}
-  .eyebrow-lbl  {{ font-size:14px !important; }}
-  .eyebrow-rgt  {{ font-size:12px !important; }}
-  .lead-title   {{ font-size:16px !important; }}
-  .lead-suffix  {{ font-size:14px !important; }}
-  .news-title   {{ font-size:16px !important; }}
-  .news-suffix  {{ font-size:14px !important; }}
-  .diary-event  {{ font-size:16px !important; }}
-  .diary-desc   {{ font-size:15px !important; }}
-  .diary-date   {{ font-size:14px !important; }}
-  .numbers-name {{ font-size:16px !important; }}
-  .numbers-tick {{ font-size:14px !important; }}
-  .numbers-px   {{ font-size:14px !important; }}
-  .numbers-ctx  {{ font-size:15px !important; }}
-  .src-link     {{ font-size:14px !important; }}
-  .footer-txt   {{ font-size:13px !important; }}
+  .hdr-title    {{ font-size:22px !important; }}
+  .hdr-date     {{ font-size:16px !important; }}
+  .eyebrow-lbl  {{ font-size:15px !important; }}
+  .eyebrow-rgt  {{ font-size:13px !important; }}
+  .lead-title   {{ font-size:18px !important; }}
+  .lead-suffix  {{ font-size:16px !important; }}
+  .news-title   {{ font-size:18px !important; }}
+  .news-suffix  {{ font-size:16px !important; }}
+  .diary-event  {{ font-size:18px !important; }}
+  .diary-desc   {{ font-size:17px !important; }}
+  .diary-date   {{ font-size:16px !important; }}
+  .numbers-name {{ font-size:18px !important; }}
+  .numbers-tick {{ font-size:16px !important; }}
+  .numbers-px   {{ font-size:16px !important; }}
+  .numbers-ctx  {{ font-size:17px !important; }}
+  .src-link     {{ font-size:16px !important; }}
+  .footer-txt   {{ font-size:14px !important; }}
 }}
 </style>
 </head>
