@@ -26,7 +26,7 @@ GR = "#2f7d4f"   # green (up)
 RD = "#9a3b3b"   # red (down)
 LG = "#f7f6f4"   # light grey row highlight
 MONO = "font-family:'DM Mono',monospace;"
-JOST = "font-family:'Jost',sans-serif;"
+JOST = "font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;"
 
 
 def build_email_html(digest: dict, today: str) -> str:
@@ -51,9 +51,9 @@ def build_email_html(digest: dict, today: str) -> str:
 <title>Hydra Brief · {today}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
-<body style="margin:0;padding:0;background:{BG};{JOST}color:{IN};font-size:16px;line-height:1.45;">
+<body style="margin:0;padding:0;background:{BG};{JOST}color:{IN};font-size:16px;line-height:1.5;">
 
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="{BG}" style="background:{BG};">
 <tr><td align="center" style="padding:20px 12px 44px;">
