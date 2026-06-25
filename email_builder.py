@@ -30,7 +30,11 @@ LG = "#f7f6f4"   # light grey row highlight
 JOST = "font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;"
 
 _RESPONSIVE_STYLE = """<style>
+.diag-desktop { display:block; }
+.diag-mobile  { display:none; }
 @media screen and (max-width: 600px) {
+  .diag-desktop { display:none !important; }
+  .diag-mobile  { display:block !important; }
   .hdr-title    { font-size:38px !important; }
   .hdr-date     { font-size:26px !important; }
   .eyebrow-lbl  { font-size:25px !important; }
@@ -89,6 +93,11 @@ def build_email_html(digest: dict, today: str) -> str:
       <td align="right" class="hdr-date" style="padding:16px 20px 15px;font-size:15px;color:{MU};white-space:nowrap;">{short_date}</td>
     </tr>
   </table>
+
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding:10px 20px;background:#ffe9e9;text-align:center;font-weight:700;">
+    <div class="diag-desktop" style="color:#9a3b3b;">MEDIA QUERY TEST: DESKTOP</div>
+    <div class="diag-mobile" style="color:#2f7d4f;">MEDIA QUERY TEST: MOBILE</div>
+  </td></tr></table>
 
   {lead_html}
   {news_html}
