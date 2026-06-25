@@ -29,6 +29,28 @@ RD = "#9a3b3b"   # red (down)
 LG = "#f7f6f4"   # light grey row highlight
 JOST = "font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;"
 
+_RESPONSIVE_STYLE = """<style>
+@media screen and (max-width: 600px) {
+  .hdr-title    { font-size:38px !important; }
+  .hdr-date     { font-size:26px !important; }
+  .eyebrow-lbl  { font-size:25px !important; }
+  .eyebrow-rgt  { font-size:21px !important; }
+  .lead-title   { font-size:30px !important; }
+  .lead-suffix  { font-size:26px !important; }
+  .news-title   { font-size:30px !important; }
+  .news-suffix  { font-size:26px !important; }
+  .diary-event  { font-size:30px !important; }
+  .diary-desc   { font-size:27px !important; }
+  .diary-date   { font-size:26px !important; }
+  .numbers-name { font-size:30px !important; }
+  .numbers-tick { font-size:26px !important; }
+  .numbers-px   { font-size:26px !important; }
+  .numbers-ctx  { font-size:27px !important; }
+  .src-link     { font-size:26px !important; }
+  .footer-txt   { font-size:22px !important; }
+}
+</style>"""
+
 
 def build_email_html(digest: dict, today: str) -> str:
     try:
@@ -50,29 +72,10 @@ def build_email_html(digest: dict, today: str) -> str:
 <meta name="color-scheme" content="light">
 <meta name="supported-color-schemes" content="light">
 <title>Hydra Brief · {today}</title>
-<style>
-@media screen and (max-width: 600px) {{
-  .hdr-title    {{ font-size:38px !important; }}
-  .hdr-date     {{ font-size:26px !important; }}
-  .eyebrow-lbl  {{ font-size:25px !important; }}
-  .eyebrow-rgt  {{ font-size:21px !important; }}
-  .lead-title   {{ font-size:30px !important; }}
-  .lead-suffix  {{ font-size:26px !important; }}
-  .news-title   {{ font-size:30px !important; }}
-  .news-suffix  {{ font-size:26px !important; }}
-  .diary-event  {{ font-size:30px !important; }}
-  .diary-desc   {{ font-size:27px !important; }}
-  .diary-date   {{ font-size:26px !important; }}
-  .numbers-name {{ font-size:30px !important; }}
-  .numbers-tick {{ font-size:26px !important; }}
-  .numbers-px   {{ font-size:26px !important; }}
-  .numbers-ctx  {{ font-size:27px !important; }}
-  .src-link     {{ font-size:26px !important; }}
-  .footer-txt   {{ font-size:22px !important; }}
-}}
-</style>
+{_RESPONSIVE_STYLE}
 </head>
 <body style="margin:0;padding:0;background:{BG};{JOST}color:{IN};font-size:16px;line-height:1.5;">
+{_RESPONSIVE_STYLE}
 
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="{BG}" style="background:{BG};">
 <tr><td align="center" style="padding:20px 12px 44px;">
