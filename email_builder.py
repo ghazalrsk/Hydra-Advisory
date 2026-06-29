@@ -30,11 +30,7 @@ LG = "#f7f6f4"   # light grey row highlight
 JOST = "font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;"
 
 _RESPONSIVE_STYLE = """<style>
-.diag-desktop { display:block; }
-.diag-mobile  { display:none; }
 @media screen and (max-width: 600px) {
-  .diag-desktop { display:none !important; }
-  .diag-mobile  { display:block !important; }
   .hdr-title    { font-size:38px !important; }
   .hdr-date     { font-size:26px !important; }
   .eyebrow-lbl  { font-size:25px !important; }
@@ -94,11 +90,6 @@ def build_email_html(digest: dict, today: str) -> str:
     </tr>
   </table>
 
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding:10px 20px;background:#ffe9e9;text-align:center;font-weight:700;">
-    <div class="diag-desktop" style="color:#9a3b3b;">MEDIA QUERY TEST: DESKTOP</div>
-    <div class="diag-mobile" style="color:#2f7d4f;">MEDIA QUERY TEST: MOBILE</div>
-  </td></tr></table>
-
   {lead_html}
   {news_html}
   {diary_html}
@@ -128,7 +119,7 @@ def _eyebrow(label: str, right_label: str = "") -> str:
         inner = (
             f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>'
             f'<td class="eyebrow-lbl" style="font-size:14px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:{CR} !important;">{label}</td>'
-            f'<td align="right" class="eyebrow-rgt" style="font-size:12px;font-weight:400;letter-spacing:.05em;text-transform:none;color:#d8c9a8 !important;white-space:nowrap;">{right_label}</td>'
+            f'<td align="right" class="eyebrow-rgt" style="font-size:12px;font-weight:400;letter-spacing:.05em;text-transform:none;color:{CR} !important;background:{B} !important;white-space:nowrap;">{right_label}</td>'
             f'</tr></table>'
         )
     else:
@@ -209,17 +200,35 @@ def _parse_diary_dates(dates: str):
     return None
 
 
-def _calendar_link(event: str, desc: str, dates: str) -> str:
+def _calendar_links(event: str, desc: str, dates: str) -> dict:
     parsed = _parse_diary_dates(dates)
     if not parsed:
-        return ""
+        return {}
     start, end = parsed
-    gcal_end = end + timedelta(days=1)  # Google Calendar all-day end date is exclusive
-    date_param = f"{start.strftime('%Y%m%d')}/{gcal_end.strftime('%Y%m%d')}"
-    return (
+    gcal_end = end + timedelta(days=1)  # all-day end date is exclusive for Google/Outlook
+
+    google = (
         "https://calendar.google.com/calendar/render?action=TEMPLATE"
-        f"&text={quote(event)}&dates={date_param}&details={quote(desc)}"
+        f"&text={quote(event)}&dates={start.strftime('%Y%m%d')}/{gcal_end.strftime('%Y%m%d')}"
+        f"&details={quote(desc)}"
     )
+    outlook = (
+        "https://outlook.live.com/calendar/0/deeplink/compose?path=%2Fcalendar%2Faction%2Fcompose&rru=addevent"
+        f"&subject={quote(event)}&startdt={start.strftime('%Y-%m-%d')}&enddt={gcal_end.strftime('%Y-%m-%d')}"
+        f"&body={quote(desc)}&allday=true"
+    )
+    ics_content = "\r\n".join([
+        "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Hydra Advisory//Hydra Brief//EN",
+        "BEGIN:VEVENT",
+        f"DTSTART:{start.strftime('%Y%m%d')}",
+        f"DTEND:{gcal_end.strftime('%Y%m%d')}",
+        f"SUMMARY:{event}",
+        f"DESCRIPTION:{desc}",
+        "END:VEVENT", "END:VCALENDAR",
+    ])
+    apple = "data:text/calendar;charset=utf8," + quote(ics_content)
+
+    return {"google": google, "outlook": outlook, "apple": apple}
 
 
 # ── Section builders ──────────────────────────────────────────────────────
@@ -290,10 +299,18 @@ def _build_diary(items: list) -> str:
         desc  = _esc(item.get("description", ""))
         dates = _esc(item.get("dates", ""))
         link  = item.get("link", "")
-        cal_link = _calendar_link(item.get("event", ""), item.get("description", ""), item.get("dates", ""))
+        cal_links = _calendar_links(item.get("event", ""), item.get("description", ""), item.get("dates", ""))
 
         event_html = f'<a href="{link}" style="color:inherit;text-decoration:none;">{event}</a>' if link else event
-        dates_html = f'<a href="{cal_link}" style="color:inherit;text-decoration:none;">{dates}</a>' if cal_link else dates
+        if cal_links:
+            dates_html = (
+                f'{dates}<br>'
+                f'<a href="{cal_links["google"]}" style="color:inherit;text-decoration:underline;">Google</a> / '
+                f'<a href="{cal_links["outlook"]}" style="color:inherit;text-decoration:underline;">Outlook</a> / '
+                f'<a href="{cal_links["apple"]}" style="color:inherit;text-decoration:underline;">Apple</a>'
+            )
+        else:
+            dates_html = dates
 
         pad = "0 0 10px" if i == len(sliced) - 1 else "0 0 7px"
         rows += (
