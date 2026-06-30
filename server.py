@@ -180,8 +180,26 @@ def trigger():
     test_email = request.args.get("email", "")
     threading.Thread(target=run_pipeline, args=(test_email,), daemon=True).start()
     if test_email:
-        return f"Pipeline triggered — test email sending to {test_email}", 200
-    return "Pipeline triggered — sending to full list", 200
+        return f"Pipeline triggered — test email sending to {test_email}. Check Railway logs for progress.", 200
+    return "Pipeline triggered — sending to full list. Check Railway logs for progress.", 200
+
+
+@app.route("/trigger/sync")
+def trigger_sync():
+    """Runs pipeline synchronously and returns full log output — use for debugging only."""
+    import io, logging as _logging
+    test_email = request.args.get("email", "")
+    buf = io.StringIO()
+    handler = _logging.StreamHandler(buf)
+    handler.setLevel(_logging.DEBUG)
+    _logging.getLogger().addHandler(handler)
+    try:
+        run_pipeline(test_email)
+    except Exception as e:
+        buf.write(f"\nFATAL: {e}")
+    finally:
+        _logging.getLogger().removeHandler(handler)
+    return f"<pre>{buf.getvalue()}</pre>", 200
 
 
 # ── Entry point ───────────────────────────────────────────────────────────
