@@ -184,7 +184,7 @@ def trigger():
     return "Pipeline triggered — sending to full list. Check Railway logs for progress.", 200
 
 
-@app.route("/trigger/sync")
+@app.route("/debug")
 def trigger_sync():
     """Runs pipeline synchronously and returns full log output — use for debugging only."""
     import io, logging as _logging
