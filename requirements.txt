@@ -8,3 +8,4 @@ mailchimp-marketing>=3.0.80 # Mailchimp API
 python-dotenv>=1.0.0       # Load .env file
 requests>=2.31.0           # HTTP requests
 flask>=3.0.0               # Web server for ICS endpoint
+gtts>=2.5.0                # Google Text-to-Speech for daily audio brief
