@@ -125,13 +125,63 @@ def audio_today():
 
 # ── Pipeline runner ───────────────────────────────────────────────────────
 
-def run_pipeline():
-    log.info("── Scheduled pipeline starting ──")
+def run_pipeline(test_email: str = ""):
+    log.info("── Pipeline starting ──")
     try:
-        from main import run
-        run()
+        from datetime import datetime, timezone
+        from collector import fetch_all_articles, fetch_stock_prices
+        from claude_processor import process_with_claude
+        from email_builder import build_email_html
+        from audio_generator import generate_audio
+        import os
+
+        today = datetime.now().strftime("%A, %-d %B %Y")
+        articles = fetch_all_articles()
+        if len(articles) < 5:
+            log.error("Too few articles — aborting")
+            return
+        stocks = fetch_stock_prices()
+        numbers_timestamp = datetime.now(timezone.utc).strftime("as of %H:%M UTC")
+        digest = process_with_claude(articles, stocks, today, numbers_timestamp)
+
+        base_url = os.environ.get("ICS_BASE_URL", "").rstrip("/")
+        audio_url = ""
+        if base_url:
+            try:
+                global _audio_cache
+                audio_bytes = generate_audio(digest, today)
+                _audio_cache = audio_bytes
+                try:
+                    with open(_AUDIO_PATH, "wb") as f:
+                        f.write(audio_bytes)
+                except Exception:
+                    pass
+                audio_url = f"{base_url}/audio/today"
+            except Exception as e:
+                log.warning(f"Audio skipped: {e}")
+
+        html = build_email_html(digest, today, audio_url=audio_url)
+
+        if test_email:
+            from mailchimp_sender import send_test_email
+            send_test_email(html, today, test_email)
+            log.info(f"Test email sent to {test_email}")
+        else:
+            from mailchimp_sender import send_via_mailchimp
+            send_via_mailchimp(html, today)
+            log.info("Email sent to full list")
+
     except Exception as e:
         log.error(f"Pipeline failed: {e}", exc_info=True)
+
+
+@app.route("/trigger")
+def trigger():
+    test_email = request.args.get("email", "")
+    threading.Thread(target=run_pipeline, args=(test_email,), daemon=True).start()
+    if test_email:
+        return f"Pipeline triggered — test email sending to {test_email}", 200
+    return "Pipeline triggered — sending to full list", 200
 
 
 # ── Entry point ───────────────────────────────────────────────────────────
