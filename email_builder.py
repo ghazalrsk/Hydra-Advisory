@@ -244,7 +244,7 @@ def _build_audio(audio_url: str, today: str) -> str:
         f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>'
         f'<td style="padding:10px 0;">'
         f'&#9654;&nbsp;'
-        f'<a href="{audio_url}" style="color:{IN};text-decoration:none;font-size:16px;font-weight:400;'
+        f'<a href="{audio_url}" data-mc-no-track="true" style="color:{IN};text-decoration:none;font-size:16px;font-weight:400;'
         f'line-height:1.35;border-bottom:1px solid {G};">{label}</a>'
         f'</td></tr></table>'
     )
@@ -321,11 +321,11 @@ def _build_diary(items: list) -> str:
         event_html = f'<a href="{link}" style="color:inherit;text-decoration:none;">{event}</a>' if link else event
         if cal_links:
             parts = [
-                f'<a href="{cal_links["google"]}" style="color:inherit;text-decoration:underline;">Google</a>',
-                f'<a href="{cal_links["outlook"]}" style="color:inherit;text-decoration:underline;">Outlook</a>',
+                f'<a href="{cal_links["google"]}" data-mc-no-track="true" style="color:inherit;text-decoration:underline;">Google</a>',
+                f'<a href="{cal_links["outlook"]}" data-mc-no-track="true" style="color:inherit;text-decoration:underline;">Outlook</a>',
             ]
             if cal_links.get("apple"):
-                parts.append(f'<a href="{cal_links["apple"]}" style="color:inherit;text-decoration:underline;">Apple</a>')
+                parts.append(f'<a href="{cal_links["apple"]}" data-mc-no-track="true" style="color:inherit;text-decoration:underline;">Apple</a>')
             dates_html = f'{dates}<br>' + ' / '.join(parts)
         else:
             dates_html = dates
