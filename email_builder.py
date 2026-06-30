@@ -243,8 +243,9 @@ def _build_audio(audio_url: str, today: str) -> str:
     row = (
         f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>'
         f'<td style="padding:10px 0;">'
-        f'<a href="{audio_url}" style="color:{IN};text-decoration:none;font-size:16px;font-weight:400;line-height:1.35;">'
-        f'&#9654;&nbsp; {label}</a>'
+        f'&#9654;&nbsp;'
+        f'<a href="{audio_url}" style="color:{IN};text-decoration:none;font-size:16px;font-weight:400;'
+        f'line-height:1.35;border-bottom:1px solid {G};">{label}</a>'
         f'</td></tr></table>'
     )
     return _section("Listen to Today's News", row)
