@@ -75,12 +75,23 @@ def run():
         log.info("Step 4 · Generating audio brief...")
         try:
             audio_bytes = generate_audio(digest, today)
-            resp = http_requests.post(f"{base_url}/store-audio", data=audio_bytes, timeout=30)
-            if resp.status_code == 200:
-                audio_url = f"{base_url}/audio/today"
-                log.info(f"         Audio uploaded → {audio_url}")
-            else:
-                log.warning(f"         Audio upload failed: {resp.status_code}")
+            # Store directly in server module if running inside the combined process,
+            # otherwise fall back to HTTP POST
+            try:
+                import server as _srv
+                _srv._audio_cache = audio_bytes
+                try:
+                    with open(_srv._AUDIO_PATH, "wb") as f:
+                        f.write(audio_bytes)
+                except Exception:
+                    pass
+                log.info("         Audio cached in-process")
+            except ImportError:
+                resp = http_requests.post(f"{base_url}/store-audio", data=audio_bytes, timeout=30)
+                if resp.status_code != 200:
+                    log.warning(f"         Audio upload failed: {resp.status_code}")
+            audio_url = f"{base_url}/audio/today"
+            log.info(f"         Audio ready → {audio_url}")
         except Exception as e:
             log.warning(f"         Audio generation skipped: {e}")
     else:

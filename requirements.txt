@@ -7,5 +7,6 @@ yfinance>=0.2.40           # Stock prices from Yahoo Finance
 mailchimp-marketing>=3.0.80 # Mailchimp API
 python-dotenv>=1.0.0       # Load .env file
 requests>=2.31.0           # HTTP requests
-flask>=3.0.0               # Web server for ICS endpoint
+flask>=3.0.0               # Web server for ICS endpoint and audio hosting
+apscheduler>=3.10.0        # Runs the daily pipeline on schedule inside server.py
 gtts>=2.5.0                # Google Text-to-Speech for daily audio brief

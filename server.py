@@ -1,29 +1,44 @@
 """
-HYDRA SUMMARY — Web Server
----------------------------
-Lightweight Flask server that runs on Railway alongside the cron pipeline.
+HYDRA SUMMARY — Web Server + Scheduler
+----------------------------------------
+Single process that does two things:
 
-Endpoints:
-  GET  /health
-      Simple health check for Railway.
+  1. Runs Flask as a web server (Railway keeps it alive as a web service)
+     Endpoints:
+       GET  /health              — health check for Railway
+       GET  /ics?...             — downloadable .ics for Apple Calendar
+       POST /store-audio         — called internally to cache daily audio
+       GET  /audio/today         — serves today's audio brief
 
-  GET  /ics?event=NAME&start=YYYYMMDD&end=YYYYMMDD&desc=DESCRIPTION
-      Returns a downloadable .ics file so email recipients can add
-      Sector Diary events to Apple Calendar or any other iCal client.
+  2. Runs the Hydra pipeline daily at 06:00 UTC via APScheduler
+     (replaces the Railway cron job — set this service as a web service,
+      not a cron service, with start command: python server.py)
 
-  POST /store-audio
-      Called by the cron pipeline after generating the daily digest.
-      Accepts raw MP3 bytes, caches them for serving.
-
-  GET  /audio/today
-      Serves the latest daily audio brief as an MP3 file.
-
-To deploy: set this as the start command for your Railway web service:
-  python server.py
+Railway setup:
+  - Service type: Web Service
+  - Start command: python server.py
+  - Environment variables: same as before (ANTHROPIC_API_KEY, MAILCHIMP_*, etc.)
 """
 
+import logging
 import os
+import threading
+
+from apscheduler.schedulers.background import BackgroundScheduler
 from flask import Flask, request, Response
+
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s  %(levelname)s  %(message)s",
+    datefmt="%H:%M:%S",
+)
+log = logging.getLogger("hydra-server")
 
 app = Flask(__name__)
 
@@ -32,7 +47,6 @@ _audio_cache: bytes = b""
 
 
 def _load_cached_audio() -> bytes:
-    """Load audio from disk on startup if it exists from a prior run."""
     try:
         with open(_AUDIO_PATH, "rb") as f:
             return f.read()
@@ -40,9 +54,10 @@ def _load_cached_audio() -> bytes:
         return b""
 
 
-# Load on startup so a server restart doesn't lose today's audio
 _audio_cache = _load_cached_audio()
 
+
+# ── Flask endpoints ───────────────────────────────────────────────────────
 
 @app.route("/health")
 def health():
@@ -93,7 +108,7 @@ def store_audio():
         with open(_AUDIO_PATH, "wb") as f:
             f.write(data)
     except Exception:
-        pass  # disk write failure is non-fatal; in-memory cache is sufficient
+        pass
     return "OK", 200
 
 
@@ -108,6 +123,25 @@ def audio_today():
     )
 
 
+# ── Pipeline runner ───────────────────────────────────────────────────────
+
+def run_pipeline():
+    log.info("── Scheduled pipeline starting ──")
+    try:
+        from main import run
+        run()
+    except Exception as e:
+        log.error(f"Pipeline failed: {e}", exc_info=True)
+
+
+# ── Entry point ───────────────────────────────────────────────────────────
+
 if __name__ == "__main__":
+    scheduler = BackgroundScheduler(timezone="UTC")
+    scheduler.add_job(run_pipeline, "cron", hour=6, minute=0)
+    scheduler.start()
+    log.info("Scheduler started — pipeline runs daily at 06:00 UTC")
+
     port = int(os.environ.get("PORT", 8080))
+    log.info(f"Starting Flask on port {port}")
     app.run(host="0.0.0.0", port=port)
