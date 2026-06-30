@@ -9,6 +9,7 @@ in Gmail/Outlook/mobile mail apps, so everything here uses <table>.
 """
 
 import logging
+import os
 import re
 from datetime import datetime, timedelta
 from urllib.parse import quote
@@ -218,16 +219,15 @@ def _calendar_links(event: str, desc: str, dates: str) -> dict:
         f"&subject={quote(event)}&startdt={start.strftime('%Y-%m-%d')}&enddt={gcal_end.strftime('%Y-%m-%d')}"
         f"&body={quote(desc)}&allday=true"
     )
-    ics_content = "\r\n".join([
-        "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Hydra Advisory//Hydra Brief//EN",
-        "BEGIN:VEVENT",
-        f"DTSTART:{start.strftime('%Y%m%d')}",
-        f"DTEND:{gcal_end.strftime('%Y%m%d')}",
-        f"SUMMARY:{event}",
-        f"DESCRIPTION:{desc}",
-        "END:VEVENT", "END:VCALENDAR",
-    ])
-    apple = "data:text/calendar;charset=utf8," + quote(ics_content)
+    base_url = os.environ.get("ICS_BASE_URL", "").rstrip("/")
+    if base_url:
+        apple = (
+            f"{base_url}/ics?event={quote(event)}"
+            f"&start={start.strftime('%Y%m%d')}&end={gcal_end.strftime('%Y%m%d')}"
+            f"&desc={quote(desc)}"
+        )
+    else:
+        apple = None
 
     return {"google": google, "outlook": outlook, "apple": apple}
 
@@ -304,12 +304,13 @@ def _build_diary(items: list) -> str:
 
         event_html = f'<a href="{link}" style="color:inherit;text-decoration:none;">{event}</a>' if link else event
         if cal_links:
-            dates_html = (
-                f'{dates}<br>'
-                f'<a href="{cal_links["google"]}" style="color:inherit;text-decoration:underline;">Google</a> / '
-                f'<a href="{cal_links["outlook"]}" style="color:inherit;text-decoration:underline;">Outlook</a> / '
-                f'<a href="{cal_links["apple"]}" style="color:inherit;text-decoration:underline;">Apple</a>'
-            )
+            parts = [
+                f'<a href="{cal_links["google"]}" style="color:inherit;text-decoration:underline;">Google</a>',
+                f'<a href="{cal_links["outlook"]}" style="color:inherit;text-decoration:underline;">Outlook</a>',
+            ]
+            if cal_links.get("apple"):
+                parts.append(f'<a href="{cal_links["apple"]}" style="color:inherit;text-decoration:underline;">Apple</a>')
+            dates_html = f'{dates}<br>' + ' / '.join(parts)
         else:
             dates_html = dates
 
