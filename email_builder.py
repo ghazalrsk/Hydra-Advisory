@@ -71,6 +71,7 @@ def build_email_html(digest: dict, today: str) -> str:
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="color-scheme" content="light">
 <meta name="supported-color-schemes" content="light">
+<meta name="format-detection" content="telephone=no,date=no,address=no,email=no,url=no">
 <title>Hydra Brief · {today}</title>
 {_RESPONSIVE_STYLE}
 </head>
@@ -354,7 +355,8 @@ def _build_numbers(items: list, timestamp: str) -> str:
             f'</td></tr></table>'
         )
 
-    return _eyebrow("Important Numbers", right_label=_esc(timestamp)) + rows
+    ts_html = f'<span style="color:{CR};text-decoration:none !important;font-style:normal;">{_esc(timestamp)}</span>'
+    return _eyebrow("Important Numbers", right_label=ts_html) + rows
 
 
 def _truncate_words(text: str, max_words: int) -> str:
