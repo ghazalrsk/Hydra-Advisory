@@ -148,12 +148,10 @@ def trigger_sync():
 # ── Entry point ───────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    # Scheduler paused — uncomment below to re-enable daily sends at 06:00 UTC
-    # scheduler = BackgroundScheduler(timezone="UTC")
-    # scheduler.add_job(run_pipeline, "cron", hour=6, minute=0)
-    # scheduler.start()
-    # log.info("Scheduler started — pipeline runs daily at 06:00 UTC")
-    log.info("Scheduler PAUSED — daily sends disabled")
+    scheduler = BackgroundScheduler(timezone="UTC")
+    scheduler.add_job(run_pipeline, "cron", hour=6, minute=0)
+    scheduler.start()
+    log.info("Scheduler started — pipeline runs daily at 06:00 UTC")
 
     port = int(os.environ.get("PORT", 8080))
     log.info(f"Starting Flask on port {port}")
