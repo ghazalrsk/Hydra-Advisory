@@ -162,13 +162,15 @@ def get_zoho_token():
     code = request.args.get("code", "")
     if not code:
         return "Pass ?code=YOUR_CODE", 400
+    client_id = os.environ.get("ZOHO_CLIENT_ID", "NOT_SET")
+    client_secret = os.environ.get("ZOHO_CLIENT_SECRET", "NOT_SET")
     resp = _req.post("https://accounts.zoho.com/oauth/v2/token", params={
         "code":          code,
-        "client_id":     os.environ.get("ZOHO_CLIENT_ID", ""),
-        "client_secret": os.environ.get("ZOHO_CLIENT_SECRET", ""),
+        "client_id":     client_id,
+        "client_secret": client_secret,
         "grant_type":    "authorization_code",
     })
-    return f"<pre>{resp.text}</pre>", 200
+    return f"<pre>client_id={client_id}\nclient_secret={client_secret[:6]}...\n\n{resp.text}</pre>", 200
 
 
 # ── Entry point ───────────────────────────────────────────────────────────
