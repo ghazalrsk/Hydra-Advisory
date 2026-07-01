@@ -105,14 +105,24 @@ def run_pipeline(test_email: str = ""):
         digest = process_with_claude(articles, stocks, today, numbers_timestamp)
         html = build_email_html(digest, today)
 
+        import os as _os
+        provider = _os.environ.get("EMAIL_PROVIDER", "mailchimp").lower()
         if test_email:
-            from mailchimp_sender import send_test_email
-            send_test_email(html, today, test_email)
-            log.info(f"Test email sent to {test_email}")
+            if provider == "zoho":
+                from zoho_sender import send_test_email_zoho
+                send_test_email_zoho(html, today, test_email)
+            else:
+                from mailchimp_sender import send_test_email
+                send_test_email(html, today, test_email)
+            log.info(f"Test email sent to {test_email} via {provider}")
         else:
-            from mailchimp_sender import send_via_mailchimp
-            send_via_mailchimp(html, today)
-            log.info("Email sent to full list")
+            if provider == "zoho":
+                from zoho_sender import send_via_zoho
+                send_via_zoho(html, today)
+            else:
+                from mailchimp_sender import send_via_mailchimp
+                send_via_mailchimp(html, today)
+            log.info(f"Email sent to full list via {provider}")
 
     except Exception as e:
         log.error(f"Pipeline failed: {e}", exc_info=True)

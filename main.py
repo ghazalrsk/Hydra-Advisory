@@ -32,6 +32,14 @@ from collector import fetch_all_articles, fetch_stock_prices
 from claude_processor import process_with_claude
 from email_builder import build_email_html
 from mailchimp_sender import send_via_mailchimp
+from zoho_sender import send_via_zoho
+
+
+def _send(html: str, today: str):
+    provider = os.environ.get("EMAIL_PROVIDER", "mailchimp").lower()
+    if provider == "zoho":
+        return send_via_zoho(html, today)
+    return send_via_mailchimp(html, today)
 
 logging.basicConfig(
     level=logging.INFO,
@@ -70,9 +78,10 @@ def run():
     html = build_email_html(digest, today)
     log.info("         Email HTML built successfully")
 
-    # ── Step 5: Send via Mailchimp ──────────────────────────────────────
-    log.info("Step 5 · Sending via Mailchimp...")
-    result = send_via_mailchimp(html, today)
+    # ── Step 5: Send email ──────────────────────────────────────────────
+    provider = os.environ.get("EMAIL_PROVIDER", "mailchimp")
+    log.info(f"Step 5 · Sending via {provider}...")
+    result = _send(html, today)
     log.info(f"         {result}")
 
     log.info("── Pipeline complete ──")
