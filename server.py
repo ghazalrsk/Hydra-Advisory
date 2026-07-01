@@ -42,20 +42,6 @@ log = logging.getLogger("hydra-server")
 
 app = Flask(__name__)
 
-_AUDIO_PATH = "/tmp/hydra_brief_today.mp3"
-_audio_cache: bytes = b""
-
-
-def _load_cached_audio() -> bytes:
-    try:
-        with open(_AUDIO_PATH, "rb") as f:
-            return f.read()
-    except FileNotFoundError:
-        return b""
-
-
-_audio_cache = _load_cached_audio()
-
 
 # ── Flask endpoints ───────────────────────────────────────────────────────
 
@@ -97,30 +83,6 @@ def ics():
     )
 
 
-@app.route("/store-audio", methods=["POST"])
-def store_audio():
-    global _audio_cache
-    data = request.get_data()
-    if not data:
-        return "No audio data received", 400
-    _audio_cache = data
-    try:
-        with open(_AUDIO_PATH, "wb") as f:
-            f.write(data)
-    except Exception:
-        pass
-    return "OK", 200
-
-
-@app.route("/audio/today")
-def audio_today():
-    if not _audio_cache:
-        return "No audio available yet", 404
-    return Response(
-        _audio_cache,
-        mimetype="audio/mpeg",
-        headers={"Content-Disposition": 'inline; filename="hydra_brief_today.mp3"'},
-    )
 
 
 # ── Pipeline runner ───────────────────────────────────────────────────────
@@ -132,8 +94,6 @@ def run_pipeline(test_email: str = ""):
         from collector import fetch_all_articles, fetch_stock_prices
         from claude_processor import process_with_claude
         from email_builder import build_email_html
-        from audio_generator import generate_audio
-        import os
 
         today = datetime.now().strftime("%A, %-d %B %Y")
         articles = fetch_all_articles()
@@ -143,24 +103,7 @@ def run_pipeline(test_email: str = ""):
         stocks = fetch_stock_prices()
         numbers_timestamp = datetime.now(timezone.utc).strftime("as of %H:%M UTC")
         digest = process_with_claude(articles, stocks, today, numbers_timestamp)
-
-        base_url = os.environ.get("ICS_BASE_URL", "").rstrip("/")
-        audio_url = ""
-        if base_url:
-            try:
-                global _audio_cache
-                audio_bytes = generate_audio(digest, today)
-                _audio_cache = audio_bytes
-                try:
-                    with open(_AUDIO_PATH, "wb") as f:
-                        f.write(audio_bytes)
-                except Exception:
-                    pass
-                audio_url = f"{base_url}/audio/today"
-            except Exception as e:
-                log.warning(f"Audio skipped: {e}")
-
-        html = build_email_html(digest, today, audio_url=audio_url)
+        html = build_email_html(digest, today)
 
         if test_email:
             from mailchimp_sender import send_test_email

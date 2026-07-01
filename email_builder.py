@@ -53,14 +53,13 @@ _RESPONSIVE_STYLE = """<style>
 </style>"""
 
 
-def build_email_html(digest: dict, today: str, audio_url: str = "") -> str:
+def build_email_html(digest: dict, today: str) -> str:
     try:
         dt = datetime.strptime(today, "%A, %d %B %Y")
         short_date = dt.strftime("%a · %-d %b %Y")
     except Exception:
         short_date = today
 
-    audio_html   = _build_audio(audio_url, today)
     lead_html    = _build_lead(digest.get("lead_items", []))
     news_html    = _build_news(digest.get("news", []))
     diary_html   = _build_diary(digest.get("diary", []))
@@ -93,7 +92,6 @@ def build_email_html(digest: dict, today: str, audio_url: str = "") -> str:
     </tr>
   </table>
 
-  {audio_html}
   {lead_html}
   {news_html}
   {diary_html}
@@ -235,20 +233,6 @@ def _calendar_links(event: str, desc: str, dates: str) -> dict:
 
 
 # ── Section builders ──────────────────────────────────────────────────────
-
-def _build_audio(audio_url: str, today: str) -> str:
-    if not audio_url:
-        return ""
-    label = _esc(f"1-Minute News With Hydra · {today}")
-    row = (
-        f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>'
-        f'<td style="padding:10px 0;">'
-        f'&#9654;&nbsp;'
-        f'<a href="{audio_url}" data-mc-no-track="true" style="color:{IN};text-decoration:none;font-size:16px;font-weight:400;'
-        f'line-height:1.35;border-bottom:1px solid {G};">{label}</a>'
-        f'</td></tr></table>'
-    )
-    return _section("Listen to Today's News", row)
 
 def _build_lead(items: list) -> str:
     if not items:
