@@ -166,7 +166,6 @@ def get_zoho_token():
         "code":          code,
         "client_id":     os.environ.get("ZOHO_CLIENT_ID", ""),
         "client_secret": os.environ.get("ZOHO_CLIENT_SECRET", ""),
-        "redirect_uri":  "https://localhost",
         "grant_type":    "authorization_code",
     })
     return f"<pre>{resp.text}</pre>", 200
