@@ -162,7 +162,7 @@ def get_zoho_token():
     code = request.args.get("code", "")
     if not code:
         return "Pass ?code=YOUR_CODE", 400
-    resp = _req.post("https://accounts.zoho.com/oauth/v2/token", params={
+    resp = _req.post("https://accounts.zoho.eu/oauth/v2/token", params={
         "code":          code,
         "client_id":     "1000.G2L6RNFPWWZ3SAOQ1NVG371YVSXHYR",
         "client_secret": "f46ea66cbd0bad984fea294e09e06aec14127fdc85",

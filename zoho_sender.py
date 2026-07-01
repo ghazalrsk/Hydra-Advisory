@@ -24,8 +24,8 @@ import requests
 
 log = logging.getLogger("hydra-summary.zoho")
 
-_TOKEN_URL = "https://accounts.zoho.com/oauth/v2/token"
-_API_BASE  = "https://campaigns.zoho.com/api/v1.1"
+_TOKEN_URL = "https://accounts.zoho.eu/oauth/v2/token"
+_API_BASE  = "https://campaigns.zoho.eu/api/v1.1"
 
 
 def _get_access_token() -> str:
