@@ -164,8 +164,8 @@ def get_zoho_token():
         return "Pass ?code=YOUR_CODE", 400
     resp = _req.post("https://accounts.zoho.eu/oauth/v2/token", params={
         "code":          code,
-        "client_id":     "1000.G2L6RNFPWWZ3SAOQ1NVG371YVSXHYR",
-        "client_secret": "f46ea66cbd0bad984fea294e09e06aec14127fdc85",
+        "client_id":     "1000.ZKN2B8W42JGJ6EMK6OZD2SKAZ5NI5R",
+        "client_secret": "08d1d8d92e6549384529f6a96383285ecd11b68dcd",
         "grant_type":    "authorization_code",
     })
     return f"<pre>{resp.text}</pre>", 200
