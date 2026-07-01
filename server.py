@@ -155,22 +155,6 @@ def trigger_sync():
     return f"<pre>{buf.getvalue()}</pre>", 200
 
 
-@app.route("/get-zoho-token")
-def get_zoho_token():
-    """Temporary: exchange a Zoho auth code for a refresh token."""
-    import requests as _req
-    code = request.args.get("code", "")
-    if not code:
-        return "Pass ?code=YOUR_CODE", 400
-    resp = _req.post("https://accounts.zoho.eu/oauth/v2/token", params={
-        "code":          code,
-        "client_id":     "1000.ZKN2B8W42JGJ6EMK6OZD2SKAZ5NI5R",
-        "client_secret": "08d1d8d92e6549384529f6a96383285ecd11b68dcd",
-        "grant_type":    "authorization_code",
-    })
-    return f"<pre>{resp.text}</pre>", 200
-
-
 # ── Entry point ───────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
