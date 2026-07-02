@@ -50,6 +50,11 @@ def health():
     return "OK", 200
 
 
+@app.route("/env-check")
+def env_check():
+    return f"EMAIL_PROVIDER={os.environ.get('EMAIL_PROVIDER', 'NOT_SET')}\nZOHO_CLIENT_ID={os.environ.get('ZOHO_CLIENT_ID', 'NOT_SET')[:10]}...", 200
+
+
 @app.route("/ics")
 def ics():
     event = request.args.get("event", "Event")
