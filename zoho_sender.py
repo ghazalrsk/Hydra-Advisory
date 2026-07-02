@@ -31,12 +31,15 @@ _API_BASE  = "https://campaigns.zoho.eu/api/v1.1"
 def _get_access_token() -> str:
     resp = requests.post(_TOKEN_URL, params={
         "refresh_token": os.environ["ZOHO_REFRESH_TOKEN"],
-        "client_id":     os.environ["ZOHO_CLIENT_ID"],
-        "client_secret": os.environ["ZOHO_CLIENT_SECRET"],
+        "client_id":     "1000.ZKN2B8W42JGJ6EMK6OZD2SKAZ5NI5R",
+        "client_secret": "08d1d8d92e6549384529f6a96383285ecd11b68dcd",
         "grant_type":    "refresh_token",
     })
     resp.raise_for_status()
-    return resp.json()["access_token"]
+    data = resp.json()
+    if "access_token" not in data:
+        raise ValueError(f"Token refresh failed: {data}")
+    return data["access_token"]
 
 
 def send_via_zoho(html: str, today: str) -> str:
