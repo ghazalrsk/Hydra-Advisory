@@ -38,16 +38,13 @@ def _get_access_token() -> str:
     return data["access_token"]
 
 
-def _api(token: str, scope: str, data: dict) -> str:
-    """Call Zoho Campaigns API v1.1 — returns raw response text."""
+def _api(token: str, action: str, data: dict) -> str:
+    """Call Zoho Campaigns API v1.1 with action as form field."""
     headers = {"Authorization": f"Zoho-oauthtoken {token}"}
-    r = requests.post(
-        _API_BASE,
-        headers=headers,
-        params={"scope": scope, "output_format": "json"},
-        data=data,
-    )
-    log.info(f"  {scope} status={r.status_code} body={r.text[:300]}")
+    payload = {"scope": action, "resfmt": "JSON"}
+    payload.update(data)
+    r = requests.post(_API_BASE, headers=headers, data=payload)
+    log.info(f"  {action} status={r.status_code} body={r.text[:300]}")
     r.raise_for_status()
     return r.text
 
