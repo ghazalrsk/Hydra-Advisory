@@ -1,24 +1,17 @@
 """
 HYDRA SUMMARY — Zoho Campaigns Sender
 ---------------------------------------
-Sends the daily email via Zoho Campaigns API.
+Sends the daily email via Zoho Campaigns API v1.1 (EU region).
 
 Required environment variables:
-  ZOHO_CLIENT_ID       — Zoho OAuth client ID
-  ZOHO_CLIENT_SECRET   — Zoho OAuth client secret
   ZOHO_REFRESH_TOKEN   — Zoho OAuth refresh token
-  ZOHO_LIST_KEY        — Mailing list key (Zoho Campaigns → Lists → Settings)
+  ZOHO_LIST_KEY        — Mailing list key (Zoho Campaigns → Contacts → Lists → Settings)
   ZOHO_FROM_EMAIL      — Sender email (must be verified in Zoho)
   ZOHO_FROM_NAME       — Sender display name (default: "Hydra Advisory")
-
-HOW TO GET THESE:
-  1. Go to https://api-console.zoho.com → Create a Server-based Application
-  2. Scopes: ZohoCampaigns.campaigns.ALL, ZohoCampaigns.lists.ALL
-  3. Generate a refresh token via OAuth flow
-  4. List Key: Zoho Campaigns → Contacts → Lists → click your list → Settings
 """
 
 import os
+import re
 import logging
 import requests
 
@@ -27,12 +20,15 @@ log = logging.getLogger("hydra-summary.zoho")
 _TOKEN_URL = "https://accounts.zoho.eu/oauth/v2/token"
 _API_BASE  = "https://campaigns.zoho.eu/api/v1.1"
 
+_SELF_CLIENT_ID     = "1000.ZKN2B8W42JGJ6EMK6OZD2SKAZ5NI5R"
+_SELF_CLIENT_SECRET = "08d1d8d92e6549384529f6a96383285ecd11b68dcd"
+
 
 def _get_access_token() -> str:
     resp = requests.post(_TOKEN_URL, params={
         "refresh_token": os.environ["ZOHO_REFRESH_TOKEN"],
-        "client_id":     "1000.ZKN2B8W42JGJ6EMK6OZD2SKAZ5NI5R",
-        "client_secret": "08d1d8d92e6549384529f6a96383285ecd11b68dcd",
+        "client_id":     _SELF_CLIENT_ID,
+        "client_secret": _SELF_CLIENT_SECRET,
         "grant_type":    "refresh_token",
     })
     resp.raise_for_status()
@@ -42,6 +38,29 @@ def _get_access_token() -> str:
     return data["access_token"]
 
 
+def _api(token: str, scope: str, data: dict) -> str:
+    """Call Zoho Campaigns API v1.1 — returns raw response text."""
+    headers = {"Authorization": f"Zoho-oauthtoken {token}"}
+    r = requests.post(
+        _API_BASE,
+        headers=headers,
+        params={"scope": scope, "output_format": "json"},
+        data=data,
+    )
+    log.info(f"  {scope} status={r.status_code} body={r.text[:300]}")
+    r.raise_for_status()
+    return r.text
+
+
+def _extract_campaign_key(text: str) -> str:
+    m = re.search(r'"campaignKey"\s*:\s*"([^"]+)"', text)
+    if not m:
+        m = re.search(r"<campaignKey>([^<]+)</campaignKey>", text)
+    if not m:
+        raise ValueError(f"No campaignKey in response: {text[:300]}")
+    return m.group(1)
+
+
 def send_via_zoho(html: str, today: str) -> str:
     token      = _get_access_token()
     list_key   = os.environ["ZOHO_LIST_KEY"]
@@ -49,10 +68,7 @@ def send_via_zoho(html: str, today: str) -> str:
     from_name  = os.environ.get("ZOHO_FROM_NAME",  "Hydra Advisory")
     subject    = f"Hydra Summary · {today}"
 
-    headers = {"Authorization": f"Zoho-oauthtoken {token}"}
-
-    # Step 1: Create campaign
-    r = requests.post(f"{_API_BASE}/createcampaign", headers=headers, data={
+    resp = _api(token, "createcampaign", {
         "campaignName":  f"Hydra Summary {today}",
         "fromName":      from_name,
         "fromEmail":     from_email,
@@ -63,30 +79,20 @@ def send_via_zoho(html: str, today: str) -> str:
         "clickTracking": "true",
         "openTracking":  "true",
     })
-    log.info(f"  createcampaign status={r.status_code} body={r.text[:500]}")
-    r.raise_for_status()
-    import re as _re
-    m = _re.search(r"<campaignKey>([^<]+)</campaignKey>", r.text)
-    if not m:
-        raise ValueError(f"No campaignKey in response: {r.text[:300]}")
-    campaign_key = m.group(1)
+    campaign_key = _extract_campaign_key(resp)
     log.info(f"  Campaign created: {campaign_key}")
 
-    # Step 2: Set HTML content
-    r = requests.post(f"{_API_BASE}/updatecampaigncontent", headers=headers, data={
+    _api(token, "updatecampaigncontent", {
         "campaignKey": campaign_key,
         "htmlBody":    html,
     })
-    r.raise_for_status()
     log.info("  Content set")
 
-    # Step 3: Send
-    r = requests.post(f"{_API_BASE}/sendcampaign", headers=headers, data={
-        "campaignKey":  campaign_key,
-        "sendDate":     "immediate",
-        "timezone":     "Europe/Rome",
+    _api(token, "sendcampaign", {
+        "campaignKey": campaign_key,
+        "sendDate":    "immediate",
+        "timezone":    "Europe/Rome",
     })
-    r.raise_for_status()
     log.info("  Campaign sent")
 
     return f"Zoho campaign '{subject}' sent (key: {campaign_key})"
@@ -99,9 +105,7 @@ def send_test_email_zoho(html: str, today: str, test_email: str) -> str:
     from_name  = os.environ.get("ZOHO_FROM_NAME",  "Hydra Advisory")
     subject    = f"[TEST] Hydra Summary · {today}"
 
-    headers = {"Authorization": f"Zoho-oauthtoken {token}"}
-
-    r = requests.post(f"{_API_BASE}/createcampaign", headers=headers, data={
+    resp = _api(token, "createcampaign", {
         "campaignName":  f"TEST Hydra Summary {today}",
         "fromName":      from_name,
         "fromEmail":     from_email,
@@ -110,24 +114,19 @@ def send_test_email_zoho(html: str, today: str, test_email: str) -> str:
         "campaignType":  "regular",
         "mailListKey":   list_key,
     })
-    log.info(f"  createcampaign status={r.status_code} body={r.text[:500]}")
-    r.raise_for_status()
-    import re as _re
-    m = _re.search(r"<campaignKey>([^<]+)</campaignKey>", r.text)
-    if not m:
-        raise ValueError(f"No campaignKey in response: {r.text[:300]}")
-    campaign_key = m.group(1)
+    campaign_key = _extract_campaign_key(resp)
+    log.info(f"  Test campaign created: {campaign_key}")
 
-    r = requests.post(f"{_API_BASE}/updatecampaigncontent", headers=headers, data={
+    _api(token, "updatecampaigncontent", {
         "campaignKey": campaign_key,
         "htmlBody":    html,
     })
-    r.raise_for_status()
+    log.info("  Content set")
 
-    r = requests.post(f"{_API_BASE}/sendtestmail", headers=headers, data={
+    _api(token, "sendtestmail", {
         "campaignKey": campaign_key,
         "emailIds":    test_email,
     })
-    r.raise_for_status()
+    log.info("  Test email sent")
 
     return f"Zoho test email sent to {test_email} (key: {campaign_key})"
