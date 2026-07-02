@@ -25,7 +25,7 @@ import requests
 log = logging.getLogger("hydra-summary.zoho")
 
 _TOKEN_URL = "https://accounts.zoho.eu/oauth/v2/token"
-_API_BASE  = "https://campaigns.zohoapis.eu/api/v1.1"
+_API_BASE  = "https://campaigns.zoho.eu/api/v1.1"
 
 
 def _get_access_token() -> str:
@@ -58,16 +58,18 @@ def send_via_zoho(html: str, today: str) -> str:
         "fromEmail":     from_email,
         "replyTo":       from_email,
         "subject":       subject,
-        "campaignType":  "autoresponder",
+        "campaignType":  "regular",
         "mailListKey":   list_key,
         "clickTracking": "true",
         "openTracking":  "true",
     })
+    log.info(f"  createcampaign status={r.status_code} body={r.text[:500]}")
     r.raise_for_status()
-    data = r.json()
-    campaign_key = data.get("campaign_key") or data.get("details", {}).get("campaignKey")
-    if not campaign_key:
-        raise ValueError(f"No campaign key in response: {data}")
+    import re as _re
+    m = _re.search(r"<campaignKey>([^<]+)</campaignKey>", r.text)
+    if not m:
+        raise ValueError(f"No campaignKey in response: {r.text[:300]}")
+    campaign_key = m.group(1)
     log.info(f"  Campaign created: {campaign_key}")
 
     # Step 2: Set HTML content
@@ -105,17 +107,16 @@ def send_test_email_zoho(html: str, today: str, test_email: str) -> str:
         "fromEmail":     from_email,
         "replyTo":       from_email,
         "subject":       subject,
-        "campaignType":  "autoresponder",
+        "campaignType":  "regular",
         "mailListKey":   list_key,
     })
     log.info(f"  createcampaign status={r.status_code} body={r.text[:500]}")
     r.raise_for_status()
-    if not r.text:
-        raise ValueError(f"Empty response from createcampaign: status={r.status_code}")
-    data = r.json()
-    campaign_key = data.get("campaign_key") or data.get("details", {}).get("campaignKey")
-    if not campaign_key:
-        raise ValueError(f"No campaign key in response: {data}")
+    import re as _re
+    m = _re.search(r"<campaignKey>([^<]+)</campaignKey>", r.text)
+    if not m:
+        raise ValueError(f"No campaignKey in response: {r.text[:300]}")
+    campaign_key = m.group(1)
 
     r = requests.post(f"{_API_BASE}/updatecampaigncontent", headers=headers, data={
         "campaignKey": campaign_key,
