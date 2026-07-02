@@ -108,7 +108,10 @@ def send_test_email_zoho(html: str, today: str, test_email: str) -> str:
         "campaignType":  "autoresponder",
         "mailListKey":   list_key,
     })
+    log.info(f"  createcampaign status={r.status_code} body={r.text[:500]}")
     r.raise_for_status()
+    if not r.text:
+        raise ValueError(f"Empty response from createcampaign: status={r.status_code}")
     data = r.json()
     campaign_key = data.get("campaign_key") or data.get("details", {}).get("campaignKey")
     if not campaign_key:
