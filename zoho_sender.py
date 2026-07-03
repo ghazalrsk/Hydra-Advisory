@@ -20,15 +20,15 @@ log = logging.getLogger("hydra-summary.zoho")
 _TOKEN_URL = "https://accounts.zoho.eu/oauth/v2/token"
 _API_BASE  = "https://campaigns.zoho.eu/api/v1.1"
 
-_SELF_CLIENT_ID     = "1000.ZKN2B8W42JGJ6EMK6OZD2SKAZ5NI5R"
-_SELF_CLIENT_SECRET = "08d1d8d92e6549384529f6a96383285ecd11b68dcd"
+_CLIENT_ID     = "1000.G2L6RNFPWWZ3SAOQ1NVG371YVSXHYR"
+_CLIENT_SECRET = "f46ea66cbd0bad984fea294e09e06aec14127fdc85"
 
 
 def _get_access_token() -> str:
     resp = requests.post(_TOKEN_URL, params={
         "refresh_token": os.environ["ZOHO_REFRESH_TOKEN"],
-        "client_id":     _SELF_CLIENT_ID,
-        "client_secret": _SELF_CLIENT_SECRET,
+        "client_id":     _CLIENT_ID,
+        "client_secret": _CLIENT_SECRET,
         "grant_type":    "refresh_token",
     })
     resp.raise_for_status()
