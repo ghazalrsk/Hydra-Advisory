@@ -71,7 +71,7 @@ def send_via_zoho(html: str, today: str) -> str:
         "fromEmail":     from_email,
         "replyTo":       from_email,
         "subject":       subject,
-        "campaignType":  "regular",
+        "campaignType":  "newsletter",
         "mailListKey":   list_key,
         "clickTracking": "true",
         "openTracking":  "true",
@@ -108,7 +108,7 @@ def send_test_email_zoho(html: str, today: str, test_email: str) -> str:
         "fromEmail":     from_email,
         "replyTo":       from_email,
         "subject":       subject,
-        "campaignType":  "regular",
+        "campaignType":  "newsletter",
         "mailListKey":   list_key,
     })
     campaign_key = _extract_campaign_key(resp)
