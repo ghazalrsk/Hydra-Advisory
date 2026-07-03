@@ -310,9 +310,9 @@ def _build_diary(items: list) -> str:
             ]
             if cal_links.get("apple"):
                 parts.append(f'<a href="{cal_links["apple"]}" data-mc-no-track="true" style="color:inherit;text-decoration:underline;">Apple</a>')
-            dates_html = f'{dates}<br>' + ' / '.join(parts)
+            dates_html = f'<a href="#" style="color:{B} !important;text-decoration:none !important;pointer-events:none;cursor:default;">{dates}</a><br>' + ' / '.join(parts)
         else:
-            dates_html = dates
+            dates_html = f'<a href="#" style="color:{B} !important;text-decoration:none !important;pointer-events:none;cursor:default;">{dates}</a>'
 
         pad = "0 0 10px" if i == len(sliced) - 1 else "0 0 7px"
         rows += (
@@ -356,7 +356,7 @@ def _build_numbers(items: list, timestamp: str) -> str:
             f'</td></tr></table>'
         )
 
-    ts_html = f'<span style="color:{CR};text-decoration:none !important;font-style:normal;">{_esc(timestamp)}</span>'
+    ts_html = f'<a href="#" style="color:{CR} !important;text-decoration:none !important;font-style:normal;pointer-events:none;cursor:default;">{_esc(timestamp)}</a>'
     return _eyebrow("Important Numbers", right_label=ts_html) + rows
 
 
