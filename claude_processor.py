@@ -210,7 +210,7 @@ RETURN THIS EXACT JSON — no other text:
     {{
       "event": "Event name · City",
       "description": "One-line description.",
-      "dates": "Date range",
+      "dates": "Date range as exact dates only, e.g. '9–15 Jul 2026' or '22 Sep 2026'. Never use vague formats like 'Est. late Jun' — always use specific day and month numbers.",
       "link": "Copy the exact 'link' value for this event from the SECTOR DIARY list above."
     }}
   ]

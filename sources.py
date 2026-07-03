@@ -134,7 +134,7 @@ SECTOR_DIARY = [
     {
         "event": "Bain Luxury Study · Summer Update",
         "description": "Market sizing report",
-        "dates": "Est. late Jun 2026",
+        "dates": "23–30 Jun 2026",
         "link": "https://www.bain.com/insights/topics/luxury-goods-and-fashion/",
     },
     {
