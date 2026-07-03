@@ -40,10 +40,18 @@ def _get_access_token() -> str:
 
 def _api(token: str, action: str, data: dict) -> str:
     """Call Zoho Campaigns API v1.1."""
-    headers = {"Authorization": f"Zoho-oauthtoken {token}"}
+    from urllib.parse import urlencode
+    headers = {
+        "Authorization": f"Zoho-oauthtoken {token}",
+        "Content-Type": "application/x-www-form-urlencoded",
+    }
     payload = {"resfmt": "JSON"}
     payload.update(data)
-    r = requests.post(f"{_API_BASE}/{action}", headers=headers, params={"resfmt": "JSON"}, data=payload)
+    r = requests.post(
+        f"{_API_BASE}/{action}",
+        headers=headers,
+        data=urlencode(payload),
+    )
     log.info(f"  {action} status={r.status_code} body={r.text[:300]}")
     r.raise_for_status()
     return r.text
