@@ -1,11 +1,7 @@
 """
 HYDRA SUMMARY — Email Builder
 -------------------------------
-Builds the HTML email matching the Hydra Brief template, using
-table-based layout so the design (full-width section bars, consistent
-alignment, single-line rows on mobile) renders reliably across email
-clients — flexbox and negative-margin "bleed" tricks are unreliable
-in Gmail/Outlook/mobile mail apps, so everything here uses <table>.
+Clean text-forward layout. Reads like a professional letter at any width.
 """
 
 import logging
@@ -18,45 +14,17 @@ log = logging.getLogger("hydra-summary.builder")
 
 B  = "#3D0C1F"   # burgundy
 G  = "#B8922A"   # gold
-CR = "#F4EFE7"   # cream
-IN = "#1f1f1f"   # ink
-MU = "#7a7a7a"   # muted
-RU = "#e2e2e2"   # rule
-BG = "#f4f2ef"   # background
-D4 = "#4a4a4a"   # dark grey text
-A0 = "#a0a0a0"   # also / dim
+IN = "#1a1a1a"   # ink
+MU = "#777777"   # muted
 GR = "#2f7d4f"   # green (up)
 RD = "#9a3b3b"   # red (down)
-LG = "#f7f6f4"   # light grey row highlight
-JOST = "font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;"
-
-_RESPONSIVE_STYLE = """<style>
-@media screen and (max-width: 480px) {
-  .hdr-title    { font-size:38px !important; }
-  .hdr-date     { font-size:26px !important; }
-  .eyebrow-lbl  { font-size:25px !important; }
-  .eyebrow-rgt  { font-size:21px !important; }
-  .lead-title   { font-size:30px !important; }
-  .lead-suffix  { font-size:26px !important; }
-  .news-title   { font-size:30px !important; }
-  .news-suffix  { font-size:26px !important; }
-  .diary-event  { font-size:30px !important; }
-  .diary-desc   { font-size:27px !important; }
-  .diary-date   { font-size:26px !important; }
-  .numbers-name { font-size:30px !important; }
-  .numbers-tick { font-size:26px !important; }
-  .numbers-px   { font-size:26px !important; }
-  .numbers-ctx  { font-size:27px !important; }
-  .src-link     { font-size:26px !important; }
-  .footer-txt   { font-size:22px !important; }
-}
-</style>"""
+FONT = "font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;"
 
 
 def build_email_html(digest: dict, today: str) -> str:
     try:
         dt = datetime.strptime(today, "%A, %d %B %Y")
-        short_date = dt.strftime("%a · %-d %b %Y")
+        short_date = dt.strftime("%-d %B %Y")
     except Exception:
         short_date = today
 
@@ -74,89 +42,59 @@ def build_email_html(digest: dict, today: str) -> str:
 <meta name="supported-color-schemes" content="light">
 <meta name="format-detection" content="telephone=no,date=no,address=no,email=no,url=no">
 <title>Hydra Brief · {today}</title>
-{_RESPONSIVE_STYLE}
+<style>
+body {{ margin:0; padding:0; background:#f5f5f5; {FONT} }}
+.wrap {{ max-width:600px; margin:0 auto; padding:32px 24px; background:#ffffff; }}
+.hdr-title {{ font-size:22px; font-weight:600; color:{B}; letter-spacing:.08em; text-transform:uppercase; }}
+.hdr-date {{ font-size:13px; color:{MU}; margin-top:2px; }}
+.divider {{ border:none; border-top:2px solid {B}; margin:14px 0 20px; }}
+.section-label {{ font-size:11px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:{B}; margin:28px 0 10px; border-left:3px solid {G}; padding-left:8px; }}
+.item {{ margin:0 0 10px 0; font-size:16px; line-height:1.5; color:{IN}; }}
+.item-src {{ font-size:13px; color:{MU}; }}
+.src-link {{ color:{B}; text-decoration:none; border-bottom:1px solid {G}; }}
+.num-row {{ display:flex; justify-content:space-between; font-size:15px; padding:6px 0; border-bottom:1px solid #eeeeee; color:{IN}; }}
+.num-ticker {{ color:{MU}; font-size:13px; }}
+.cal-link {{ font-size:12px; color:{MU}; text-decoration:none; border-bottom:1px solid #cccccc; }}
+.footer {{ font-size:12px; color:#aaaaaa; margin-top:32px; padding-top:16px; border-top:1px solid #eeeeee; }}
+@media (max-width:600px) {{
+  .wrap {{ padding:20px 16px; }}
+  .hdr-title {{ font-size:20px; }}
+  .item {{ font-size:17px; }}
+}}
+</style>
 </head>
-<body style="margin:0;padding:0;background:{BG};{JOST}color:{IN};font-size:18px;line-height:1.5;">
-{_RESPONSIVE_STYLE}
+<body>
+<div class="wrap">
 
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="{BG}" style="background:{BG};">
-<tr><td align="center" style="padding:20px 12px 44px;">
-
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" align="center" style="max-width:480px;background:#ffffff;">
-<tr><td style="padding:0 0 6px;">
-
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-bottom:2px solid {B};">
-    <tr>
-      <td class="hdr-title" style="padding:16px 20px 15px;font-weight:500;font-size:20px;color:{B};letter-spacing:.1em;text-transform:uppercase;">Hydra Brief</td>
-      <td align="right" class="hdr-date" style="padding:16px 20px 15px;font-size:15px;color:{MU};white-space:nowrap;">{short_date}</td>
-    </tr>
-  </table>
+  <div class="hdr-title">Hydra Brief</div>
+  <div class="hdr-date">{short_date}</div>
+  <hr class="divider">
 
   {lead_html}
   {news_html}
   {diary_html}
   {numbers_html}
 
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-top:1px solid {RU};margin-top:8px;">
-    <tr><td class="footer-txt" style="padding:10px 20px 0;font-size:13px;color:{A0};">
-      <a href="https://hydra-advisory.com" style="color:{MU};">hydra-advisory.com</a> ·
-      <a href="*|UNSUB|*" style="color:{MU};">Unsubscribe</a> · Hydra Advisory
-    </td></tr>
-  </table>
+  <div class="footer">
+    <a href="https://hydra-advisory.com" style="color:#aaaaaa;">hydra-advisory.com</a> &nbsp;·&nbsp;
+    <a href="*|UNSUB|*" style="color:#aaaaaa;">Unsubscribe</a> &nbsp;·&nbsp; Hydra Advisory
+  </div>
 
-</td></tr>
-</table>
-
-</td></tr>
-</table>
-
+</div>
 </body>
 </html>"""
 
 
 # ── Helpers ───────────────────────────────────────────────────────────────
 
-def _eyebrow(label: str, right_label: str = "") -> str:
-    if right_label:
-        inner = (
-            f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>'
-            f'<td class="eyebrow-lbl" style="font-size:14px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:{CR} !important;">{label}</td>'
-            f'<td align="right" class="eyebrow-rgt" style="font-size:12px;font-weight:400;letter-spacing:.05em;text-transform:none;color:{CR} !important;background:{B} !important;white-space:nowrap;">{right_label}</td>'
-            f'</tr></table>'
-        )
-    else:
-        inner = label
-    return (
-        f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">'
-        f'<tr><td class="eyebrow-lbl" style="background:{B};padding:6px 20px;font-size:14px;font-weight:500;'
-        f'letter-spacing:.16em;text-transform:uppercase;color:{CR} !important;">{inner}</td></tr></table>'
-    )
-
-
-def _section(label: str, rows_html: str, right_label: str = "", side_padding: int = 20) -> str:
-    return (
-        _eyebrow(label, right_label)
-        + f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">'
-        f'<tr><td style="padding:8px {side_padding}px 0;">{rows_html}</td></tr></table>'
-    )
-
-
-def _row_table(inner: str) -> str:
-    return f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td>{inner}</td></tr></table>'
-
-
 def _source_link(text: str, href: str) -> str:
-    return (
-        f'<a href="{href}" class="src-link" style="font-size:14px;color:{B};'
-        f'text-decoration:none;border-bottom:1px solid {G};white-space:nowrap;">{text}</a>'
-    )
+    return f'<a href="{href}" class="src-link">{text}</a>'
 
 
 def _also_slash(names: list) -> str:
     if not names:
         return ""
-    joined = "/".join(_esc(s) for s in names[:3])
-    return f'/{joined}'
+    return "/" + "/".join(_esc(s) for s in names[:3])
 
 
 _MONTHS = {
@@ -166,11 +104,8 @@ _MONTHS = {
 
 
 def _parse_diary_dates(dates: str):
-    """Best-effort parse of a free-text diary date range into (start, end) dates.
-    Returns None if the format isn't recognised (e.g. "Est. late Jun 2026")."""
     s = dates.strip().replace("–", "-").replace("—", "-")
 
-    # "D[-D] Mon YYYY" e.g. "17-22 Jun 2026"
     m = re.match(r"^(\d{1,2})(?:\s*-\s*(\d{1,2}))?\s+([A-Za-z]{3,})\s+(\d{4})$", s)
     if m:
         d1, d2, mon, year = m.groups()
@@ -184,7 +119,6 @@ def _parse_diary_dates(dates: str):
         except ValueError:
             return None
 
-    # "D Mon - D Mon, YYYY" e.g. "25 Sep - 3 Oct 2026"
     m = re.match(r"^(\d{1,2})\s+([A-Za-z]{3,})\s*-\s*(\d{1,2})\s+([A-Za-z]{3,}),?\s+(\d{4})$", s)
     if m:
         d1, mon1, d2, mon2, year = m.groups()
@@ -207,7 +141,7 @@ def _calendar_links(event: str, desc: str, dates: str) -> dict:
     if not parsed:
         return {}
     start, end = parsed
-    gcal_end = end + timedelta(days=1)  # all-day end date is exclusive for Google/Outlook
+    gcal_end = end + timedelta(days=1)
 
     google = (
         "https://calendar.google.com/calendar/render?action=TEMPLATE"
@@ -220,14 +154,11 @@ def _calendar_links(event: str, desc: str, dates: str) -> dict:
         f"&body={quote(desc)}&allday=true"
     )
     base_url = os.environ.get("ICS_BASE_URL", "").rstrip("/")
-    if base_url:
-        apple = (
-            f"{base_url}/ics?event={quote(event)}"
-            f"&start={start.strftime('%Y%m%d')}&end={gcal_end.strftime('%Y%m%d')}"
-            f"&desc={quote(desc)}"
-        )
-    else:
-        apple = None
+    apple = (
+        f"{base_url}/ics?event={quote(event)}"
+        f"&start={start.strftime('%Y%m%d')}&end={gcal_end.strftime('%Y%m%d')}"
+        f"&desc={quote(desc)}"
+    ) if base_url else None
 
     return {"google": google, "outlook": outlook, "apple": apple}
 
@@ -237,127 +168,97 @@ def _calendar_links(event: str, desc: str, dates: str) -> dict:
 def _build_lead(items: list) -> str:
     if not items:
         return ""
-    rows = ""
-    sliced = items[:3]
-    for i, item in enumerate(sliced):
-        text    = _esc(_truncate_words(item.get("text", ""), 6))
+    html = '<div class="section-label">What You Should Know Today</div>'
+    for item in items[:3]:
+        text    = _esc(_truncate_words(item.get("text", ""), 8))
         link    = item.get("link", "")
         primary = _esc(item.get("primary_source", ""))
         also    = item.get("also", [])
 
-        title_html = f'<a href="{link}" style="color:{IN};text-decoration:none;">{text}</a>' if link else text
-        src_html = (_source_link(primary, link) if link else primary) if primary else ""
-        also_html = _also_slash(also) if also else ""
-        suffix = f' <span class="lead-suffix" style="font-size:14px;font-weight:400;color:{MU};">{src_html}{also_html}</span>' if src_html else ""
+        title_html = f'<a href="{link}" style="color:{IN};text-decoration:none;font-weight:500;">{text}</a>' if link else f'<strong>{text}</strong>'
+        src = (_source_link(primary, link) if link else primary) if primary else ""
+        also_html = f'<span style="color:{MU};">{_also_slash(also)}</span>' if also else ""
+        src_line = f'<div class="item-src">{src}{also_html}</div>' if src else ""
 
-        pad = "0 0 10px" if i == len(sliced) - 1 else "0 0 7px"
-        rows += _row_table(
-            f'<div class="lead-title" style="padding:{pad};font-size:16px;font-weight:400;line-height:1.35;color:{IN};'
-            f'white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'
-            f'&bull;&nbsp; {title_html}{suffix}</div>'
-        )
-    return _section("What You Should Know Today", rows)
+        html += f'<div class="item">&bull;&nbsp;{title_html}{src_line}</div>'
+    return html
 
 
 def _build_news(items: list) -> str:
     if not items:
         return ""
-    rows = ""
-    sliced = items[:10]
-    n = len(sliced)
-    for i, item in enumerate(sliced):
-        headline = _esc(_truncate_words(item.get("headline", ""), 8))
+    html = '<div class="section-label">News</div>'
+    for item in items[:10]:
+        headline = _esc(_truncate_words(item.get("headline", ""), 10))
         link     = item.get("link", "")
         primary  = _esc(item.get("primary_source", ""))
         also     = item.get("also", [])
 
         title_html = f'<a href="{link}" style="color:{IN};text-decoration:none;">{headline}</a>' if link else headline
-        src = _source_link(primary, link) if link else primary
-        also_html = _also_slash(also) if also else ""
-        src_html = f' <span class="news-suffix" style="font-size:14px;font-weight:400;color:{MU};">{src}{also_html}</span>' if src else ""
-        bg = f'background:{LG};' if i % 2 == 0 else ""
-        pad_top = "10px" if i == 0 else "8px"
-        pad_bottom = "12px" if i == n - 1 else "8px"
+        src = (_source_link(primary, link) if link else primary) if primary else ""
+        also_html = f'<span style="color:{MU};">{_also_slash(also)}</span>' if also else ""
+        src_line = f'<div class="item-src">{src}{also_html}</div>' if src else ""
 
-        rows += (
-            f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">'
-            f'<tr><td style="{bg}padding:{pad_top} 20px {pad_bottom};">'
-            f'<div class="news-title" style="font-size:16px;font-weight:400;line-height:1.35;color:{IN};'
-            f'white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'
-            f'&bull;&nbsp; {title_html}{src_html}</div>'
-            f'</td></tr></table>'
-        )
-    return _eyebrow("News") + rows
+        html += f'<div class="item">&bull;&nbsp;{title_html}{src_line}</div>'
+    return html
 
 
 def _build_diary(items: list) -> str:
     if not items:
         return ""
-    rows = ""
-    sliced = items[:4]
-    for i, item in enumerate(sliced):
+    html = '<div class="section-label">Sector Diary</div>'
+    for item in items[:4]:
         event = _esc(item.get("event", ""))
         desc  = _esc(item.get("description", ""))
         dates = _esc(item.get("dates", ""))
         link  = item.get("link", "")
-        cal_links = _calendar_links(item.get("event", ""), item.get("description", ""), item.get("dates", ""))
+        cal   = _calendar_links(item.get("event", ""), item.get("description", ""), item.get("dates", ""))
 
-        event_html = f'<a href="{link}" style="color:inherit;text-decoration:none;">{event}</a>' if link else event
-        if cal_links:
-            parts = [
-                f'<a href="{cal_links["google"]}" data-mc-no-track="true" style="color:inherit;text-decoration:underline;">Google</a>',
-                f'<a href="{cal_links["outlook"]}" data-mc-no-track="true" style="color:inherit;text-decoration:underline;">Outlook</a>',
-            ]
-            if cal_links.get("apple"):
-                parts.append(f'<a href="{cal_links["apple"]}" data-mc-no-track="true" style="color:inherit;text-decoration:underline;">Apple</a>')
-            dates_html = f'<a href="#" style="color:{B} !important;text-decoration:none !important;pointer-events:none;cursor:default;">{dates}</a><br>' + ' / '.join(parts)
-        else:
-            dates_html = f'<a href="#" style="color:{B} !important;text-decoration:none !important;pointer-events:none;cursor:default;">{dates}</a>'
+        event_html = f'<a href="{link}" style="color:{IN};text-decoration:none;font-weight:500;">{event}</a>' if link else f'<strong>{event}</strong>'
 
-        pad = "0 0 10px" if i == len(sliced) - 1 else "0 0 7px"
-        rows += (
-            f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>'
-            f'<td class="diary-event" style="padding:{pad};font-size:16px;line-height:1.35;">'
-            f'<div style="font-weight:500;">{event_html}</div>'
-            f'<div class="diary-desc" style="color:{MU};font-size:15px;">{desc}</div>'
-            f'</td>'
-            f'<td align="right" valign="top" class="diary-date" style="padding:{pad};font-size:14px;color:{B};white-space:nowrap;">{dates_html}</td>'
-            f'</tr></table>'
+        cal_parts = []
+        if cal.get("google"):
+            cal_parts.append(f'<a href="{cal["google"]}" data-mc-no-track="true" class="cal-link">Google</a>')
+        if cal.get("outlook"):
+            cal_parts.append(f'<a href="{cal["outlook"]}" data-mc-no-track="true" class="cal-link">Outlook</a>')
+        if cal.get("apple"):
+            cal_parts.append(f'<a href="{cal["apple"]}" data-mc-no-track="true" class="cal-link">Apple</a>')
+        cal_html = f' &nbsp;<span style="font-size:12px;color:{MU};">{" / ".join(cal_parts)}</span>' if cal_parts else ""
+
+        html += (
+            f'<div class="item">'
+            f'{event_html}'
+            f'<div class="item-src">{desc}</div>'
+            f'<div class="item-src"><a href="#" style="color:{MU};text-decoration:none;pointer-events:none;cursor:default;">{dates}</a>{cal_html}</div>'
+            f'</div>'
         )
-    return _section("Sector Diary", rows)
+    return html
 
 
 def _build_numbers(items: list, timestamp: str) -> str:
     if not items:
         return ""
-    sliced = items[:6]
-    rows = ""
-    n = len(sliced)
-    for i, item in enumerate(sliced):
+    ts = f'<a href="#" style="color:{MU};text-decoration:none;pointer-events:none;cursor:default;font-size:12px;">{_esc(timestamp)}</a>'
+    html = f'<div class="section-label">Important Numbers &nbsp;<span style="font-size:11px;font-weight:400;letter-spacing:0;text-transform:none;color:{MU};">{ts}</span></div>'
+    for item in items[:6]:
         name      = _esc(item.get("name", ""))
         ticker    = _esc(item.get("ticker", ""))
         price     = _esc(item.get("price", ""))
         change    = _esc(item.get("change", ""))
         direction = item.get("direction", "flat")
-        context   = _esc(_truncate_words(item.get("context", ""), 5))
+        context   = _esc(_truncate_words(item.get("context", ""), 6))
         colour    = GR if direction == "up" else (RD if direction == "down" else MU)
-        bg = f'background:{LG};' if i % 2 == 0 else ""
-        pad_top = "10px" if i == 0 else "8px"
-        pad_bottom = "12px" if i == n - 1 else "8px"
 
-        rows += (
-            f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">'
-            f'<tr><td style="{bg}padding:{pad_top} 20px {pad_bottom};">'
+        html += (
+            f'<div style="padding:7px 0;border-bottom:1px solid #eeeeee;">'
             f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>'
-            f'<td class="numbers-name" style="font-size:16px;font-weight:400;color:{IN};">{name} <span class="numbers-tick" style="color:{MU};font-size:14px;font-weight:400;">&middot; {ticker}</span></td>'
-            f'<td align="right" class="numbers-px" style="font-size:14px;color:{B};white-space:nowrap;font-weight:400;">{price} <span style="color:{colour};">{change}</span></td>'
+            f'<td style="font-size:15px;color:{IN};">{name} <span class="num-ticker">&middot; {ticker}</span></td>'
+            f'<td align="right" style="font-size:15px;color:{IN};white-space:nowrap;">{price} <span style="color:{colour};font-size:13px;">{change}</span></td>'
             f'</tr></table>'
-            f'<div class="numbers-ctx" style="font-size:15px;color:{MU};line-height:1.3;margin-top:2px;">{context}</div>'
-            f'</td></tr></table>'
+            f'<div style="font-size:12px;color:{MU};margin-top:2px;">{context}</div>'
+            f'</div>'
         )
-
-    ts_html = f'<a href="#" style="color:{CR} !important;text-decoration:none !important;font-style:normal;pointer-events:none;cursor:default;">{_esc(timestamp)}</a>'
-    return _eyebrow("Important Numbers", right_label=ts_html) + rows
+    return html
 
 
 def _truncate_words(text: str, max_words: int) -> str:
