@@ -31,7 +31,7 @@ LG = "#f7f6f4"   # light grey row highlight
 JOST = "font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;"
 
 _RESPONSIVE_STYLE = """<style>
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 480px) {
   .hdr-title    { font-size:38px !important; }
   .hdr-date     { font-size:26px !important; }
   .eyebrow-lbl  { font-size:25px !important; }
@@ -82,7 +82,7 @@ def build_email_html(digest: dict, today: str) -> str:
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="{BG}" style="background:{BG};">
 <tr><td align="center" style="padding:20px 12px 44px;">
 
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" align="center" style="max-width:600px;background:#ffffff;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" align="center" style="max-width:480px;background:#ffffff;">
 <tr><td style="padding:0 0 6px;">
 
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-bottom:2px solid {B};">
