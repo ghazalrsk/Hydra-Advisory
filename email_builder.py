@@ -93,16 +93,56 @@ body {{ margin:0; padding:0; background:#f5f5f5; {FONT} }}
 
 # ── Helpers ───────────────────────────────────────────────────────────────
 
+_SOURCE_ABBR = {
+    "business of fashion": "BoF",
+    "bof": "BoF",
+    "wwd": "WWD",
+    "vogue business": "VB",
+    "pambianco news": "PAMB",
+    "pambianco": "PAMB",
+    "mff — moda finanza fashion": "MFF",
+    "mffashion": "MFF",
+    "il sole 24 ore - moda": "Il Sole",
+    "il sole 24 ore": "Il Sole",
+    "reuters": "Reuters",
+    "financial times — luxury": "FT",
+    "financial times": "FT",
+    "south china morning post": "SCMP",
+    "nikkei asia": "Nikkei",
+    "fashion network": "FashNet",
+    "luxury society": "LuxSoc",
+    "lvmh newsroom": "LVMH",
+    "kering press": "Kering",
+    "richemont news": "Richemont",
+    "brand announcement": "Brand",
+}
+
+def _abbr(name: str) -> str:
+    return _SOURCE_ABBR.get(name.lower(), name)
+
+
 def _source_link(text: str, href: str) -> str:
-    return f'<a href="{href}" class="src-link">{text}</a>'
+    return f'<a href="{href}" class="src-link">{_abbr(text)}</a>'
 
 
 def _inline_src(primary: str, link: str, also: list) -> str:
     if not primary:
         return ""
-    src = f'<a href="{link}" class="src-link">{primary}</a>' if link else primary
-    also_part = "/" + "/".join(_esc(s) for s in also[:3]) if also else ""
-    return f'&nbsp;<span class="item-src" style="display:inline;">{src}{also_part}</span>'
+    src = f'<a href="{link}" class="src-link">{_abbr(primary)}</a>' if link else f'<span class="item-src">{_abbr(primary)}</span>'
+    also_part = "/" + "/".join(_abbr(_esc(s)) for s in also[:2]) if also else ""
+    return f'<span class="item-src" style="white-space:nowrap;padding-left:5px;">{src}{also_part}</span>'
+
+
+def _one_line_item(title_html: str, src_html: str) -> str:
+    return (
+        f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 10px 0;">'
+        f'<tr>'
+        f'<td style="font-size:17px;line-height:1.5;color:{IN};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:1px;width:100%;">'
+        f'&bull;&nbsp;{title_html}'
+        f'</td>'
+        f'<td style="white-space:nowrap;padding-left:6px;vertical-align:middle;">{src_html}</td>'
+        f'</tr></table>'
+    )
 
 
 def _also_slash(names: list) -> str:
@@ -192,7 +232,7 @@ def _build_lead(items: list) -> str:
         title_html = f'<a href="{link}" style="color:{IN};text-decoration:none;font-weight:500;">{text}</a>' if link else f'<strong>{text}</strong>'
         src_html = _inline_src(primary, link, also)
 
-        html += f'<div class="item">&bull;&nbsp;{title_html}{src_html}</div>'
+        html += _one_line_item(title_html, src_html)
     html += f'<hr class="divider">'
     return html
 
@@ -210,7 +250,7 @@ def _build_news(items: list) -> str:
         title_html = f'<a href="{link}" style="color:{IN};text-decoration:none;">{headline}</a>' if link else headline
         src_html = _inline_src(primary, link, also)
 
-        html += f'<div class="item">&bull;&nbsp;{title_html}{src_html}</div>'
+        html += _one_line_item(title_html, src_html)
     html += f'<hr class="divider">'
     return html
 
