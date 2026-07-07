@@ -105,6 +105,16 @@ INCLUDE ONLY WITH EXPLICIT BUSINESS ANGLE:
 - Sustainability initiatives — only if they include specific metrics or regulatory deadlines
 - Consumer trend reports — only from Bain, McKinsey, Altagamma, BCG
 
+INDUSTRY PRIORITY — apply this before anything else:
+Hydra Brief serves a luxury advisory boutique. The digest must stay within the luxury, high-end fashion, and premium goods industry first. Fill all available slots with stories from this universe before considering anything outside it.
+
+Priority order for story selection:
+  1. Luxury, fashion, high-end goods — always first. Stories about the brand universe, luxury M&A, luxury retail, luxury market data, watches, jewellery, leather goods, couture, premium beauty.
+  2. Broader financial/macro news — only if it has a direct, explicit luxury demand implication (e.g. China tariffs, consumer confidence in key luxury markets, currency moves affecting luxury pricing). Must pass the test: "would a luxury executive care about this specifically?"
+  3. Everything else — reject.
+
+If after filling all slots with luxury-industry stories there are still remaining slots and no more qualifying luxury stories, only then consider adjacent macro/financial stories with a direct luxury link.
+
 ALWAYS REJECT:
 - Celebrity wearing a brand (unless it is a new ambassador deal)
 - Street style coverage of any kind
@@ -118,6 +128,7 @@ ALWAYS REJECT:
 - Brand content or advertorial disguised as editorial
 - Sports sponsorships unless a new major strategic deal
 - General tech or finance news with no luxury link
+- Geopolitical or defence news (missile tests, military deals, nuclear policy) — reject entirely unless there is an explicit, named luxury market impact
 
 ════════════════════════════════════════
 SECTION C — DEDUPLICATION

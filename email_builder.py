@@ -87,7 +87,8 @@ body {{ margin:0; padding:0; background:#f5f5f5; {FONT} }}
   <div class="footer" style="text-align:center;">
     Hydra Brief is a curated summary of important industry news of the day.<br>
     Provided by <a href="https://hydra-advisory.com" style="color:#aaaaaa;">Hydra Advisory</a>.<br>
-    <a href="*|UNSUB|*" style="color:#aaaaaa;">Unsubscribe</a>
+    <span style="font-size:11px;color:#cccccc;">This digest is for informational purposes only and does not constitute financial, investment, or legal advice.</span><br><br>
+    <a href="*|UNSUB|*" style="color:#aaaaaa;">Unsubscribe</a> &nbsp;·&nbsp; Via Cerva 1, Milan, 20122
   </div>
 
 </div>
