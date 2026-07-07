@@ -285,8 +285,8 @@ def _build_numbers(items: list, timestamp: str) -> str:
     if not items:
         return ""
     ts_label = f'<a href="#" style="color:{MU};text-decoration:none;pointer-events:none;cursor:default;">{_esc(timestamp)} · vs. previous day close</a>'
-    ts_span = f'<span style="font-size:12px;font-weight:400;letter-spacing:0;text-transform:none;color:{MU};">{ts_label}</span>'
-    html = f'<div class="section-label">Important Numbers &nbsp;{ts_span}</div>'
+    ts_span = f'<div style="font-size:12px;font-weight:400;letter-spacing:0;text-transform:none;color:{MU};margin:-4px 0 10px 0;">{ts_label}</div>'
+    html = f'<div class="section-label">Important Numbers</div>{ts_span}'
     for item in items[:6]:
         name      = _esc(item.get("name", ""))
         ticker    = _esc(item.get("ticker", ""))

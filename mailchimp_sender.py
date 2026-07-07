@@ -18,10 +18,18 @@ HOW TO FIND THESE:
 
 import os
 import logging
+from datetime import datetime
 import mailchimp_marketing as MailchimpMarketing
 from mailchimp_marketing.api_client import ApiClientError
 
 log = logging.getLogger("hydra-summary.mailchimp")
+
+
+def _short_date(today: str) -> str:
+    try:
+        return datetime.strptime(today, "%A, %-d %B %Y").strftime("%-d %b %Y")
+    except Exception:
+        return today
 
 
 def send_via_mailchimp(html: str, today: str) -> str:
@@ -37,7 +45,7 @@ def send_via_mailchimp(html: str, today: str) -> str:
     from_name  = os.environ.get("MAILCHIMP_FROM_NAME",  "Hydra Advisory")
     from_email = os.environ.get("MAILCHIMP_FROM_EMAIL", "info@hydra-advisory.com")
 
-    subject = f"Hydra Summary · {today}"
+    subject = f"Hydra Brief · {_short_date(today)}"
 
     client = MailchimpMarketing.Client()
     client.set_config({
@@ -56,7 +64,7 @@ def send_via_mailchimp(html: str, today: str) -> str:
                 "subject_line":  subject,
                 "from_name":     from_name,
                 "reply_to":      from_email,
-                "title":         f"Hydra Summary {today}",
+                "title":         f"Hydra Brief {_short_date(today)}",
             },
         })
 
@@ -98,7 +106,7 @@ def send_test_email(html: str, today: str, test_email: str) -> str:
     client = MailchimpMarketing.Client()
     client.set_config({"api_key": api_key, "server": server})
 
-    subject = f"[TEST] Hydra Summary · {today}"
+    subject = f"Hydra Brief · {_short_date(today)}"
 
     try:
         campaign = client.campaigns.create({
@@ -108,7 +116,7 @@ def send_test_email(html: str, today: str, test_email: str) -> str:
                 "subject_line": subject,
                 "from_name":    from_name,
                 "reply_to":     from_email,
-                "title":        f"TEST Hydra Summary {today}",
+                "title":        f"Hydra Brief {_short_date(today)}",
             },
         })
 
