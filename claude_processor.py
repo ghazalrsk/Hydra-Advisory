@@ -156,15 +156,14 @@ If you cannot find a reason in the articles, write a brief 5-word-max factual no
 SECTION F — WRITING RULES
 ════════════════════════════════════════
 
-Lead items: MAXIMUM 5 words, HARD LIMIT — never exceed this. The headline fact only, no elaboration, no subordinate clauses.
-  CORRECT: "Gucci names new creative director"
-  WRONG: "Gucci creative director search enters final round"
-If the full story does not fit in 5 words, REWRITE and SUMMARISE it down to the core fact — never produce a longer phrase that would need to be cut off. The result must always read as a complete thought, never a sentence trailing into nothing.
-
-News headlines: MAXIMUM 7 words, HARD LIMIT — never exceed this, must fit on one line on a mobile screen — the headline alone must convey the whole point of the story.
-  CORRECT: "Richemont names single CEO for watches"
-  WRONG: "Richemont names a single CEO to oversee all specialist watchmaking divisions"
-If the full story does not fit in 7 words, REWRITE and SUMMARISE it down to the core fact — never produce a longer phrase that would need to be cut off. The result must always read as a complete thought, never a sentence trailing into nothing.
+Lead items and news headlines: MAXIMUM 5 words, ABSOLUTE HARD LIMIT.
+The source abbreviation (e.g. "BoF", "PAMB") appears after the headline on the same line — so the headline must leave room for it. Write as if the total line budget is 6 tokens: 5 for the headline, 1 for the source.
+No ellipsis, no truncation — you must write a complete thought in 5 words or fewer.
+  CORRECT: "Gucci names new creative director"  (5 words — complete)
+  CORRECT: "Richemont appoints new CEO"  (4 words — complete)
+  WRONG: "Gucci creative director search enters final round"  (7 words — too long)
+  WRONG: "Richemont names a single CEO to oversee watches"  (9 words — too long)
+Summarise ruthlessly. Drop articles (a, an, the). Use brand abbreviations where natural (LVMH, not "Louis Vuitton Moët Hennessy"). The result must always read as a complete, standalone thought.
 
 Return exactly 10 news items (after lead_items are excluded, per SECTION C).
 

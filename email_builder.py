@@ -213,7 +213,7 @@ def _build_lead(items: list) -> str:
         return ""
     html = '<div class="section-label">What You Should Know Today</div>'
     for item in items[:3]:
-        text    = _esc(_truncate_words(item.get("text", ""), 6))
+        text    = _esc(_truncate_words(item.get("text", ""), 5))
         link    = item.get("link", "")
         primary = _esc(item.get("primary_source", ""))
         also    = item.get("also", [])
@@ -231,7 +231,7 @@ def _build_news(items: list) -> str:
         return ""
     html = '<div class="section-label">News</div>'
     for item in items[:10]:
-        headline = _esc(_truncate_words(item.get("headline", ""), 7))
+        headline = _esc(_truncate_words(item.get("headline", ""), 5))
         link     = item.get("link", "")
         primary  = _esc(item.get("primary_source", ""))
         also     = item.get("also", [])
@@ -307,7 +307,7 @@ def _truncate_words(text: str, max_words: int) -> str:
     words = str(text).split()
     if len(words) <= max_words:
         return str(text)
-    return " ".join(words[:max_words]).rstrip(".,;:") + "…"
+    return " ".join(words[:max_words]).rstrip(".,;:")
 
 
 def _esc(text: str) -> str:
