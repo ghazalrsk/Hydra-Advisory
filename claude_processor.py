@@ -156,8 +156,8 @@ If you cannot find a reason in the articles, write a brief 5-word-max factual no
 SECTION F — WRITING RULES
 ════════════════════════════════════════
 
-Lead items and news headlines: MAXIMUM 32 CHARACTERS, ABSOLUTE HARD LIMIT — count every letter, space, and punctuation mark.
-The source abbreviation (e.g. "BoF", "PAMB", "WWD") appears after the headline on the same line on a narrow mobile screen. The headline must fit in 32 characters so the whole line stays on one row.
+Lead items and news headlines: MAXIMUM 40 CHARACTERS, ABSOLUTE HARD LIMIT — count every letter, space, and punctuation mark.
+The source abbreviation (e.g. "BoF", "PAMB", "WWD") appears after the headline on the same line on a narrow mobile screen. The headline must fit in 40 characters so the whole line stays on one row.
 No ellipsis, no truncation — you must write a complete thought within 32 characters.
   CORRECT: "Gucci names new creative director"  (32 chars ✓)
   CORRECT: "Richemont appoints new CEO"  (26 chars ✓)

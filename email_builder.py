@@ -61,8 +61,8 @@ body {{ margin:0; padding:0; background:#f5f5f5; {FONT} }}
   .hdr-title {{ font-size:18px; }}
   .hdr-date {{ font-size:12px; }}
   .section-label {{ font-size:11px; margin:20px 0 8px; }}
-  .item {{ font-size:15px; line-height:1.45; }}
-  .item-src {{ font-size:12px; }}
+  .item {{ font-size:13px; line-height:1.45; }}
+  .item-src {{ font-size:11px; }}
   .num-row {{ font-size:14px; }}
   .num-ticker {{ font-size:12px; }}
   .footer {{ font-size:12px; }}
@@ -213,7 +213,7 @@ def _build_lead(items: list) -> str:
         return ""
     html = '<div class="section-label">What You Should Know Today</div>'
     for item in items[:3]:
-        text    = _esc(_truncate_chars(item.get("text", ""), 32))
+        text    = _esc(_truncate_chars(item.get("text", ""), 40))
         link    = item.get("link", "")
         primary = _esc(item.get("primary_source", ""))
         also    = item.get("also", [])
@@ -231,7 +231,7 @@ def _build_news(items: list) -> str:
         return ""
     html = '<div class="section-label">News</div>'
     for item in items[:10]:
-        headline = _esc(_truncate_chars(item.get("headline", ""), 32))
+        headline = _esc(_truncate_chars(item.get("headline", ""), 40))
         link     = item.get("link", "")
         primary  = _esc(item.get("primary_source", ""))
         also     = item.get("also", [])
