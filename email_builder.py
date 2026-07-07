@@ -187,6 +187,7 @@ def _build_lead(items: list) -> str:
         src_line = f'<div class="item-src">{src}{also_html}</div>' if src else ""
 
         html += f'<div class="item">&bull;&nbsp;{title_html}{src_line}</div>'
+    html += f'<hr class="divider">'
     return html
 
 
@@ -206,6 +207,7 @@ def _build_news(items: list) -> str:
         src_line = f'<div class="item-src">{src}{also_html}</div>' if src else ""
 
         html += f'<div class="item">&bull;&nbsp;{title_html}{src_line}</div>'
+    html += f'<hr class="divider">'
     return html
 
 
@@ -238,6 +240,7 @@ def _build_diary(items: list) -> str:
             f'<div class="item-src"><a href="#" style="color:{MU};text-decoration:none;pointer-events:none;cursor:default;">{dates}</a>{cal_html}</div>'
             f'</div>'
         )
+    html += f'<hr class="divider">'
     return html
 
 
