@@ -133,17 +133,6 @@ def _inline_src(primary: str, link: str, also: list) -> str:
     return f'<span class="item-src" style="white-space:nowrap;padding-left:5px;">{src}{also_part}</span>'
 
 
-def _one_line_item(title_html: str, src_html: str) -> str:
-    return (
-        f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 10px 0;">'
-        f'<tr>'
-        f'<td style="font-size:17px;line-height:1.5;color:{IN};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:1px;width:100%;">'
-        f'&bull;&nbsp;{title_html}'
-        f'</td>'
-        f'<td style="white-space:nowrap;padding-left:6px;vertical-align:middle;">{src_html}</td>'
-        f'</tr></table>'
-    )
-
 
 def _also_slash(names: list) -> str:
     if not names:
@@ -224,7 +213,7 @@ def _build_lead(items: list) -> str:
         return ""
     html = '<div class="section-label">What You Should Know Today</div>'
     for item in items[:3]:
-        text    = _esc(_truncate_words(item.get("text", ""), 8))
+        text    = _esc(_truncate_words(item.get("text", ""), 6))
         link    = item.get("link", "")
         primary = _esc(item.get("primary_source", ""))
         also    = item.get("also", [])
@@ -232,7 +221,7 @@ def _build_lead(items: list) -> str:
         title_html = f'<a href="{link}" style="color:{IN};text-decoration:none;font-weight:500;">{text}</a>' if link else f'<strong>{text}</strong>'
         src_html = _inline_src(primary, link, also)
 
-        html += _one_line_item(title_html, src_html)
+        html += f'<div class="item">&bull;&nbsp;{title_html}{src_html}</div>'
     html += f'<hr class="divider">'
     return html
 
@@ -242,7 +231,7 @@ def _build_news(items: list) -> str:
         return ""
     html = '<div class="section-label">News</div>'
     for item in items[:10]:
-        headline = _esc(_truncate_words(item.get("headline", ""), 10))
+        headline = _esc(_truncate_words(item.get("headline", ""), 7))
         link     = item.get("link", "")
         primary  = _esc(item.get("primary_source", ""))
         also     = item.get("also", [])
@@ -250,7 +239,7 @@ def _build_news(items: list) -> str:
         title_html = f'<a href="{link}" style="color:{IN};text-decoration:none;">{headline}</a>' if link else headline
         src_html = _inline_src(primary, link, also)
 
-        html += _one_line_item(title_html, src_html)
+        html += f'<div class="item">&bull;&nbsp;{title_html}{src_html}</div>'
     html += f'<hr class="divider">'
     return html
 
