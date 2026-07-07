@@ -86,9 +86,9 @@ body {{ margin:0; padding:0; background:#f5f5f5; {FONT} }}
 
   <div class="footer" style="text-align:center;">
     Hydra Brief is a curated summary of important industry news of the day.<br>
-    Provided by <a href="https://hydra-advisory.com" style="color:#aaaaaa;">Hydra Advisory</a>.<br>
-    <span style="font-size:11px;color:#cccccc;">This digest is for informational purposes only and does not constitute financial, investment, or legal advice.</span><br><br>
-    <a href="*|UNSUB|*" style="color:#aaaaaa;">Unsubscribe</a> &nbsp;·&nbsp; Via Cerva 1, Milan, 20122
+    Provided by <a href="https://hydra-advisory.com" style="color:#aaaaaa;">Hydra Advisory</a>.<br><br>
+    <a href="*|UNSUB|*" style="color:#aaaaaa;">Unsubscribe</a> &nbsp;·&nbsp; Via Cerva 1, Milan, 20122<br>
+    <span style="font-size:11px;color:#cccccc;">This digest is for informational purposes only and does not constitute financial, investment, or legal advice.</span>
   </div>
 
 </div>
@@ -286,7 +286,7 @@ def _build_numbers(items: list, timestamp: str) -> str:
     if not items:
         return ""
     ts_label = f'<a href="#" style="color:{MU};text-decoration:none;pointer-events:none;cursor:default;">{_esc(timestamp)} · vs. previous day close</a>'
-    ts_span = f'<div style="font-size:12px;font-weight:400;letter-spacing:0;text-transform:none;color:{MU};margin:-4px 0 10px 0;">{ts_label}</div>'
+    ts_span = f'<div style="font-size:12px;font-weight:400;letter-spacing:0;text-transform:none;color:{MU};margin:-4px 0 18px 0;">{ts_label}</div>'
     html = f'<div class="section-label">Important Numbers</div>{ts_span}'
     for item in items[:6]:
         name      = _esc(item.get("name", ""))
