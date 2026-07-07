@@ -50,7 +50,7 @@ body {{ margin:0; padding:0; background:#f5f5f5; {FONT} }}
 .divider {{ border:none; border-top:2px solid {B}; margin:14px 0 20px; }}
 .divider-thin {{ border:none; border-top:1px solid rgba(61,12,31,0.25); margin:14px 0 20px; }}
 .section-label {{ font-size:12px; font-weight:800; letter-spacing:.18em; text-transform:uppercase; color:{B}; margin:28px 0 10px; padding-left:0; }}
-.item {{ margin:0 0 7px 0; font-size:17px; line-height:1.5; color:{IN}; }}
+.item {{ margin:0 0 3px 0; font-size:17px; line-height:1.5; color:{IN}; }}
 .item-src {{ font-size:14px; color:{MU}; }}
 .src-link {{ color:{MU}; text-decoration:none; border-bottom:1px solid #cccccc; }}
 .num-row {{ display:flex; justify-content:space-between; font-size:16px; padding:6px 0; border-bottom:1px solid #eeeeee; color:{IN}; }}
