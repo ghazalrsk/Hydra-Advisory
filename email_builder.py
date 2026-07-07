@@ -45,27 +45,27 @@ def build_email_html(digest: dict, today: str) -> str:
 <style>
 body {{ margin:0; padding:0; background:#f5f5f5; {FONT} }}
 .wrap {{ max-width:600px; margin:0 auto; padding:32px 24px; background:#ffffff; }}
-.hdr-title {{ font-size:22px; font-weight:600; color:{B}; letter-spacing:.08em; text-transform:uppercase; }}
-.hdr-date {{ font-size:13px; color:{MU}; margin-top:2px; }}
+.hdr-title {{ font-size:24px; font-weight:600; color:{B}; letter-spacing:.08em; text-transform:uppercase; }}
+.hdr-date {{ font-size:14px; color:{MU}; margin-top:2px; }}
 .divider {{ border:none; border-top:2px solid {B}; margin:14px 0 20px; }}
-.section-label {{ font-size:11px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:{B}; margin:28px 0 10px; border-left:3px solid {G}; padding-left:8px; }}
-.item {{ margin:0 0 10px 0; font-size:16px; line-height:1.5; color:{IN}; }}
-.item-src {{ font-size:13px; color:{MU}; }}
+.section-label {{ font-size:12px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:{B}; margin:28px 0 10px; border-left:3px solid {G}; padding-left:8px; }}
+.item {{ margin:0 0 10px 0; font-size:17px; line-height:1.5; color:{IN}; }}
+.item-src {{ font-size:14px; color:{MU}; }}
 .src-link {{ color:{B}; text-decoration:none; border-bottom:1px solid {G}; }}
-.num-row {{ display:flex; justify-content:space-between; font-size:15px; padding:6px 0; border-bottom:1px solid #eeeeee; color:{IN}; }}
-.num-ticker {{ color:{MU}; font-size:13px; }}
-.cal-link {{ font-size:12px; color:{MU}; text-decoration:none; border-bottom:1px solid #cccccc; }}
-.footer {{ font-size:12px; color:#aaaaaa; margin-top:32px; padding-top:16px; border-top:1px solid #eeeeee; }}
+.num-row {{ display:flex; justify-content:space-between; font-size:16px; padding:6px 0; border-bottom:1px solid #eeeeee; color:{IN}; }}
+.num-ticker {{ color:{MU}; font-size:14px; }}
+.cal-link {{ font-size:13px; color:{MU}; text-decoration:none; border-bottom:1px solid #cccccc; }}
+.footer {{ font-size:13px; color:#aaaaaa; margin-top:32px; padding-top:16px; border-top:1px solid #eeeeee; }}
 @media (max-width:600px) {{
   .wrap {{ padding:20px 16px; }}
-  .hdr-title {{ font-size:16px; }}
-  .hdr-date {{ font-size:11px; }}
-  .section-label {{ font-size:10px; margin:20px 0 8px; }}
-  .item {{ font-size:13px; line-height:1.45; }}
-  .item-src {{ font-size:11px; }}
-  .num-row {{ font-size:13px; }}
-  .num-ticker {{ font-size:11px; }}
-  .footer {{ font-size:11px; }}
+  .hdr-title {{ font-size:18px; }}
+  .hdr-date {{ font-size:12px; }}
+  .section-label {{ font-size:11px; margin:20px 0 8px; }}
+  .item {{ font-size:15px; line-height:1.45; }}
+  .item-src {{ font-size:12px; }}
+  .num-row {{ font-size:14px; }}
+  .num-ticker {{ font-size:12px; }}
+  .footer {{ font-size:12px; }}
 }}
 </style>
 </head>
