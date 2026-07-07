@@ -115,15 +115,33 @@ def run_pipeline(test_email: str = ""):
         from collector import fetch_all_articles, fetch_stock_prices
         from claude_processor import process_with_claude
         from email_builder import build_email_html
+        from story_memory import load_memory, save_memory, filter_seen, mark_published
 
-        today = datetime.now().strftime("%A, %-d %B %Y")
-        articles = fetch_all_articles()
-        if len(articles) < 5:
-            log.error("Too few articles — aborting")
+        now = datetime.now(timezone.utc)
+        weekday = now.weekday()  # 0=Mon, 5=Sat, 6=Sun
+
+        # Skip weekends for scheduled runs (test emails always go through)
+        if not test_email and weekday in (5, 6):
+            log.info(f"Weekend ({now.strftime('%A')}) — pipeline skipped")
             return
+
+        is_monday = (weekday == 0)
+        today = now.strftime("%A, %-d %B %Y")
+
+        # Load 7-day story memory and fetch articles
+        memory = load_memory()
+        articles = fetch_all_articles(is_monday=is_monday)
+
+        # Filter out stories already covered in recent editions
+        articles = filter_seen(articles, memory)
+
+        if len(articles) < 5:
+            log.error("Too few articles after memory filter — aborting")
+            return
+
         stocks = fetch_stock_prices()
-        numbers_timestamp = datetime.now(timezone.utc).strftime("as of %H:%M UTC")
-        digest = process_with_claude(articles, stocks, today, numbers_timestamp)
+        numbers_timestamp = now.strftime("as of %H:%M UTC")
+        digest = process_with_claude(articles, stocks, today, numbers_timestamp, is_monday=is_monday)
         html = build_email_html(digest, today)
 
         import os as _os
@@ -144,6 +162,10 @@ def run_pipeline(test_email: str = ""):
                 from mailchimp_sender import send_via_mailchimp
                 send_via_mailchimp(html, today)
             log.info(f"Email sent to full list via {provider}")
+
+        # Update memory with today's published stories
+        memory = mark_published(digest, memory)
+        save_memory(memory)
 
     except Exception as e:
         log.error(f"Pipeline failed: {e}", exc_info=True)
@@ -180,9 +202,9 @@ def trigger_sync():
 
 if __name__ == "__main__":
     scheduler = BackgroundScheduler(timezone="UTC")
-    scheduler.add_job(run_pipeline, "cron", hour=6, minute=0)
+    scheduler.add_job(run_pipeline, "cron", day_of_week="mon-fri", hour=6, minute=0)
     scheduler.start()
-    log.info("Scheduler started — pipeline runs daily at 06:00 UTC")
+    log.info("Scheduler started — pipeline runs Mon–Fri at 06:00 UTC")
 
     port = int(os.environ.get("PORT", 8080))
     log.info(f"Starting Flask on port {port}")

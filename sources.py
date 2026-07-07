@@ -2,89 +2,106 @@
 HYDRA SUMMARY — Sources
 ------------------------
 Define every source here. The collector reads this file.
+
+Source tiers control attribution in the digest:
+  Tier 1 — Wire/financial press: always the primary attribution
+  Tier 2 — Trade press: primary only when Tier 1 has not covered the story
+  Tier 3 — Context/brand sources: "also" attribution only, never primary
 """
 
 NEWS_SOURCES = [
-    # ── Tier 1: English-language trade ──────────────────────────────────
-    {
-        "name": "Business of Fashion",
-        "rss": "https://www.businessoffashion.com/feed/",
-        "section": "news",
-    },
-    {
-        "name": "WWD",
-        "rss": "https://wwd.com/feed/",
-        "section": "news",
-    },
-    {
-        "name": "Vogue Business",
-        "rss": "https://www.voguebusiness.com/feed",
-        "section": "news",
-    },
-    # ── Italian market ───────────────────────────────────────────────────
-    {
-        "name": "Pambianco News",
-        "rss": "https://www.pambianconews.com/feed/",
-        "section": "news",
-    },
-    {
-        "name": "MFF — Moda Finanza Fashion",
-        "rss": "https://www.mffashion.com/rss",
-        "section": "news",
-    },
-    {
-        "name": "Il Sole 24 Ore - Moda",
-        "rss": "https://www.ilsole24ore.com/rss/moda.xml",
-        "section": "news",
-    },
-    # ── Financial wire / broad market ────────────────────────────────────
+    # ── Tier 1: Wire / financial press — always primary attribution ───────
     {
         "name": "Reuters",
         "rss": "https://feeds.reuters.com/reuters/businessNews",
         "section": "news",
+        "tier": 1,
     },
     {
         "name": "Financial Times — Luxury",
         "rss": "https://www.ft.com/luxury/rss",
         "section": "news",
+        "tier": 1,
     },
-    # ── Asia signals ─────────────────────────────────────────────────────
+    {
+        "name": "Il Sole 24 Ore - Moda",
+        "rss": "https://www.ilsole24ore.com/rss/moda.xml",
+        "section": "news",
+        "tier": 1,
+    },
+    # ── Tier 2: Trade press — primary when Tier 1 absent ─────────────────
+    {
+        "name": "Business of Fashion",
+        "rss": "https://www.businessoffashion.com/feed/",
+        "section": "news",
+        "tier": 2,
+    },
+    {
+        "name": "WWD",
+        "rss": "https://wwd.com/feed/",
+        "section": "news",
+        "tier": 2,
+    },
+    {
+        "name": "Pambianco News",
+        "rss": "https://www.pambianconews.com/feed/",
+        "section": "news",
+        "tier": 2,
+    },
+    {
+        "name": "MFF — Moda Finanza Fashion",
+        "rss": "https://www.mffashion.com/rss",
+        "section": "news",
+        "tier": 2,
+    },
     {
         "name": "South China Morning Post",
         "rss": "https://www.scmp.com/rss/91/feed",
         "section": "news",
+        "tier": 2,
     },
     {
         "name": "Nikkei Asia",
         "rss": "https://asia.nikkei.com/rss/feed/nar",
         "section": "news",
+        "tier": 2,
     },
-    # ── European trade ───────────────────────────────────────────────────
+    # ── Tier 3: Context only — "also" attribution, never primary ─────────
+    {
+        "name": "Vogue Business",
+        "rss": "https://www.voguebusiness.com/feed",
+        "section": "news",
+        "tier": 3,
+    },
     {
         "name": "Fashion Network",
         "rss": "https://us.fashionnetwork.com/rss/news.xml",
         "section": "news",
+        "tier": 3,
     },
     {
         "name": "Luxury Society",
         "rss": "https://luxurysociety.com/en/articles/feed",
         "section": "news",
+        "tier": 3,
     },
-    # ── Group newsrooms ──────────────────────────────────────────────────
     {
         "name": "LVMH Newsroom",
         "rss": "https://www.lvmh.com/news-documents/news/feed/",
         "section": "news",
+        "tier": 3,
     },
     {
         "name": "Kering Press",
         "rss": "https://www.kering.com/en/news/rss/",
         "section": "news",
+        "tier": 3,
     },
     {
         "name": "Richemont News",
         "rss": "https://www.richemont.com/media/press-releases/rss/",
         "section": "news",
+        "tier": 3,
     },
 ]
 

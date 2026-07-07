@@ -15,9 +15,9 @@ from sources import SECTOR_DIARY
 log = logging.getLogger("hydra-summary.claude")
 
 
-def process_with_claude(articles: list[dict], stocks: list[dict], today: str, numbers_timestamp: str = "") -> dict:
+def process_with_claude(articles: list[dict], stocks: list[dict], today: str, numbers_timestamp: str = "", is_monday: bool = False) -> dict:
     client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
-    prompt = _build_prompt(articles, stocks, today)
+    prompt = _build_prompt(articles, stocks, today, is_monday)
     log.info(f"  Sending {len(articles)} articles to Claude...")
     message = client.messages.create(
         model="claude-opus-4-5",
@@ -30,35 +30,55 @@ def process_with_claude(articles: list[dict], stocks: list[dict], today: str, nu
     return result
 
 
-def _build_prompt(articles: list[dict], stocks: list[dict], today: str) -> str:
+def _build_prompt(articles: list[dict], stocks: list[dict], today: str, is_monday: bool = False) -> str:
     articles_text = json.dumps(articles, ensure_ascii=False, indent=2)
     stocks_text   = json.dumps(stocks,   ensure_ascii=False, indent=2)
     diary_text    = json.dumps(SECTOR_DIARY, ensure_ascii=False, indent=2)
+
+    monday_note = """
+════════════════════════════════════════
+MONDAY EDITION — SPECIAL RULES
+════════════════════════════════════════
+
+Today is Monday. The article pool covers the last 72 hours (Friday evening through Sunday).
+"What You Should Know Today" MUST feature only stories that broke on Saturday or Sunday.
+Do NOT surface any story that would have appeared in Friday's edition.
+Friday holdovers — stories published before Saturday 00:00 — must be excluded from lead_items entirely.
+News items may include Friday stories only if they represent a genuinely new development (e.g. a follow-up, a confirmation, or new data published over the weekend on a Friday story).
+""" if is_monday else ""
 
     return f"""You are the editor of Hydra Brief, a daily intelligence digest for luxury industry professionals — executives, investors, analysts, and M&A advisors at the senior level.
 
 Today's date: {today}
 
 Return a single JSON object. No prose, no explanation, no markdown fences. Raw JSON only.
+{monday_note}
 
 ════════════════════════════════════════
-SECTION A — SOURCE PRIORITY
+SECTION A — SOURCE TIERS & ATTRIBUTION
 ════════════════════════════════════════
 
-When multiple sources cover the same story, choose the primary source in this order:
-1. Reuters / Bloomberg / Financial Times — for financial, earnings, M&A, tariff news
-2. Business of Fashion — for creative direction, brand strategy, CD appointments
-3. Pambianco / MFF — for Italian market news (use if they broke it first)
-4. WWD — for US market, retail, wholesale trade news
-5. Vogue Business — for digital, sustainability, consumer strategy
-6. If the source that broke the story first is identifiable, always use that one regardless of tier
+Every article in the pool carries a "tier" field. Attribution rules are strict:
+
+TIER 1 — Reuters, Financial Times, Il Sole 24 Ore
+  → Always the primary_source, regardless of who broke the story first.
+  → If a Tier 1 source covered it, it is the primary. No exceptions.
+
+TIER 2 — Business of Fashion, WWD, Pambianco, MFF, SCMP, Nikkei Asia
+  → Primary only when NO Tier 1 source covers the same story.
+  → Among Tier 2 sources covering the same story, prefer BoF for brand/creative news,
+    WWD for US/retail news, Pambianco/MFF for Italian-only stories, SCMP/Nikkei for Asia.
+
+TIER 3 — Vogue Business, Fashion Network, Luxury Society, brand newsrooms (LVMH, Kering, Richemont)
+  → NEVER the primary_source. Place in "also" list only.
+  → Brand newsrooms: include in "also" only if no editorial source covered the story,
+    and label as "Brand announcement" in that edge case only.
 
 Attribution format in output:
-  primary_source: "BoF"
-  also: ["WWD", "Pambianco"]
-Maximum 3 sources in the "also" list.
-This attribution is required for BOTH "lead_items" and "news" — every item in either array must carry primary_source (and also, if applicable).
-Brand press releases: use only if no editorial coverage exists. Label as "Brand announcement".
+  primary_source: "Reuters"
+  also: ["BoF", "WWD"]
+Maximum 2 sources in the "also" list. Tier 3 sources may appear in "also" but count toward the limit.
+This attribution is required for BOTH "lead_items" and "news" — every item must carry primary_source.
 
 ════════════════════════════════════════
 SECTION B — STORY SELECTION
