@@ -25,7 +25,7 @@ import os
 import threading
 
 from apscheduler.schedulers.background import BackgroundScheduler
-from flask import Flask, request, Response
+from flask import Flask, request, Response, send_file, jsonify
 
 try:
     from dotenv import load_dotenv
@@ -44,6 +44,39 @@ app = Flask(__name__)
 
 
 # ── Flask endpoints ───────────────────────────────────────────────────────
+
+@app.route("/")
+def index():
+    return send_file(os.path.join(os.path.dirname(__file__), "landing.html"))
+
+
+@app.route("/subscribe", methods=["POST"])
+def subscribe():
+    data = request.get_json(silent=True) or {}
+    email = data.get("email", "").strip()
+    if not email:
+        return jsonify({"ok": False, "message": "Email required"}), 400
+    try:
+        import mailchimp_marketing as MailchimpMarketing
+        from mailchimp_marketing.api_client import ApiClientError
+        client = MailchimpMarketing.Client()
+        client.set_config({
+            "api_key": os.environ["MAILCHIMP_API_KEY"],
+            "server":  os.environ["MAILCHIMP_SERVER"],
+        })
+        client.lists.add_list_member(os.environ["MAILCHIMP_LIST_ID"], {
+            "email_address": email,
+            "status": "subscribed",
+        })
+        log.info(f"New subscriber: {email}")
+        return jsonify({"ok": True})
+    except Exception as e:
+        err = str(getattr(e, "text", e))
+        if "already a list member" in err.lower():
+            return jsonify({"ok": True})
+        log.error(f"Subscribe error for {email}: {err}")
+        return jsonify({"ok": False, "message": "Could not subscribe"}), 500
+
 
 @app.route("/health")
 def health():
