@@ -63,8 +63,8 @@ body {{ margin:0; padding:0; background:#f5f5f5; {FONT} }}
   .section-label {{ font-size:11px; margin:20px 0 8px; }}
   .item {{ font-size:13px; line-height:1.45; }}
   .item-src {{ font-size:11px; }}
-  .num-row {{ font-size:14px; }}
-  .num-ticker {{ font-size:12px; }}
+  .num-row {{ font-size:13px; }}
+  .num-ticker {{ font-size:11px; }}
   .footer {{ font-size:12px; }}
 }}
 </style>
@@ -294,8 +294,8 @@ def _build_numbers(items: list, timestamp: str) -> str:
         html += (
             f'<div style="padding:7px 0;border-bottom:1px solid #eeeeee;">'
             f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>'
-            f'<td style="font-size:15px;color:{IN};">{name} <span class="num-ticker">&middot; {ticker}</span></td>'
-            f'<td align="right" style="font-size:15px;color:{IN};white-space:nowrap;">{price} <span style="color:{colour};font-size:13px;">{change}</span></td>'
+            f'<td style="font-size:17px;color:{IN};">{name} <span class="num-ticker">&middot; {ticker}</span></td>'
+            f'<td align="right" style="font-size:17px;color:{IN};white-space:nowrap;">{price} <span style="color:{colour};font-size:14px;">{change}</span></td>'
             f'</tr></table>'
             f'<div style="font-size:12px;color:{MU};margin-top:2px;">{context}</div>'
             f'</div>'
