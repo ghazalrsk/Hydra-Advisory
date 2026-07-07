@@ -140,7 +140,7 @@ def run_pipeline(test_email: str = ""):
             return
 
         stocks = fetch_stock_prices()
-        numbers_timestamp = now.strftime("as of %H:%M UTC")
+        numbers_timestamp = now.strftime("%-d %b %Y · as of %H:%M UTC")
         digest = process_with_claude(articles, stocks, today, numbers_timestamp, is_monday=is_monday)
         html = build_email_html(digest, today)
 

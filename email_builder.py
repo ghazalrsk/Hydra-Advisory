@@ -48,8 +48,9 @@ body {{ margin:0; padding:0; background:#f5f5f5; {FONT} }}
 .hdr-title {{ font-size:24px; font-weight:600; color:{B}; letter-spacing:.08em; text-transform:uppercase; }}
 .hdr-date {{ font-size:14px; color:{MU}; margin-top:2px; }}
 .divider {{ border:none; border-top:2px solid {B}; margin:14px 0 20px; }}
-.section-label {{ font-size:12px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:{B}; margin:28px 0 10px; border-left:3px solid {G}; padding-left:8px; }}
-.item {{ margin:0 0 10px 0; font-size:17px; line-height:1.5; color:{IN}; }}
+.divider-thin {{ border:none; border-top:1px solid rgba(61,12,31,0.25); margin:14px 0 20px; }}
+.section-label {{ font-size:12px; font-weight:800; letter-spacing:.18em; text-transform:uppercase; color:{B}; margin:28px 0 10px; padding-left:0; }}
+.item {{ margin:0 0 7px 0; font-size:17px; line-height:1.5; color:{IN}; }}
 .item-src {{ font-size:14px; color:{MU}; }}
 .src-link {{ color:{MU}; text-decoration:none; border-bottom:1px solid #cccccc; }}
 .num-row {{ display:flex; justify-content:space-between; font-size:16px; padding:6px 0; border-bottom:1px solid #eeeeee; color:{IN}; }}
@@ -81,9 +82,9 @@ body {{ margin:0; padding:0; background:#f5f5f5; {FONT} }}
   {diary_html}
   {numbers_html}
 
-  <div class="footer">
-    <a href="https://hydra-advisory.com" style="color:#aaaaaa;">hydra-advisory.com</a> &nbsp;·&nbsp;
-    <a href="*|UNSUB|*" style="color:#aaaaaa;">Unsubscribe</a> &nbsp;·&nbsp; Hydra Advisory
+  <div class="footer" style="text-align:center;">
+    Hydra Brief is a curated summary of important industry news of the day, provided by <a href="https://hydra-advisory.com" style="color:#aaaaaa;">Hydra Advisory</a>.<br>
+    <a href="*|UNSUB|*" style="color:#aaaaaa;">Unsubscribe</a>
   </div>
 
 </div>
@@ -222,7 +223,7 @@ def _build_lead(items: list) -> str:
         src_html = _inline_src(primary, link, also)
 
         html += f'<div class="item">&bull;&nbsp;{title_html}{src_html}</div>'
-    html += f'<hr class="divider">'
+    html += f'<hr class="divider-thin">'
     return html
 
 
@@ -240,7 +241,7 @@ def _build_news(items: list) -> str:
         src_html = _inline_src(primary, link, also)
 
         html += f'<div class="item">&bull;&nbsp;{title_html}{src_html}</div>'
-    html += f'<hr class="divider">'
+    html += f'<hr class="divider-thin">'
     return html
 
 
@@ -273,15 +274,16 @@ def _build_diary(items: list) -> str:
             f'<div class="item-src"><a href="#" style="color:{MU};text-decoration:none;pointer-events:none;cursor:default;">{dates}</a>{cal_html}</div>'
             f'</div>'
         )
-    html += f'<hr class="divider">'
+    html += f'<hr class="divider-thin">'
     return html
 
 
 def _build_numbers(items: list, timestamp: str) -> str:
     if not items:
         return ""
-    ts = f'<a href="#" style="color:{MU};text-decoration:none;pointer-events:none;cursor:default;font-size:12px;">{_esc(timestamp)}</a>'
-    html = f'<div class="section-label">Important Numbers &nbsp;<span style="font-size:11px;font-weight:400;letter-spacing:0;text-transform:none;color:{MU};">{ts}</span></div>'
+    ts_label = f'<a href="#" style="color:{MU};text-decoration:none;pointer-events:none;cursor:default;">{_esc(timestamp)} · vs. previous day close</a>'
+    ts_span = f'<span style="font-size:12px;font-weight:400;letter-spacing:0;text-transform:none;color:{MU};">{ts_label}</span>'
+    html = f'<div class="section-label">Important Numbers &nbsp;{ts_span}</div>'
     for item in items[:6]:
         name      = _esc(item.get("name", ""))
         ticker    = _esc(item.get("ticker", ""))
