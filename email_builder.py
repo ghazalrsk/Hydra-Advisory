@@ -236,7 +236,7 @@ def _build_news(items: list) -> str:
         primary  = _esc(item.get("primary_source", ""))
         also     = item.get("also", [])
 
-        title_html = f'<a href="{link}" style="color:{IN};text-decoration:none;">{headline}</a>' if link else headline
+        title_html = f'<a href="{link}" style="color:{IN};text-decoration:none;font-weight:500;">{headline}</a>' if link else f'<span style="font-weight:500;">{headline}</span>'
         src_html = _inline_src(primary, link, also)
 
         html += f'<div class="item">&bull;&nbsp;{title_html}{src_html}</div>'
