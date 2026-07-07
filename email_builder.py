@@ -85,7 +85,8 @@ body {{ margin:0; padding:0; background:#f5f5f5; {FONT} }}
   {numbers_html}
 
   <div class="footer" style="text-align:center;">
-    Hydra Brief is a curated summary of important industry news of the day, provided by <a href="https://hydra-advisory.com" style="color:#aaaaaa;">Hydra Advisory</a>.<br>
+    Hydra Brief is a curated summary of important industry news of the day.<br>
+    Provided by <a href="https://hydra-advisory.com" style="color:#aaaaaa;">Hydra Advisory</a>.<br>
     <a href="*|UNSUB|*" style="color:#aaaaaa;">Unsubscribe</a>
   </div>
 
