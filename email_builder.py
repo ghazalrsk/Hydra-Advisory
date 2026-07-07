@@ -218,7 +218,7 @@ def _build_lead(items: list) -> str:
         primary = _esc(item.get("primary_source", ""))
         also    = item.get("also", [])
 
-        title_html = f'<a href="{link}" style="color:{IN};text-decoration:none;font-weight:500;">{text}</a>' if link else f'<strong>{text}</strong>'
+        title_html = f'<a href="{link}" style="color:{IN};text-decoration:none;">{text}</a>' if link else text
         src_html = _inline_src(primary, link, also)
 
         html += f'<div class="item">&bull;&nbsp;{title_html}{src_html}</div>'
@@ -236,7 +236,7 @@ def _build_news(items: list) -> str:
         primary  = _esc(item.get("primary_source", ""))
         also     = item.get("also", [])
 
-        title_html = f'<a href="{link}" style="color:{IN};text-decoration:none;font-weight:500;">{headline}</a>' if link else f'<span style="font-weight:500;">{headline}</span>'
+        title_html = f'<a href="{link}" style="color:{IN};text-decoration:none;">{headline}</a>' if link else headline
         src_html = _inline_src(primary, link, also)
 
         html += f'<div class="item">&bull;&nbsp;{title_html}{src_html}</div>'
@@ -255,7 +255,7 @@ def _build_diary(items: list) -> str:
         link  = item.get("link", "")
         cal   = _calendar_links(item.get("event", ""), item.get("description", ""), item.get("dates", ""))
 
-        event_html = f'<a href="{link}" style="color:{IN};text-decoration:none;font-weight:500;">{event}</a>' if link else f'<strong>{event}</strong>'
+        event_html = f'<a href="{link}" style="color:{IN};text-decoration:none;">{event}</a>' if link else event
 
         cal_parts = []
         if cal.get("google"):
