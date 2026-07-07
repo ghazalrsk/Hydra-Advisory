@@ -51,7 +51,7 @@ body {{ margin:0; padding:0; background:#f5f5f5; {FONT} }}
 .section-label {{ font-size:12px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:{B}; margin:28px 0 10px; border-left:3px solid {G}; padding-left:8px; }}
 .item {{ margin:0 0 10px 0; font-size:17px; line-height:1.5; color:{IN}; }}
 .item-src {{ font-size:14px; color:{MU}; }}
-.src-link {{ color:{B}; text-decoration:none; border-bottom:1px solid {G}; }}
+.src-link {{ color:{MU}; text-decoration:none; border-bottom:1px solid #cccccc; }}
 .num-row {{ display:flex; justify-content:space-between; font-size:16px; padding:6px 0; border-bottom:1px solid #eeeeee; color:{IN}; }}
 .num-ticker {{ color:{MU}; font-size:14px; }}
 .cal-link {{ font-size:13px; color:{MU}; text-decoration:none; border-bottom:1px solid #cccccc; }}
@@ -95,6 +95,14 @@ body {{ margin:0; padding:0; background:#f5f5f5; {FONT} }}
 
 def _source_link(text: str, href: str) -> str:
     return f'<a href="{href}" class="src-link">{text}</a>'
+
+
+def _inline_src(primary: str, link: str, also: list) -> str:
+    if not primary:
+        return ""
+    src = f'<a href="{link}" class="src-link">{primary}</a>' if link else primary
+    also_part = "/" + "/".join(_esc(s) for s in also[:3]) if also else ""
+    return f'&nbsp;<span class="item-src" style="display:inline;">{src}{also_part}</span>'
 
 
 def _also_slash(names: list) -> str:
@@ -182,11 +190,9 @@ def _build_lead(items: list) -> str:
         also    = item.get("also", [])
 
         title_html = f'<a href="{link}" style="color:{IN};text-decoration:none;font-weight:500;">{text}</a>' if link else f'<strong>{text}</strong>'
-        src = (_source_link(primary, link) if link else primary) if primary else ""
-        also_html = f'<span style="color:{MU};">{_also_slash(also)}</span>' if also else ""
-        src_line = f'<div class="item-src">{src}{also_html}</div>' if src else ""
+        src_html = _inline_src(primary, link, also)
 
-        html += f'<div class="item">&bull;&nbsp;{title_html}{src_line}</div>'
+        html += f'<div class="item">&bull;&nbsp;{title_html}{src_html}</div>'
     html += f'<hr class="divider">'
     return html
 
@@ -202,11 +208,9 @@ def _build_news(items: list) -> str:
         also     = item.get("also", [])
 
         title_html = f'<a href="{link}" style="color:{IN};text-decoration:none;">{headline}</a>' if link else headline
-        src = (_source_link(primary, link) if link else primary) if primary else ""
-        also_html = f'<span style="color:{MU};">{_also_slash(also)}</span>' if also else ""
-        src_line = f'<div class="item-src">{src}{also_html}</div>' if src else ""
+        src_html = _inline_src(primary, link, also)
 
-        html += f'<div class="item">&bull;&nbsp;{title_html}{src_line}</div>'
+        html += f'<div class="item">&bull;&nbsp;{title_html}{src_html}</div>'
     html += f'<hr class="divider">'
     return html
 
