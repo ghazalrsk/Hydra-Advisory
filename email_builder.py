@@ -58,8 +58,14 @@ body {{ margin:0; padding:0; background:#f5f5f5; {FONT} }}
 .footer {{ font-size:12px; color:#aaaaaa; margin-top:32px; padding-top:16px; border-top:1px solid #eeeeee; }}
 @media (max-width:600px) {{
   .wrap {{ padding:20px 16px; }}
-  .hdr-title {{ font-size:20px; }}
-  .item {{ font-size:17px; }}
+  .hdr-title {{ font-size:16px; }}
+  .hdr-date {{ font-size:11px; }}
+  .section-label {{ font-size:10px; margin:20px 0 8px; }}
+  .item {{ font-size:13px; line-height:1.45; }}
+  .item-src {{ font-size:11px; }}
+  .num-row {{ font-size:13px; }}
+  .num-ticker {{ font-size:11px; }}
+  .footer {{ font-size:11px; }}
 }}
 </style>
 </head>
