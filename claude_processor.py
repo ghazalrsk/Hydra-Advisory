@@ -167,18 +167,22 @@ If you cannot find a reason in the articles, write a brief 5-word-max factual no
 SECTION F — WRITING RULES
 ════════════════════════════════════════
 
-Lead items and news headlines: MAXIMUM 40 CHARACTERS, ABSOLUTE HARD LIMIT — count every letter, space, and punctuation mark.
-The source abbreviation (e.g. "BoF", "PAMB", "WWD") appears after the headline on the same line on a narrow mobile screen. The headline must fit in 40 characters so the whole line stays on one row.
-No ellipsis, no truncation — you must write a complete thought within 32 characters.
+Lead items and news headlines: the headline + one space + source label must fit on ONE LINE.
+Target total length = 52 characters (headline + space + source). Source labels vary in length:
+  BoF = 3 chars → headline may be up to 48 chars
+  WWD = 3 chars → headline may be up to 48 chars
+  PAMB = 4 chars → headline may be up to 47 chars
+  Nikkei = 6 chars → headline may be up to 45 chars
+  Il Sole/WWD = 11 chars → headline may be up to 40 chars
+Never write a headline longer than 48 characters. Never use ellipsis or truncation — write a complete thought.
   CORRECT: "Gucci names new creative director"  (32 chars ✓)
-  CORRECT: "Richemont appoints new CEO"  (26 chars ✓)
-  WRONG: "Mazarine taps ex-Vestiaire Collective exec"  (42 chars — too long, would wrap)
-  WRONG: "Jessica McCormack details expansion plans"  (41 chars — too long, would wrap)
-  RIGHT version: "Mazarine hires Vestiaire exec"  (29 chars ✓)
-  RIGHT version: "McCormack outlines expansion"  (28 chars ✓)
+  CORRECT: "Italian leather goods exports fall 3.5% in Q1"  (46 chars, BoF → total 50 ✓)
+  WRONG: "Mazarine taps ex-Vestiaire Collective exec"  (42 chars + Il Sole/WWD = 54 — wraps ✗)
+  RIGHT: "Mazarine hires Vestiaire exec"  (29 chars ✓)
 Summarise ruthlessly. Drop articles (a, an, the). Use brand abbreviations (LVMH not "Louis Vuitton Moët Hennessy"). Shorten long proper nouns. The result must always read as a complete, standalone thought.
 
 Return exactly 10 news items (after lead_items are excluded, per SECTION C).
+If the article pool contains fewer than 10 clearly luxury-relevant stories, include the next most relevant stories that have any connection to luxury demand, luxury consumers, or the business of fashion and premium goods — do not leave slots empty.
 
 BANNED WORDS — never use:
 iconic · stunning · exciting · bold · groundbreaking · luxury powerhouse · giant · titan
