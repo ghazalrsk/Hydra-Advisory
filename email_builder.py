@@ -44,7 +44,7 @@ def build_email_html(digest: dict, today: str) -> str:
 <title>Hydra Brief · {today}</title>
 <style>
 body {{ margin:0; padding:0; background:#f5f5f5; {FONT} }}
-.wrap {{ max-width:600px; margin:0 auto; padding:32px 24px; background:#ffffff; }}
+.wrap {{ max-width:600px; margin:0 auto; padding:16px 24px 32px; background:#ffffff; }}
 .hdr-title {{ font-size:24px; font-weight:600; color:{B}; letter-spacing:.08em; text-transform:uppercase; }}
 .hdr-date {{ font-size:14px; color:{MU}; margin-top:2px; }}
 .divider {{ border:none; border-top:2px solid {B}; margin:14px 0 20px; }}
