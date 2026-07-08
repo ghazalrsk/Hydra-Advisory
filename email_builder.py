@@ -213,7 +213,7 @@ def _calendar_links(event: str, desc: str, dates: str) -> dict:
 
 # ── Section builders ──────────────────────────────────────────────────────
 
-LINE_BUDGET = 52  # total chars: headline + space + source label
+LINE_BUDGET = 45  # total chars: headline + space + source label
 
 def _headline_limit(primary: str, also: list) -> int:
     src_label = _abbr(primary)

@@ -167,25 +167,28 @@ If you cannot find a reason in the articles, write a brief 5-word-max factual no
 SECTION F — WRITING RULES
 ════════════════════════════════════════
 
-Lead items and news headlines: each headline + source label appears on ONE line and must fill that line as fully as possible — aim to reach the right margin without exceeding it.
+Lead items and news headlines: each headline + source label must appear on EXACTLY ONE LINE — never wrap. The combined total (headline + 1 space + source) must not exceed 45 characters.
 
-Maximum characters per headline depending on your source label:
-  BoF        (3 chars) → headline max 48 chars
-  WWD        (3 chars) → headline max 48 chars
-  PAMB       (4 chars) → headline max 47 chars
-  Nikkei     (6 chars) → headline max 45 chars
-  Il Sole    (7 chars) → headline max 44 chars
-  Il Sole/WWD (11 chars) → headline max 40 chars
-  MFF        (3 chars) → headline max 48 chars
-  SCMP       (4 chars) → headline max 47 chars
+Maximum headline length per source — HARD LIMITS, never exceed:
+  BoF        (3 chars) → headline max 41 chars
+  WWD        (3 chars) → headline max 41 chars
+  PAMB       (4 chars) → headline max 40 chars
+  Nikkei     (6 chars) → headline max 38 chars
+  Il Sole    (7 chars) → headline max 37 chars
+  Il Sole/WWD (11 chars) → headline max 33 chars
+  MFF        (3 chars) → headline max 41 chars
+  SCMP       (4 chars) → headline max 40 chars
 
-Never write a headline shorter than 5 words if the limit allows more. Never use ellipsis. Write a complete, informative thought that uses every character available.
-  WRONG: "LV wins China case BoF"  (too short — wastes the line)
-  CORRECT: "Louis Vuitton wins China trademark dispute BoF"  (fills the line ✓)
+After writing each headline, count the characters. If it exceeds the limit, rewrite it shorter — shorten the last word, cut a qualifier, use an abbreviation. Never end a headline on a long word like "partnership" or "collaboration" if it pushes you over.
+
+Fill the line as close to the limit as possible. Never write a headline shorter than you need to — use every character available.
+  WRONG: "LV wins China case BoF"  (22 chars — too short)
+  CORRECT: "Louis Vuitton wins China trademark case BoF"  (41 chars ✓)
   WRONG: "Chanel shows couture Il Sole/WWD"  (too short)
-  CORRECT: "Chanel, Armani Privé open Paris couture Il Sole/WWD"  (fills the line ✓)
+  CORRECT: "Chanel, Armani Privé show Paris couture Il Sole"  (too long — rewrite)
+  CORRECT: "Chanel, Armani Privé open couture Il Sole/WWD"  (33 chars headline ✓)
 
-Summarise ruthlessly but use the full available width. Drop articles (a, an, the). Use brand abbreviations (LVMH not "Louis Vuitton Moët Hennessy"). The result must always read as a complete, standalone thought.
+Summarise ruthlessly. Drop articles (a, an, the). Use brand abbreviations (LVMH not "Louis Vuitton Moët Hennessy"). The result must always read as a complete, standalone thought.
 
 Return exactly 10 news items (after lead_items are excluded, per SECTION C).
 If the article pool contains fewer than 10 clearly luxury-relevant stories, include the next most relevant stories that have any connection to luxury demand, luxury consumers, or the business of fashion and premium goods — do not leave slots empty.
