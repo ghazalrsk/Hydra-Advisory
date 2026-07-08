@@ -213,12 +213,22 @@ def _calendar_links(event: str, desc: str, dates: str) -> dict:
 
 # ── Section builders ──────────────────────────────────────────────────────
 
+LINE_BUDGET = 52  # total chars: headline + space + source label
+
+def _headline_limit(primary: str, also: list) -> int:
+    src_label = _abbr(primary)
+    for s in also[:2]:
+        src_label += "/" + _abbr(s)
+    return max(20, LINE_BUDGET - 1 - len(src_label))
+
+
 def _build_lead(items: list) -> str:
     if not items:
         return ""
     html = '<div class="section-label">What You Should Know Today</div>'
     for item in items[:3]:
-        text    = _esc(_truncate_chars(item.get("text", ""), 40))
+        limit   = _headline_limit(item.get("primary_source", ""), item.get("also", []))
+        text    = _esc(_truncate_chars(item.get("text", ""), limit))
         link    = item.get("link", "")
         primary = _esc(item.get("primary_source", ""))
         also    = item.get("also", [])
@@ -236,7 +246,8 @@ def _build_news(items: list) -> str:
         return ""
     html = '<div class="section-label">News</div>'
     for item in items[:10]:
-        headline = _esc(_truncate_chars(item.get("headline", ""), 40))
+        limit    = _headline_limit(item.get("primary_source", ""), item.get("also", []))
+        headline = _esc(_truncate_chars(item.get("headline", ""), limit))
         link     = item.get("link", "")
         primary  = _esc(item.get("primary_source", ""))
         also     = item.get("also", [])
