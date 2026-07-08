@@ -167,15 +167,25 @@ If you cannot find a reason in the articles, write a brief 5-word-max factual no
 SECTION F — WRITING RULES
 ════════════════════════════════════════
 
-Lead items and news headlines: make every headline as long as possible — fill the line.
-Rule: headline + one space + source label must total NO MORE THAN 52 characters.
-Count the abbreviated source label (e.g. "BoF" = 3, "PAMB" = 4, "Il Sole/WWD" = 11) and use the remaining characters for the headline.
-Never use ellipsis. Write a complete thought that reaches as close to the 52-char total as possible.
-  CORRECT: "Italian leather goods exports fall 3.5% in Q1 BoF"  (49 chars total ✓)
-  CORRECT: "Chanel, Armani Privé show couture Il Sole/WWD"  (45 chars total ✓)
-  WRONG: "LV wins China case BoF"  (22 chars — too short, wastes the line)
-  RIGHT: "Louis Vuitton wins China trademark case BoF"  (43 chars ✓)
-Summarise ruthlessly but write the FULLEST possible headline. Drop articles (a, an, the). Use brand abbreviations (LVMH not "Louis Vuitton Moët Hennessy"). The result must always read as a complete, standalone thought.
+Lead items and news headlines: each headline + source label appears on ONE line and must fill that line as fully as possible — aim to reach the right margin without exceeding it.
+
+Maximum characters per headline depending on your source label:
+  BoF        (3 chars) → headline max 48 chars
+  WWD        (3 chars) → headline max 48 chars
+  PAMB       (4 chars) → headline max 47 chars
+  Nikkei     (6 chars) → headline max 45 chars
+  Il Sole    (7 chars) → headline max 44 chars
+  Il Sole/WWD (11 chars) → headline max 40 chars
+  MFF        (3 chars) → headline max 48 chars
+  SCMP       (4 chars) → headline max 47 chars
+
+Never write a headline shorter than 5 words if the limit allows more. Never use ellipsis. Write a complete, informative thought that uses every character available.
+  WRONG: "LV wins China case BoF"  (too short — wastes the line)
+  CORRECT: "Louis Vuitton wins China trademark dispute BoF"  (fills the line ✓)
+  WRONG: "Chanel shows couture Il Sole/WWD"  (too short)
+  CORRECT: "Chanel, Armani Privé open Paris couture Il Sole/WWD"  (fills the line ✓)
+
+Summarise ruthlessly but use the full available width. Drop articles (a, an, the). Use brand abbreviations (LVMH not "Louis Vuitton Moët Hennessy"). The result must always read as a complete, standalone thought.
 
 Return exactly 10 news items (after lead_items are excluded, per SECTION C).
 If the article pool contains fewer than 10 clearly luxury-relevant stories, include the next most relevant stories that have any connection to luxury demand, luxury consumers, or the business of fashion and premium goods — do not leave slots empty.
