@@ -167,19 +167,15 @@ If you cannot find a reason in the articles, write a brief 5-word-max factual no
 SECTION F — WRITING RULES
 ════════════════════════════════════════
 
-Lead items and news headlines: the headline + one space + source label must fit on ONE LINE.
-Target total length = 52 characters (headline + space + source). Source labels vary in length:
-  BoF = 3 chars → headline may be up to 48 chars
-  WWD = 3 chars → headline may be up to 48 chars
-  PAMB = 4 chars → headline may be up to 47 chars
-  Nikkei = 6 chars → headline may be up to 45 chars
-  Il Sole/WWD = 11 chars → headline may be up to 40 chars
-Never write a headline longer than 48 characters. Never use ellipsis or truncation — write a complete thought.
-  CORRECT: "Gucci names new creative director"  (32 chars ✓)
-  CORRECT: "Italian leather goods exports fall 3.5% in Q1"  (46 chars, BoF → total 50 ✓)
-  WRONG: "Mazarine taps ex-Vestiaire Collective exec"  (42 chars + Il Sole/WWD = 54 — wraps ✗)
-  RIGHT: "Mazarine hires Vestiaire exec"  (29 chars ✓)
-Summarise ruthlessly. Drop articles (a, an, the). Use brand abbreviations (LVMH not "Louis Vuitton Moët Hennessy"). Shorten long proper nouns. The result must always read as a complete, standalone thought.
+Lead items and news headlines: make every headline as long as possible — fill the line.
+Rule: headline + one space + source label must total NO MORE THAN 52 characters.
+Count the abbreviated source label (e.g. "BoF" = 3, "PAMB" = 4, "Il Sole/WWD" = 11) and use the remaining characters for the headline.
+Never use ellipsis. Write a complete thought that reaches as close to the 52-char total as possible.
+  CORRECT: "Italian leather goods exports fall 3.5% in Q1 BoF"  (49 chars total ✓)
+  CORRECT: "Chanel, Armani Privé show couture Il Sole/WWD"  (45 chars total ✓)
+  WRONG: "LV wins China case BoF"  (22 chars — too short, wastes the line)
+  RIGHT: "Louis Vuitton wins China trademark case BoF"  (43 chars ✓)
+Summarise ruthlessly but write the FULLEST possible headline. Drop articles (a, an, the). Use brand abbreviations (LVMH not "Louis Vuitton Moët Hennessy"). The result must always read as a complete, standalone thought.
 
 Return exactly 10 news items (after lead_items are excluded, per SECTION C).
 If the article pool contains fewer than 10 clearly luxury-relevant stories, include the next most relevant stories that have any connection to luxury demand, luxury consumers, or the business of fashion and premium goods — do not leave slots empty.
