@@ -327,13 +327,23 @@ def _truncate_words(text: str, max_words: int) -> str:
     return " ".join(words[:max_words]).rstrip(".,;:")
 
 
+_DANGLING = {
+    "amid", "with", "for", "on", "at", "by", "of", "in", "to", "into",
+    "from", "through", "about", "and", "but", "or", "while", "as",
+    "since", "although", "despite", "because", "the", "a", "an",
+    "its", "their", "his", "her", "our", "your",
+}
+
 def _truncate_chars(text: str, max_chars: int) -> str:
     s = str(text).strip()
     if len(s) <= max_chars:
         return s
-    # Cut at last word boundary within limit
     cut = s[:max_chars].rsplit(" ", 1)[0].rstrip(".,;:")
-    return cut
+    # Walk back if last word is a dangling preposition, conjunction, or article
+    words = cut.split()
+    while words and words[-1].lower().rstrip(".,;:") in _DANGLING:
+        words.pop()
+    return " ".join(words)
 
 
 def _esc(text: str) -> str:
