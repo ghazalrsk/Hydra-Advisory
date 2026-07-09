@@ -176,10 +176,11 @@ HEADLINE WRITING RULES
 Every headline must obey ALL of the following without exception:
 
 1. ONE LINE ON MOBILE — HARD CHARACTER LIMIT
-   Every headline must be 50 characters or fewer, including spaces and punctuation.
-   Count the characters before submitting. If you exceed 50, rewrite using shorter words — never cut the sentence short.
-   Example: "LVMH reports record H1 sales on Asia rebound" = 45 chars ✓
-   Example: "Hugo Boss board rejects Frasers takeover bid as undervalued" = 59 chars ✗ → rewrite as "Hugo Boss rejects Frasers bid as undervalued" = 44 chars ✓
+   Every headline must be 40 characters or fewer, including spaces and punctuation.
+   The source label (e.g. "BoF", "Reuters") is displayed on the same line after your headline — it takes up the remaining space.
+   Count your characters before submitting. If you exceed 40, rewrite using shorter words — never cut the sentence short.
+   Example: "Hugo Boss rejects Frasers bid" = 29 chars ✓
+   Example: "LVMH reports record H1 sales on Asia rebound" = 44 chars ✗ → rewrite as "LVMH reports record H1 sales" = 28 chars ✓
 
 2. COMPLETE ENGLISH SENTENCE — NO EXCEPTIONS
    Every headline must be a grammatically complete sentence in plain professional English.

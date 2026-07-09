@@ -226,8 +226,8 @@ def _build_lead(items: list) -> str:
         also    = item.get("also", [])
         hl_html = f'<a href="{link}" style="color:{IN};text-decoration:none;">{text}</a>' if link else text
         src_parts = [_abbr(primary)] + [_abbr(s) for s in also[:2]] if primary else []
-        src_html  = f'<div class="item-src">{" · ".join(src_parts)}</div>' if src_parts else ""
-        html += f'<div class="item"><div class="item-hl-row">&bull;&nbsp;{hl_html}</div>{src_html}</div>'
+        src_tag   = f' <span class="item-src" style="white-space:nowrap;">{" · ".join(src_parts)}</span>' if src_parts else ""
+        html += f'<div class="item"><div class="item-hl-row">&bull;&nbsp;{hl_html}{src_tag}</div></div>'
     html += f'<hr class="divider-thin">'
     return html
 
@@ -243,8 +243,8 @@ def _build_news(items: list) -> str:
         also     = item.get("also", [])
         hl_html  = f'<a href="{link}" style="color:{IN};text-decoration:none;">{headline}</a>' if link else headline
         src_parts = [_abbr(primary)] + [_abbr(s) for s in also[:2]] if primary else []
-        src_html  = f'<div class="item-src">{" · ".join(src_parts)}</div>' if src_parts else ""
-        html += f'<div class="item"><div class="item-hl-row">&bull;&nbsp;{hl_html}</div>{src_html}</div>'
+        src_tag   = f' <span class="item-src" style="white-space:nowrap;">{" · ".join(src_parts)}</span>' if src_parts else ""
+        html += f'<div class="item"><div class="item-hl-row">&bull;&nbsp;{hl_html}{src_tag}</div></div>'
     html += f'<hr class="divider-thin">'
     return html
 
