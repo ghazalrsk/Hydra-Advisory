@@ -168,30 +168,42 @@ If you cannot find a reason in the articles, write a brief 5-word-max factual no
 SECTION F — WRITING RULES
 ════════════════════════════════════════
 
-Lead items and news headlines — two rules only:
+════════════════════════════════════════
+HEADLINE WRITING RULES
+════════════════════════════════════════
 
-RULE 1 — HARD MAXIMUM: The headline + 1 space + source label must never exceed 45 characters total. This ensures it fits on one line on a mobile screen. Never wrap to a second line under any circumstances. After writing each headline, count the total characters. If over 45, shorten the headline until it fits.
+Every headline must obey ALL of the following without exception:
 
-RULE 2 — SOFT MINIMUM: Write at least 5 words. Do not write a headline so short it looks terse or incomplete next to the others.
+1. ONE LINE ON MOBILE — HARD LIMIT
+   The headline text + one space + source label must total 45 characters or fewer.
+   Count every character. If over 45, rewrite the headline using shorter words until it fits.
+   Never wrap to a second line under any circumstances.
 
-Within these two bounds, write the best, most informative, most natural-sounding headline you can.
+2. COMPLETE ENGLISH SENTENCE — NO EXCEPTIONS
+   Every headline must be a grammatically complete sentence in plain professional English.
+   A reader must understand the full story from the headline alone: who did what, and what it means.
+   Never end on a preposition, conjunction, or modifier without completing the thought.
+   WRONG: "Tokopedia denies layoffs amid"  — amid what? Incomplete. ✗
+   WRONG: "De Beers sale advances amid natural"  — natural what? Incomplete. ✗
+   WRONG: "Reda posts growth despite merino"  — despite merino what? Incomplete. ✗
+   RIGHT: "Tokopedia denies layoffs amid restructuring"  — complete. ✓
+   RIGHT: "De Beers nears sale, backs natural diamonds"  — complete. ✓
+   RIGHT: "Reda grows H1 despite merino price rises"  — complete. ✓
 
-CRITICAL RULE 1 — NEVER cut a headline mid-thought. Every headline must be a complete, grammatically correct English sentence that answers: who, what, and when/where if relevant. A reader must fully understand what happened from the headline alone.
+3. NEVER PUT THE SOURCE IN THE HEADLINE
+   The source tag (BoF, WWD, PAMB etc.) is added automatically after the headline.
+   Never write the source name inside the headline text itself.
+   WRONG: "Hermès plans couture show in Jan BoF"  — BoF is in the headline text. ✗
+   RIGHT: "Hermès to debut couture show in January"  — clean headline, source added separately. ✓
 
-CRITICAL RULE 2 — NEVER include the source name inside the headline text. The source (BoF, WWD, PAMB etc.) is added automatically as a separate tag after the headline. If you write "Hermès plans couture show Jan BoF" you have made two errors: "Jan" is not a complete thought, and "BoF" must not appear in the headline text itself.
+4. IF IT DOESN'T FIT, REWRITE — NEVER TRUNCATE
+   If the complete thought exceeds 45 characters, rephrase the entire headline using simpler
+   or shorter words that preserve the full meaning. Never cut a sentence short to make it fit.
 
-If the full meaning does not fit in 45 characters, rephrase from scratch using simpler or shorter words — never truncate.
-
-  WRONG: "Hermès plans first couture show Jan BoF"  (truncated + source in headline ✗)
-  RIGHT: "Hermès to debut couture show in January"  (complete, natural English ✓)
-
-  WRONG: "De Beers sale advances amid natural"  (cut mid-thought ✗)
-  RIGHT: "De Beers nears sale, backs natural diamonds"  (complete ✓)
-
-  WRONG: "Reda posts H1 growth despite merino"  (cut mid-thought — merino what? ✗)
-  RIGHT: "Reda grows H1 despite merino price increases"  (complete ✓)
-
-Write in plain, professional English. Full words, not abbreviations for months (January not Jan). The headline must read like a proper news sentence, not a note to yourself.
+5. ABBREVIATIONS ARE FINE IF THEY MAKE SENSE IN CONTEXT
+   "in Jan" is acceptable. "Jan" alone at the end of a sentence is not.
+   Use brand abbreviations: LVMH, BoF, H1, Q1, CEO, M&A.
+   Drop articles (a, an, the) to save space where natural.
 
 Return exactly 10 news items (after lead_items are excluded, per SECTION C).
 If the article pool contains fewer than 10 clearly luxury-relevant stories, include the next most relevant stories that have any connection to luxury demand, luxury consumers, or the business of fashion and premium goods — do not leave slots empty.
