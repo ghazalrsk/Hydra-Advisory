@@ -177,8 +177,9 @@ Every headline must obey ALL of the following without exception:
 
 1. ONE LINE ON MOBILE — HARD LIMIT
    Every headline must fit on a single line on a mobile phone screen. Never wrap to a second line.
-   Mobile screens are narrow. Keep headlines concise. If a headline feels long, shorten it.
-   Never wrap to a second line under any circumstances.
+   Target: 7 words or fewer (including prepositions and articles). Absolute maximum: 9 words.
+   Count your words before submitting. If you reach 8–9, rewrite with simpler phrasing.
+   The source label is displayed separately — do not count it toward your word limit.
 
 2. COMPLETE ENGLISH SENTENCE — NO EXCEPTIONS
    Every headline must be a grammatically complete sentence in plain professional English.
