@@ -13,8 +13,9 @@ Article pool rules:
 """
 
 import feedparser
-import yfinance as yf
 import logging
+import math
+import requests
 from datetime import datetime, timedelta, timezone
 from sources import NEWS_SOURCES, STOCK_TICKERS
 
@@ -90,8 +91,8 @@ def fetch_all_articles(is_monday: bool = False) -> list[dict]:
 
 def fetch_stock_prices(top_n: int = 6) -> list[dict]:
     """
-    Fetches today's price and daily change for every ticker in STOCK_TICKERS,
-    then returns only the top_n with the highest absolute 24h % change.
+    Fetches prices via Stooq CSV API (no auth, no rate limits).
+    Returns top_n by highest absolute daily % change.
     """
     stocks = []
 
@@ -100,22 +101,39 @@ def fetch_stock_prices(top_n: int = 6) -> list[dict]:
         ".MI": "€",
         ".SW": "CHF",
         ".L":  "£",
+        ".US": "$",
         "":    "$",
     }
 
     for name, ticker in STOCK_TICKERS.items():
         try:
-            data = yf.Ticker(ticker)
-            hist = data.history(period="2d")
+            # Stooq uses lowercase tickers and dots, same format as Yahoo
+            stooq_ticker = ticker.lower()
+            url = f"https://stooq.com/q/d/l/?s={stooq_ticker}&i=d"
+            resp = requests.get(url, timeout=10, headers={"User-Agent": "Mozilla/5.0"})
+            resp.raise_for_status()
 
-            if len(hist) < 2:
-                log.warning(f"  Not enough data for {ticker}")
+            lines = [l for l in resp.text.strip().splitlines() if l and not l.startswith("Date")]
+            if len(lines) < 2:
+                log.warning(f"  Not enough Stooq data for {ticker}")
                 continue
 
-            prev_close = hist["Close"].iloc[-2]
-            today_close = hist["Close"].iloc[-1]
-            pct_change = ((today_close - prev_close) / prev_close) * 100
+            # Last two rows: most recent close and prior close
+            def parse_row(row):
+                parts = row.split(",")
+                return float(parts[4]) if len(parts) >= 5 else None  # Close is index 4
 
+            today_close = parse_row(lines[-1])
+            prev_close  = parse_row(lines[-2])
+
+            if today_close is None or prev_close is None:
+                log.warning(f"  Could not parse close for {ticker}")
+                continue
+            if math.isnan(today_close) or math.isnan(prev_close) or prev_close == 0:
+                log.warning(f"  NaN/zero price for {ticker}, skipping")
+                continue
+
+            pct_change = ((today_close - prev_close) / prev_close) * 100
             suffix = "." + ticker.split(".")[-1] if "." in ticker else ""
             currency = currency_map.get(f".{ticker.split('.')[-1]}", "€")
 
@@ -132,6 +150,7 @@ def fetch_stock_prices(top_n: int = 6) -> list[dict]:
                 "raw_price": round(today_close, 2),
                 "raw_change": round(pct_change, 2),
             })
+            log.info(f"  {name} ({ticker}): {currency}{today_close:.2f} {sign}{pct_change:.1f}%")
 
         except Exception as e:
             log.warning(f"  Failed to fetch {ticker}: {e}")
