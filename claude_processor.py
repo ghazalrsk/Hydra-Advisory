@@ -182,13 +182,27 @@ Every headline must obey ALL of the following without exception:
 2. COMPLETE ENGLISH SENTENCE — NO EXCEPTIONS
    Every headline must be a grammatically complete sentence in plain professional English.
    A reader must understand the full story from the headline alone: who did what, and what it means.
-   Never end on a preposition, conjunction, or modifier without completing the thought.
-   WRONG: "Tokopedia denies layoffs amid"  — amid what? Incomplete. ✗
-   WRONG: "De Beers sale advances amid natural"  — natural what? Incomplete. ✗
-   WRONG: "Reda posts growth despite merino"  — despite merino what? Incomplete. ✗
-   RIGHT: "Tokopedia denies layoffs amid restructuring"  — complete. ✓
-   RIGHT: "De Beers nears sale, backs natural diamonds"  — complete. ✓
-   RIGHT: "Reda grows H1 despite merino price rises"  — complete. ✓
+
+   GRAMMAR RULES — all mandatory:
+   a) Never end on a preposition (amid, with, for, on, at, by, of, in, to, into, from, through, about).
+      WRONG: "Kering cuts costs amid"  WRONG: "LVMH expands into"  WRONG: "Chanel plans for"
+   b) Never end on a conjunction (and, but, or, while, as, since, although, despite, because).
+      WRONG: "Gucci grows but"  WRONG: "Sales rise despite"  WRONG: "Brands expand while"
+   c) Never end on an adjective or modifier without the noun it describes.
+      WRONG: "De Beers backs natural"  WRONG: "Hermès reports strong"
+   d) Never end on a possessive or article.
+      WRONG: "Richemont raises its"  WRONG: "LVMH cuts the"
+   e) Subject and verb must both be present. A headline is not a title or a label.
+      WRONG: "Chanel couture season"  WRONG: "LVMH Q2 results"
+      RIGHT: "Chanel opens couture season in Paris"  RIGHT: "LVMH reports Q2 sales rise"
+   f) Verb tense: use simple present for current news ("Gucci names", "LVMH cuts", "Chanel opens").
+
+   WRONG: "Tokopedia denies layoffs amid"  — ends on preposition ✗
+   WRONG: "De Beers sale advances amid natural"  — ends on adjective without noun ✗
+   WRONG: "Reda posts growth despite merino"  — ends on noun mid-clause ✗
+   RIGHT: "Tokopedia denies layoffs amid restructuring"  ✓
+   RIGHT: "De Beers nears sale, backs natural diamonds"  ✓
+   RIGHT: "Reda grows H1 despite merino price rises"  ✓
 
 3. NEVER PUT THE SOURCE IN THE HEADLINE
    The source tag (BoF, WWD, PAMB etc.) is added automatically after the headline.
