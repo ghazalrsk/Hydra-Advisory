@@ -174,14 +174,23 @@ RULE 1 — HARD MAXIMUM: The headline + 1 space + source label must never exceed
 
 RULE 2 — SOFT MINIMUM: Write at least 5 words. Do not write a headline so short it looks terse or incomplete next to the others.
 
-Within these two bounds, write the best, most informative, most natural-sounding headline you can. Do not pad, do not cut meaning to hit a target length — just write clearly and check you are within the maximum.
+Within these two bounds, write the best, most informative, most natural-sounding headline you can.
 
-  CORRECT: "Gucci names new creative director BoF"  (natural, fits ✓)
-  CORRECT: "De Beers cuts diamond prices WWD"  (short but complete ✓)
-  WRONG: "LVMH and Kering announce new strategic retail partnership BoF"  (too long — wraps on mobile ✗)
-  RIGHT: "LVMH, Kering announce retail partnership BoF"  (fits ✓)
+CRITICAL — NEVER cut a headline mid-thought. Every headline must be a complete, self-contained statement that makes sense on its own. A reader must understand what happened from the headline alone, without needing to read the article.
 
-Summarise ruthlessly. Drop articles (a, an, the). Use brand abbreviations (LVMH not "Louis Vuitton Moët Hennessy"). The result must always read as a complete, standalone thought.
+If the full meaning does not fit in 45 characters, do NOT truncate the sentence. Instead, rephrase the entire headline from scratch using simpler or shorter words that capture the same meaning completely.
+
+  WRONG: "De Beers sale advances amid natural"  (cut mid-thought — natural what? ✗)
+  RIGHT: "De Beers sale nears as natural diamond push starts PAMB"  (too long — rephrase)
+  RIGHT: "De Beers nears sale, backs natural diamonds PAMB"  (complete ✓)
+
+  WRONG: "Reda posts H1 growth despite merino"  (cut mid-thought — despite merino what? ✗)
+  RIGHT: "Reda grows H1 despite merino price rises PAMB"  (complete ✓)
+
+  WRONG: "LVMH and Kering announce new strategic retail partnership BoF"  (too long ✗)
+  RIGHT: "LVMH, Kering announce retail partnership BoF"  (complete ✓)
+
+Summarise ruthlessly. Drop articles (a, an, the). Use brand abbreviations (LVMH not "Louis Vuitton Moët Hennessy"). The result must always read as a complete, standalone thought — never a fragment.
 
 Return exactly 10 news items (after lead_items are excluded, per SECTION C).
 If the article pool contains fewer than 10 clearly luxury-relevant stories, include the next most relevant stories that have any connection to luxury demand, luxury consumers, or the business of fashion and premium goods — do not leave slots empty.
