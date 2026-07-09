@@ -16,6 +16,11 @@ import feedparser
 import logging
 import math
 import requests
+try:
+    import yfinance as yf
+    _YF_AVAILABLE = True
+except ImportError:
+    _YF_AVAILABLE = False
 from datetime import datetime, timedelta, timezone
 from sources import NEWS_SOURCES, STOCK_TICKERS
 
@@ -89,9 +94,41 @@ def fetch_all_articles(is_monday: bool = False) -> list[dict]:
     return articles
 
 
+def _parse_closes_yf(ticker: str):
+    """Try Yahoo Finance via yfinance. Returns (today_close, prev_close) or raises."""
+    data = yf.Ticker(ticker)
+    hist = data.history(period="2d")
+    if len(hist) < 2:
+        raise ValueError("insufficient data")
+    prev  = float(hist["Close"].iloc[-2])
+    today = float(hist["Close"].iloc[-1])
+    if math.isnan(prev) or math.isnan(today) or prev == 0:
+        raise ValueError("NaN or zero")
+    return today, prev
+
+
+def _parse_closes_stooq(ticker: str):
+    """Fallback: Stooq CSV API. Returns (today_close, prev_close) or raises."""
+    url  = f"https://stooq.com/q/d/l/?s={ticker.lower()}&i=d"
+    resp = requests.get(url, timeout=10, headers={"User-Agent": "Mozilla/5.0"})
+    resp.raise_for_status()
+    lines = [l for l in resp.text.strip().splitlines() if l and not l.startswith("Date")]
+    if len(lines) < 2:
+        raise ValueError("insufficient Stooq data")
+    def _close(row):
+        parts = row.split(",")
+        return float(parts[4]) if len(parts) >= 5 else None
+    today = _close(lines[-1])
+    prev  = _close(lines[-2])
+    if today is None or prev is None or math.isnan(today) or math.isnan(prev) or prev == 0:
+        raise ValueError("NaN or unparseable")
+    return today, prev
+
+
 def fetch_stock_prices(top_n: int = 6) -> list[dict]:
     """
-    Fetches prices via Stooq CSV API (no auth, no rate limits).
+    Primary: Yahoo Finance via yfinance.
+    Fallback: Stooq CSV API (used only if Yahoo returns no/NaN data).
     Returns top_n by highest absolute daily % change.
     """
     stocks = []
@@ -106,51 +143,39 @@ def fetch_stock_prices(top_n: int = 6) -> list[dict]:
     }
 
     for name, ticker in STOCK_TICKERS.items():
+        today_close = prev_close = None
+        source = "?"
         try:
-            # Stooq uses lowercase tickers and dots, same format as Yahoo
-            stooq_ticker = ticker.lower()
-            url = f"https://stooq.com/q/d/l/?s={stooq_ticker}&i=d"
-            resp = requests.get(url, timeout=10, headers={"User-Agent": "Mozilla/5.0"})
-            resp.raise_for_status()
+            if _YF_AVAILABLE:
+                today_close, prev_close = _parse_closes_yf(ticker)
+                source = "Yahoo"
+        except Exception as e:
+            log.warning(f"  Yahoo failed for {ticker}: {e} — trying Stooq")
 
-            lines = [l for l in resp.text.strip().splitlines() if l and not l.startswith("Date")]
-            if len(lines) < 2:
-                log.warning(f"  Not enough Stooq data for {ticker}")
+        if today_close is None:
+            try:
+                today_close, prev_close = _parse_closes_stooq(ticker)
+                source = "Stooq"
+            except Exception as e:
+                log.warning(f"  Stooq also failed for {ticker}: {e} — skipping")
                 continue
 
-            # Last two rows: most recent close and prior close
-            def parse_row(row):
-                parts = row.split(",")
-                return float(parts[4]) if len(parts) >= 5 else None  # Close is index 4
+        pct_change = ((today_close - prev_close) / prev_close) * 100
+        currency   = currency_map.get(f".{ticker.split('.')[-1]}", "€")
+        direction  = "up" if pct_change > 0.1 else ("down" if pct_change < -0.1 else "flat")
+        sign       = "▲ +" if pct_change > 0 else ("▼ " if pct_change < 0 else "")
 
-            today_close = parse_row(lines[-1])
-            prev_close  = parse_row(lines[-2])
-
-            if today_close is None or prev_close is None:
-                log.warning(f"  Could not parse close for {ticker}")
-                continue
-            if math.isnan(today_close) or math.isnan(prev_close) or prev_close == 0:
-                log.warning(f"  NaN/zero price for {ticker}, skipping")
-                continue
-
-            pct_change = ((today_close - prev_close) / prev_close) * 100
-            suffix = "." + ticker.split(".")[-1] if "." in ticker else ""
-            currency = currency_map.get(f".{ticker.split('.')[-1]}", "€")
-
-            direction = "up" if pct_change > 0.1 else ("down" if pct_change < -0.1 else "flat")
-            sign = "▲ +" if pct_change > 0 else ("▼ " if pct_change < 0 else "")
-
-            stocks.append({
-                "name":      name,
-                "ticker":    ticker,
-                "price":     f"{currency}{today_close:,.2f}",
-                "change":    f"{sign}{pct_change:.1f}%",
-                "direction": direction,
-                "currency":  currency,
-                "raw_price": round(today_close, 2),
-                "raw_change": round(pct_change, 2),
-            })
-            log.info(f"  {name} ({ticker}): {currency}{today_close:.2f} {sign}{pct_change:.1f}%")
+        stocks.append({
+            "name":      name,
+            "ticker":    ticker,
+            "price":     f"{currency}{today_close:,.2f}",
+            "change":    f"{sign}{pct_change:.1f}%",
+            "direction": direction,
+            "currency":  currency,
+            "raw_price": round(today_close, 2),
+            "raw_change": round(pct_change, 2),
+        })
+        log.info(f"  {name} ({ticker}) [{source}]: {currency}{today_close:.2f} {sign}{pct_change:.1f}%")
 
         except Exception as e:
             log.warning(f"  Failed to fetch {ticker}: {e}")

@@ -2,6 +2,7 @@
 # Install with: pip install -r requirements.txt
 
 anthropic>=0.25.0          # Claude API
+yfinance>=0.2.40           # Stock prices (primary); Stooq used as fallback
 feedparser>=6.0.0          # RSS feed parsing
 mailchimp-marketing>=3.0.80 # Mailchimp API
 python-dotenv>=1.0.0       # Load .env file
