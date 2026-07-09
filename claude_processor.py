@@ -176,21 +176,22 @@ RULE 2 — SOFT MINIMUM: Write at least 5 words. Do not write a headline so shor
 
 Within these two bounds, write the best, most informative, most natural-sounding headline you can.
 
-CRITICAL — NEVER cut a headline mid-thought. Every headline must be a complete, self-contained statement that makes sense on its own. A reader must understand what happened from the headline alone, without needing to read the article.
+CRITICAL RULE 1 — NEVER cut a headline mid-thought. Every headline must be a complete, grammatically correct English sentence that answers: who, what, and when/where if relevant. A reader must fully understand what happened from the headline alone.
 
-If the full meaning does not fit in 45 characters, do NOT truncate the sentence. Instead, rephrase the entire headline from scratch using simpler or shorter words that capture the same meaning completely.
+CRITICAL RULE 2 — NEVER include the source name inside the headline text. The source (BoF, WWD, PAMB etc.) is added automatically as a separate tag after the headline. If you write "Hermès plans couture show Jan BoF" you have made two errors: "Jan" is not a complete thought, and "BoF" must not appear in the headline text itself.
 
-  WRONG: "De Beers sale advances amid natural"  (cut mid-thought — natural what? ✗)
-  RIGHT: "De Beers sale nears as natural diamond push starts PAMB"  (too long — rephrase)
-  RIGHT: "De Beers nears sale, backs natural diamonds PAMB"  (complete ✓)
+If the full meaning does not fit in 45 characters, rephrase from scratch using simpler or shorter words — never truncate.
 
-  WRONG: "Reda posts H1 growth despite merino"  (cut mid-thought — despite merino what? ✗)
-  RIGHT: "Reda grows H1 despite merino price rises PAMB"  (complete ✓)
+  WRONG: "Hermès plans first couture show Jan BoF"  (truncated + source in headline ✗)
+  RIGHT: "Hermès to debut couture show in January"  (complete, natural English ✓)
 
-  WRONG: "LVMH and Kering announce new strategic retail partnership BoF"  (too long ✗)
-  RIGHT: "LVMH, Kering announce retail partnership BoF"  (complete ✓)
+  WRONG: "De Beers sale advances amid natural"  (cut mid-thought ✗)
+  RIGHT: "De Beers nears sale, backs natural diamonds"  (complete ✓)
 
-Summarise ruthlessly. Drop articles (a, an, the). Use brand abbreviations (LVMH not "Louis Vuitton Moët Hennessy"). The result must always read as a complete, standalone thought — never a fragment.
+  WRONG: "Reda posts H1 growth despite merino"  (cut mid-thought — merino what? ✗)
+  RIGHT: "Reda grows H1 despite merino price increases"  (complete ✓)
+
+Write in plain, professional English. Full words, not abbreviations for months (January not Jan). The headline must read like a proper news sentence, not a note to yourself.
 
 Return exactly 10 news items (after lead_items are excluded, per SECTION C).
 If the article pool contains fewer than 10 clearly luxury-relevant stories, include the next most relevant stories that have any connection to luxury demand, luxury consumers, or the business of fashion and premium goods — do not leave slots empty.
