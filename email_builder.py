@@ -51,7 +51,7 @@ body {{ margin:0; padding:0; background:#f5f5f5; {FONT} }}
 .divider-thin {{ border:none; border-top:1px solid rgba(61,12,31,0.25); margin:14px 0 20px; }}
 .section-label {{ font-size:12px; font-weight:800; letter-spacing:.18em; text-transform:uppercase; color:{B}; margin:28px 0 10px; padding-left:0; }}
 .item {{ margin:0 0 8px 0; font-size:17px; line-height:1.5; color:{IN}; }}
-.item-hl {{ display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }}
+.item-hl-row {{ white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }}
 .item-src {{ font-size:12px; color:{MU}; line-height:1.4; }}
 .src-link {{ color:{MU}; text-decoration:none; border-bottom:1px solid #cccccc; }}
 .num-row {{ display:flex; justify-content:space-between; font-size:16px; padding:6px 0; border-bottom:1px solid #eeeeee; color:{IN}; }}
@@ -64,7 +64,7 @@ body {{ margin:0; padding:0; background:#f5f5f5; {FONT} }}
   .hdr-date {{ font-size:12px; }}
   .section-label {{ font-size:11px; margin:20px 0 8px; }}
   .item {{ font-size:13px; line-height:1.45; }}
-  .item-hl {{ display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }}
+  .item-hl-row {{ white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }}
   .item-src {{ font-size:11px; }}
   .num-row {{ font-size:13px; }}
   .num-name {{ font-size:13px !important; }}
@@ -224,10 +224,10 @@ def _build_lead(items: list) -> str:
         link    = item.get("link", "")
         primary = item.get("primary_source", "")
         also    = item.get("also", [])
-        hl_html = f'<a href="{link}" class="item-hl" style="color:{IN};text-decoration:none;">{text}</a>' if link else f'<span class="item-hl">{text}</span>'
+        hl_html = f'<a href="{link}" style="color:{IN};text-decoration:none;">{text}</a>' if link else text
         src_parts = [_abbr(primary)] + [_abbr(s) for s in also[:2]] if primary else []
         src_html  = f'<div class="item-src">{" · ".join(src_parts)}</div>' if src_parts else ""
-        html += f'<div class="item">&bull;&nbsp;{hl_html}{src_html}</div>'
+        html += f'<div class="item"><div class="item-hl-row">&bull;&nbsp;{hl_html}</div>{src_html}</div>'
     html += f'<hr class="divider-thin">'
     return html
 
@@ -241,10 +241,10 @@ def _build_news(items: list) -> str:
         link     = item.get("link", "")
         primary  = item.get("primary_source", "")
         also     = item.get("also", [])
-        hl_html  = f'<a href="{link}" class="item-hl" style="color:{IN};text-decoration:none;">{headline}</a>' if link else f'<span class="item-hl">{headline}</span>'
+        hl_html  = f'<a href="{link}" style="color:{IN};text-decoration:none;">{headline}</a>' if link else headline
         src_parts = [_abbr(primary)] + [_abbr(s) for s in also[:2]] if primary else []
         src_html  = f'<div class="item-src">{" · ".join(src_parts)}</div>' if src_parts else ""
-        html += f'<div class="item">&bull;&nbsp;{hl_html}{src_html}</div>'
+        html += f'<div class="item"><div class="item-hl-row">&bull;&nbsp;{hl_html}</div>{src_html}</div>'
     html += f'<hr class="divider-thin">'
     return html
 

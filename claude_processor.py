@@ -175,11 +175,11 @@ HEADLINE WRITING RULES
 
 Every headline must obey ALL of the following without exception:
 
-1. ONE LINE ON MOBILE — HARD LIMIT
-   Every headline must fit on a single line on a mobile phone screen. Never wrap to a second line.
-   Target: 7 words or fewer (including prepositions and articles). Absolute maximum: 9 words.
-   Count your words before submitting. If you reach 8–9, rewrite with simpler phrasing.
-   The source label is displayed separately — do not count it toward your word limit.
+1. ONE LINE ON MOBILE — HARD CHARACTER LIMIT
+   Every headline must be 50 characters or fewer, including spaces and punctuation.
+   Count the characters before submitting. If you exceed 50, rewrite using shorter words — never cut the sentence short.
+   Example: "LVMH reports record H1 sales on Asia rebound" = 45 chars ✓
+   Example: "Hugo Boss board rejects Frasers takeover bid as undervalued" = 59 chars ✗ → rewrite as "Hugo Boss rejects Frasers bid as undervalued" = 44 chars ✓
 
 2. COMPLETE ENGLISH SENTENCE — NO EXCEPTIONS
    Every headline must be a grammatically complete sentence in plain professional English.
