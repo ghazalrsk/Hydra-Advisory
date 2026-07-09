@@ -175,8 +175,8 @@ HEADLINE WRITING RULES
 Every headline must obey ALL of the following without exception:
 
 1. ONE LINE ON MOBILE — HARD LIMIT
-   The headline text + one space + source label must total 45 characters or fewer.
-   Count every character. If over 45, rewrite the headline using shorter words until it fits.
+   Every headline must fit on a single line on a mobile phone screen. Never wrap to a second line.
+   Mobile screens are narrow. Keep headlines concise. If a headline feels long, shorten it.
    Never wrap to a second line under any circumstances.
 
 2. COMPLETE ENGLISH SENTENCE — NO EXCEPTIONS
@@ -210,9 +210,9 @@ Every headline must obey ALL of the following without exception:
    WRONG: "Hermès plans couture show in Jan BoF"  — BoF is in the headline text. ✗
    RIGHT: "Hermès to debut couture show in January"  — clean headline, source added separately. ✓
 
-4. IF IT DOESN'T FIT, REWRITE — NEVER TRUNCATE
-   If the complete thought exceeds 45 characters, rephrase the entire headline using simpler
-   or shorter words that preserve the full meaning. Never cut a sentence short to make it fit.
+4. IF IT FEELS TOO LONG, REWRITE — NEVER TRUNCATE
+   If a headline is too long to fit on one mobile line, rephrase it using simpler or shorter
+   words that preserve the full meaning. Never cut a sentence short to make it fit.
 
 5. ABBREVIATIONS ARE FINE IF THEY MAKE SENSE IN CONTEXT
    "in Jan" is acceptable. "Jan" alone at the end of a sentence is not.
