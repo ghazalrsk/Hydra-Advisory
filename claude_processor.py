@@ -27,6 +27,7 @@ def process_with_claude(articles: list[dict], stocks: list[dict], today: str, nu
     raw = message.content[0].text
     result = _parse_response(raw)
     result["numbers_timestamp"] = numbers_timestamp
+    result = _validate_and_fix_headlines(client, result)
     return result
 
 
@@ -290,6 +291,80 @@ RETURN THIS EXACT JSON — no other text:
   ]
 }}
 """
+
+
+_BAD_ENDINGS = {
+    # prepositions
+    "amid", "with", "for", "on", "at", "by", "of", "in", "to", "into",
+    "from", "through", "about", "against", "between", "under", "over",
+    "within", "without", "beyond", "across", "behind", "during",
+    # conjunctions
+    "and", "but", "or", "while", "as", "since", "although", "despite",
+    "because", "though", "yet", "nor", "so", "than", "whether",
+    # articles / possessives
+    "the", "a", "an", "its", "their", "his", "her", "our", "your",
+    # adjectives that need a noun (common in luxury news)
+    "natural", "strong", "new", "major", "key", "first", "second",
+    "higher", "lower", "wider", "broader", "further", "additional",
+}
+
+
+def _headline_is_bad(text: str) -> str | None:
+    """Returns a description of the problem if headline is bad, else None."""
+    if not text:
+        return "empty"
+    last_word = text.rstrip(".,;:!?").split()[-1].lower()
+    if last_word in _BAD_ENDINGS:
+        return f"ends on '{last_word}' — incomplete sentence"
+    return None
+
+
+def _validate_and_fix_headlines(client, result: dict) -> dict:
+    """Check every headline and fix bad ones with a targeted Claude call."""
+    fixes_needed = []
+
+    for item in result.get("lead_items", []):
+        problem = _headline_is_bad(item.get("text", ""))
+        if problem:
+            fixes_needed.append(("lead", item, "text", problem))
+
+    for item in result.get("news", []):
+        problem = _headline_is_bad(item.get("headline", ""))
+        if problem:
+            fixes_needed.append(("news", item, "headline", problem))
+
+    if not fixes_needed:
+        log.info("  Headline validation: all clean")
+        return result
+
+    log.warning(f"  Headline validation: {len(fixes_needed)} bad headline(s) — fixing...")
+
+    for section, item, field, problem in fixes_needed:
+        bad = item[field]
+        fix_prompt = f"""This news headline is grammatically incomplete: "{bad}"
+Problem: {problem}
+
+Rewrite it as a complete, grammatically correct English sentence.
+Rules:
+- Must NOT end on a preposition, conjunction, article, or adjective without its noun
+- Must fit on one line on a mobile phone (keep it concise)
+- Must make complete sense on its own — who did what
+- Do NOT include the source publication name in the headline
+- Return ONLY the rewritten headline text, nothing else"""
+
+        try:
+            msg = client.messages.create(
+                model="claude-opus-4-5",
+                max_tokens=100,
+                messages=[{"role": "user", "content": fix_prompt}],
+            )
+            fixed = msg.content[0].text.strip().strip('"')
+            log.info(f"  Fixed: '{bad}' → '{fixed}'")
+            item[field] = fixed
+        except Exception as e:
+            log.warning(f"  Could not fix headline '{bad}': {e}")
+
+    return result
 
 
 def _parse_response(raw: str) -> dict:
