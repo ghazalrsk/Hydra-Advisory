@@ -168,26 +168,18 @@ If you cannot find a reason in the articles, write a brief 5-word-max factual no
 SECTION F — WRITING RULES
 ════════════════════════════════════════
 
-Lead items and news headlines: each headline + source label must appear on EXACTLY ONE LINE — never wrap. The combined total (headline + 1 space + source) must not exceed 45 characters.
+Lead items and news headlines — two rules only:
 
-Maximum headline length per source — HARD LIMITS, never exceed:
-  BoF        (3 chars) → headline max 41 chars
-  WWD        (3 chars) → headline max 41 chars
-  PAMB       (4 chars) → headline max 40 chars
-  Nikkei     (6 chars) → headline max 38 chars
-  Il Sole    (7 chars) → headline max 37 chars
-  Il Sole/WWD (11 chars) → headline max 33 chars
-  MFF        (3 chars) → headline max 41 chars
-  SCMP       (4 chars) → headline max 40 chars
+RULE 1 — HARD MAXIMUM: The headline + 1 space + source label must never exceed 45 characters total. This ensures it fits on one line on a mobile screen. Never wrap to a second line under any circumstances. After writing each headline, count the total characters. If over 45, shorten the headline until it fits.
 
-After writing each headline, count the characters. If it exceeds the limit, rewrite it shorter — shorten the last word, cut a qualifier, use an abbreviation. Never end a headline on a long word like "partnership" or "collaboration" if it pushes you over.
+RULE 2 — SOFT MINIMUM: Write at least 5 words. Do not write a headline so short it looks terse or incomplete next to the others.
 
-Fill the line as close to the limit as possible. Never write a headline shorter than you need to — use every character available.
-  WRONG: "LV wins China case BoF"  (22 chars — too short)
-  CORRECT: "Louis Vuitton wins China trademark case BoF"  (41 chars ✓)
-  WRONG: "Chanel shows couture Il Sole/WWD"  (too short)
-  CORRECT: "Chanel, Armani Privé show Paris couture Il Sole"  (too long — rewrite)
-  CORRECT: "Chanel, Armani Privé open couture Il Sole/WWD"  (33 chars headline ✓)
+Within these two bounds, write the best, most informative, most natural-sounding headline you can. Do not pad, do not cut meaning to hit a target length — just write clearly and check you are within the maximum.
+
+  CORRECT: "Gucci names new creative director BoF"  (natural, fits ✓)
+  CORRECT: "De Beers cuts diamond prices WWD"  (short but complete ✓)
+  WRONG: "LVMH and Kering announce new strategic retail partnership BoF"  (too long — wraps on mobile ✗)
+  RIGHT: "LVMH, Kering announce retail partnership BoF"  (fits ✓)
 
 Summarise ruthlessly. Drop articles (a, an, the). Use brand abbreviations (LVMH not "Louis Vuitton Moët Hennessy"). The result must always read as a complete, standalone thought.
 
