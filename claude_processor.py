@@ -176,11 +176,11 @@ HEADLINE WRITING RULES
 Every headline must obey ALL of the following without exception:
 
 1. ONE LINE ON MOBILE — HARD CHARACTER LIMIT
-   Every headline must be 40 characters or fewer, including spaces and punctuation.
-   The source label (e.g. "BoF", "Reuters") is displayed on the same line after your headline — it takes up the remaining space.
-   Count your characters before submitting. If you exceed 40, rewrite using shorter words — never cut the sentence short.
+   Every headline must be 35 characters or fewer, including spaces and punctuation.
+   The source label (e.g. "BoF", "Reuters") appears on the same line after the headline — leave room for it.
+   Count every character before submitting. If over 35, rewrite with shorter words — never cut the sentence.
    Example: "Hugo Boss rejects Frasers bid" = 29 chars ✓
-   Example: "LVMH reports record H1 sales on Asia rebound" = 44 chars ✗ → rewrite as "LVMH reports record H1 sales" = 28 chars ✓
+   Example: "Kering cuts costs on weak China demand" = 38 chars ✗ → rewrite as "Kering cuts costs on China weakness" = 35 chars ✓
 
 2. COMPLETE ENGLISH SENTENCE — NO EXCEPTIONS
    Every headline must be a grammatically complete sentence in plain professional English.
@@ -311,10 +311,14 @@ _BAD_ENDINGS = {
 }
 
 
+MAX_HEADLINE_CHARS = 35
+
 def _headline_is_bad(text: str) -> str | None:
     """Returns a description of the problem if headline is bad, else None."""
     if not text:
         return "empty"
+    if len(text) > MAX_HEADLINE_CHARS:
+        return f"too long ({len(text)} chars) — must be {MAX_HEADLINE_CHARS} or fewer"
     last_word = text.rstrip(".,;:!?").split()[-1].lower()
     if last_word in _BAD_ENDINGS:
         return f"ends on '{last_word}' — incomplete sentence"
@@ -343,13 +347,13 @@ def _validate_and_fix_headlines(client, result: dict) -> dict:
 
     for section, item, field, problem in fixes_needed:
         bad = item[field]
-        fix_prompt = f"""This news headline is grammatically incomplete: "{bad}"
+        fix_prompt = f"""This news headline has a problem: "{bad}"
 Problem: {problem}
 
 Rewrite it as a complete, grammatically correct English sentence.
 Rules:
+- Must be {MAX_HEADLINE_CHARS} characters or fewer (count every character including spaces)
 - Must NOT end on a preposition, conjunction, article, or adjective without its noun
-- Must fit on one line on a mobile phone (keep it concise)
 - Must make complete sense on its own — who did what
 - Do NOT include the source publication name in the headline
 - Return ONLY the rewritten headline text, nothing else"""
