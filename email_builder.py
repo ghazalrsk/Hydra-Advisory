@@ -88,7 +88,7 @@ body {{ margin:0; padding:0; background:#f5f5f5; {FONT} }}
     Hydra Brief is a curated summary of important industry news of the day.<br>
     Provided by <a href="https://hydra-advisory.com" style="color:#aaaaaa;">Hydra Advisory</a>.<br><br>
     <a href="*|UNSUB|*" style="color:#aaaaaa;">Unsubscribe</a> &nbsp;·&nbsp; Via Cerva 1, Milan, 20122<br>
-    <span style="font-size:11px;color:#cccccc;">This digest is for informational purposes only and does not constitute financial, investment, or legal advice.</span>
+    <span style="font-size:11px;color:#cccccc;">This digest is for informational purposes only and does not constitute financial, investment, or legal advice. News summaries are sourced from third-party publications; all original reporting belongs to the respective publishers.</span>
   </div>
 
 </div>
@@ -218,15 +218,10 @@ def _build_lead(items: list) -> str:
         return ""
     html = '<div class="section-label">What You Should Know Today</div>'
     for item in items[:3]:
-        text    = _esc(item.get("text", ""))
-        link    = item.get("link", "")
-        primary = _esc(item.get("primary_source", ""))
-        also    = item.get("also", [])
-
+        text = _esc(item.get("text", ""))
+        link = item.get("link", "")
         title_html = f'<a href="{link}" style="color:{IN};text-decoration:none;">{text}</a>' if link else text
-        src_html = _inline_src(primary, link, also)
-
-        html += f'<div class="item">&bull;&nbsp;{title_html}{src_html}</div>'
+        html += f'<div class="item">&bull;&nbsp;{title_html}</div>'
     html += f'<hr class="divider-thin">'
     return html
 
@@ -238,13 +233,8 @@ def _build_news(items: list) -> str:
     for item in items[:10]:
         headline = _esc(item.get("headline", ""))
         link     = item.get("link", "")
-        primary  = _esc(item.get("primary_source", ""))
-        also     = item.get("also", [])
-
         title_html = f'<a href="{link}" style="color:{IN};text-decoration:none;">{headline}</a>' if link else headline
-        src_html = _inline_src(primary, link, also)
-
-        html += f'<div class="item">&bull;&nbsp;{title_html}{src_html}</div>'
+        html += f'<div class="item">&bull;&nbsp;{title_html}</div>'
     html += f'<hr class="divider-thin">'
     return html
 
