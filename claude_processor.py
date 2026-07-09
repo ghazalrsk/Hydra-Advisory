@@ -108,12 +108,13 @@ INCLUDE ONLY WITH EXPLICIT BUSINESS ANGLE:
 INDUSTRY PRIORITY — apply this before anything else:
 Hydra Brief serves a luxury advisory boutique. The digest must stay within the luxury, high-end fashion, and premium goods industry first. Fill all available slots with stories from this universe before considering anything outside it.
 
-Priority order for story selection:
+Priority order for story selection — work through these in order until all slots are filled:
   1. Luxury, fashion, high-end goods — always first. Stories about the brand universe, luxury M&A, luxury retail, luxury market data, watches, jewellery, leather goods, couture, premium beauty.
-  2. Broader financial/macro news — only if it has a direct, explicit luxury demand implication (e.g. China tariffs, consumer confidence in key luxury markets, currency moves affecting luxury pricing). Must pass the test: "would a luxury executive care about this specifically?"
-  3. Everything else — reject.
+  2. Broader financial/macro news with a direct luxury demand implication (e.g. China tariffs, consumer confidence in key luxury markets, currency moves affecting luxury pricing).
+  3. Adjacent business news relevant to luxury executives — retail, consumer goods, hospitality, art market, real estate in key luxury cities, high-end travel.
+  4. General business, economic, or geopolitical news that any senior executive would want to know — use this tier to fill any remaining slots if tiers 1–3 are exhausted.
 
-If after filling all slots with luxury-industry stories there are still remaining slots and no more qualifying luxury stories, only then consider adjacent macro/financial stories with a direct luxury link.
+CRITICAL: All slots must always be filled. Never leave a slot empty because "no qualifying luxury story exists." Work through the priority tiers until every slot is filled. The email must always send.
 
 ALWAYS REJECT:
 - Celebrity wearing a brand (unless it is a new ambassador deal)

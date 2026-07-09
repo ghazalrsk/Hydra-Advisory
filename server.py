@@ -166,11 +166,13 @@ def run_pipeline(test_email: str = ""):
         articles = fetch_all_articles(is_monday=is_monday)
 
         # Filter out stories already covered in recent editions
-        articles = filter_seen(articles, memory)
-
-        if len(articles) < 5:
-            log.error("Too few articles after memory filter — aborting")
-            return
+        # If memory filter leaves too few, fall back to the full unfiltered pool
+        filtered = filter_seen(articles, memory)
+        if len(filtered) < 5:
+            log.warning(f"Only {len(filtered)} articles after memory filter — using full pool of {len(articles)}")
+            articles = articles
+        else:
+            articles = filtered
 
         stocks = fetch_stock_prices()
         numbers_timestamp = now.strftime("%-d %b %Y · as of %H:%M UTC")
