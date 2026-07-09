@@ -177,9 +177,6 @@ def fetch_stock_prices(top_n: int = 6) -> list[dict]:
         })
         log.info(f"  {name} ({ticker}) [{source}]: {currency}{today_close:.2f} {sign}{pct_change:.1f}%")
 
-        except Exception as e:
-            log.warning(f"  Failed to fetch {ticker}: {e}")
-
     stocks.sort(key=lambda s: abs(s["raw_change"]), reverse=True)
     return stocks[:top_n]
 
