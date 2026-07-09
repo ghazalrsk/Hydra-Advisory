@@ -1,141 +1,133 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Hydra Brief — Subscribe</title>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
   min-height: 100vh;
-  background: #2a0a18;
-  background: radial-gradient(ellipse at center, #3d1225 0%, #1e0710 100%);
+  background: radial-gradient(ellipse at 50% 40%, #3d1225 0%, #1a0509 100%);
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
   color: #fff;
-  padding: 40px 24px;
+  padding: 48px 24px;
+  -webkit-font-smoothing: antialiased;
 }
 
 .card {
-  max-width: 720px;
+  max-width: 700px;
   width: 100%;
 }
 
 h1 {
-  font-size: clamp(22px, 4vw, 36px);
+  font-size: clamp(24px, 4vw, 38px);
   font-weight: 600;
   color: #ffffff;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
   line-height: 1.2;
+  letter-spacing: -0.01em;
 }
 
 .body-text {
-  font-size: clamp(14px, 2vw, 17px);
-  color: rgba(255,255,255,0.55);
-  line-height: 1.6;
-  margin-bottom: 40px;
-  max-width: 640px;
+  font-size: clamp(14px, 1.8vw, 17px);
+  color: rgba(255,255,255,0.5);
+  line-height: 1.65;
+  margin-bottom: 44px;
+  max-width: 600px;
 }
 
 .form-row {
   display: flex;
-  gap: 0;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 
 input[type="email"] {
   flex: 1;
-  padding: 14px 20px;
+  padding: 15px 20px;
   font-size: 15px;
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.14);
   border-right: none;
   color: #fff;
   outline: none;
   font-family: inherit;
+  -webkit-appearance: none;
 }
 
-input[type="email"]::placeholder {
-  color: rgba(255,255,255,0.35);
-}
+input[type="email"]::placeholder { color: rgba(255,255,255,0.3); }
+input[type="email"]:focus { border-color: rgba(184,146,42,0.5); background: rgba(255,255,255,0.1); }
 
 button[type="submit"] {
-  padding: 14px 28px;
+  padding: 15px 30px;
   background: #B8922A;
   color: #fff;
   border: none;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 700;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   cursor: pointer;
   font-family: inherit;
   white-space: nowrap;
+  transition: background 0.15s;
 }
 
-button[type="submit"]:hover { background: #c9a030; }
-button[type="submit"]:disabled { opacity: 0.6; cursor: default; }
+button[type="submit"]:hover:not(:disabled) { background: #ca9f30; }
+button[type="submit"]:disabled { opacity: 0.55; cursor: default; }
 
 .gdpr {
   display: flex;
   align-items: flex-start;
   gap: 12px;
   font-size: 13px;
-  color: rgba(255,255,255,0.45);
-  line-height: 1.5;
-  margin-bottom: 48px;
-  max-width: 640px;
+  color: rgba(255,255,255,0.38);
+  line-height: 1.55;
+  margin-bottom: 52px;
+  max-width: 600px;
 }
 
 .gdpr input[type="checkbox"] {
   margin-top: 2px;
   flex-shrink: 0;
-  width: 16px;
-  height: 16px;
+  width: 15px;
+  height: 15px;
   cursor: pointer;
   accent-color: #B8922A;
 }
 
-.gdpr a {
-  color: rgba(255,255,255,0.65);
-  text-decoration: underline;
-}
+.gdpr a { color: rgba(255,255,255,0.55); text-decoration: underline; }
 
 .footer-text {
-  font-size: clamp(14px, 2vw, 17px);
-  color: rgba(255,255,255,0.45);
-  line-height: 1.6;
-  max-width: 640px;
+  font-size: clamp(14px, 1.8vw, 17px);
+  color: rgba(255,255,255,0.38);
+  line-height: 1.65;
+  max-width: 600px;
 }
 
 .msg {
-  margin-top: 14px;
-  font-size: 14px;
-  min-height: 20px;
+  margin-top: 12px;
+  font-size: 13px;
+  min-height: 18px;
+  letter-spacing: 0.01em;
 }
 .msg.ok  { color: #7ecfa0; }
-.msg.err { color: #e07070; }
+.msg.err { color: #e08080; }
 
 @media (max-width: 480px) {
   .form-row { flex-direction: column; }
-  input[type="email"] { border-right: 1px solid rgba(255,255,255,0.15); border-bottom: none; }
-  button[type="submit"] { padding: 14px; }
+  input[type="email"] { border-right: 1px solid rgba(255,255,255,0.14); border-bottom: none; }
+  button[type="submit"] { padding: 14px; letter-spacing: 0.16em; }
 }
 </style>
-</head>
-<body>
+
 <div class="card">
   <h1>Free daily digest for luxury professionals</h1>
-
   <p class="body-text">Every morning, one email. Twenty-plus sources collapsed into the stories that matter — deduplicated, summarised, and sent before your day starts.</p>
 
-  <form id="form" onsubmit="submit(event)">
+  <form id="form" onsubmit="handleSubmit(event)">
     <div class="form-row">
       <input type="email" id="email" placeholder="Your email address" required autocomplete="email">
-      <button type="submit" id="btn">SUBSCRIBE</button>
+      <button type="submit" id="btn">Subscribe</button>
     </div>
     <label class="gdpr">
       <input type="checkbox" id="gdpr" required>
@@ -148,13 +140,13 @@ button[type="submit"]:disabled { opacity: 0.6; cursor: default; }
 </div>
 
 <script>
-async function submit(e) {
+async function handleSubmit(e) {
   e.preventDefault();
   const btn = document.getElementById('btn');
   const msg = document.getElementById('msg');
   const email = document.getElementById('email').value.trim();
   btn.disabled = true;
-  btn.textContent = 'SUBSCRIBING…';
+  btn.textContent = 'Subscribing…';
   msg.className = 'msg';
   msg.textContent = '';
   try {
@@ -166,8 +158,8 @@ async function submit(e) {
     const data = await res.json();
     if (data.ok) {
       msg.className = 'msg ok';
-      msg.textContent = 'You're subscribed. See you tomorrow morning.';
-      btn.textContent = 'SUBSCRIBED';
+      msg.textContent = 'You\'re subscribed. See you tomorrow morning.';
+      btn.textContent = 'Subscribed';
     } else {
       throw new Error(data.message || 'Something went wrong.');
     }
@@ -175,9 +167,7 @@ async function submit(e) {
     msg.className = 'msg err';
     msg.textContent = err.message;
     btn.disabled = false;
-    btn.textContent = 'SUBSCRIBE';
+    btn.textContent = 'Subscribe';
   }
 }
 </script>
-</body>
-</html>
