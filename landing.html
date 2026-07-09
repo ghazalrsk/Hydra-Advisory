@@ -113,10 +113,34 @@ button[type="submit"]:disabled { opacity: 0.55; cursor: default; }
 .msg.ok  { color: #7ecfa0; }
 .msg.err { color: #e08080; }
 
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 14px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  font-size: 11px;
+  color: rgba(255,255,255,0.25);
+  border-top: 1px solid rgba(255,255,255,0.07);
+  flex-wrap: wrap;
+}
+
+footer a { color: rgba(255,255,255,0.35); text-decoration: none; }
+footer a:hover { color: rgba(255,255,255,0.6); }
+
+.footer-left { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
+.footer-right { text-align: right; }
+
 @media (max-width: 480px) {
   .form-row { flex-direction: column; }
   input[type="email"] { border-right: 1px solid rgba(255,255,255,0.14); border-bottom: none; }
   button[type="submit"] { padding: 14px; letter-spacing: 0.16em; }
+  footer { flex-direction: column; align-items: flex-start; gap: 6px; }
+  .footer-right { text-align: left; }
 }
 </style>
 
@@ -138,6 +162,17 @@ button[type="submit"]:disabled { opacity: 0.55; cursor: default; }
 
   <p class="footer-text">Join luxury executives, investors, and brand operators who start their day with Hydra Brief. Free, always. Unsubscribe in one click.</p>
 </div>
+
+<footer>
+  <div class="footer-left">
+    <span>© 2026 Hydra Advisory</span>
+    <a href="https://hydra-advisory.com" target="_blank">hydra-advisory.com</a>
+    <span>Via Cerva 1, 20122 Milan, Italy</span>
+  </div>
+  <div class="footer-right">
+    News summaries are sourced from third-party publications; all original reporting belongs to the respective publishers. This digest is for informational purposes only and does not constitute financial, investment, or legal advice.
+  </div>
+</footer>
 
 <script>
 async function handleSubmit(e) {
