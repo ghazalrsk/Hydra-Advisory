@@ -1,408 +1,162 @@
-
-<title>Hydra Brief — Daily Intelligence for Luxury Professionals</title>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hydra Brief — Subscribe</title>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-:root {
-  --b:   #3D0C1F;
-  --b2:  #5c1530;
-  --g:   #B8922A;
-  --g2:  #CCA84A;
-  --g3:  #E4CA80;
-  --ink: #1A1A1A;
-  --mute:#7A7070;
-  --rule:#E2DDD8;
-  --bg:  #F7F4F0;
-  --pos: #1A5E3A;
-  --serif: 'Cormorant Garamond', 'Georgia', serif;
-  --mono:  'DM Mono', 'Courier New', monospace;
-  --sans:  'Jost', system-ui, sans-serif;
-}
-
-html, body { height: 100%; overflow: hidden; }
-
 body {
-  font-family: var(--sans);
-  background: var(--bg);
-  color: var(--ink);
-  font-size: 14px;
-  font-weight: 300;
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  background: #2a0a18;
+  background: radial-gradient(ellipse at center, #3d1225 0%, #1e0710 100%);
   display: flex;
-  flex-direction: column;
-}
-
-.site-header {
-  background: var(--b);
-  display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 0 36px;
-  height: 36px;
-  flex-shrink: 0;
-  border-bottom: 1px solid rgba(255,255,255,0.07);
-}
-.site-header-brand {
-  font-family: var(--mono);
-  font-size: 9px;
-  letter-spacing: 0.26em;
-  text-transform: uppercase;
+  justify-content: center;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
   color: #fff;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.site-header-brand::before {
-  content: '';
-  display: block;
-  width: 14px;
-  height: 1px;
-  background: var(--g2);
-}
-.site-header-right {
-  font-family: var(--mono);
-  font-size: 8px;
-  letter-spacing: 0.16em;
-  color: rgba(255,255,255,0.32);
-  text-transform: uppercase;
+  padding: 40px 24px;
 }
 
-.layout {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-
-.hero {
-  background: var(--b);
-  padding: 28px 40px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 40px;
-  flex-shrink: 0;
-  position: relative;
-  overflow: hidden;
-}
-.hero::after {
-  content: 'H';
-  position: absolute;
-  right: -20px;
-  top: 50%;
-  transform: translateY(-54%);
-  font-family: var(--serif);
-  font-size: 220px;
-  font-weight: 300;
-  color: rgba(255,255,255,0.03);
-  line-height: 1;
-  pointer-events: none;
-}
-.hero-left { flex: 1; max-width: 540px; }
-.hero-eyebrow {
-  font-family: var(--mono);
-  font-size: 8px;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: var(--g2);
-  margin-bottom: 12px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.hero-eyebrow::before {
-  content: '';
-  display: block;
-  width: 20px;
-  height: 1px;
-  background: var(--g2);
-}
-.hero-title {
-  font-family: var(--serif);
-  font-size: clamp(34px, 4.2vw, 56px);
-  font-weight: 300;
-  line-height: 0.92;
-  color: #fff;
-  margin-bottom: 6px;
-  letter-spacing: -0.01em;
-}
-.hero-title em { font-style: italic; color: var(--g3); }
-.hero-sub {
-  font-family: var(--serif);
-  font-size: clamp(13px, 1.6vw, 17px);
-  font-weight: 300;
-  color: rgba(255,255,255,0.38);
-  margin-bottom: 18px;
-}
-.hero-desc {
-  font-size: 12px;
-  color: rgba(255,255,255,0.48);
-  line-height: 1.7;
-  max-width: 400px;
-  font-weight: 300;
-}
-.hero-right {
-  display: flex;
-  gap: 0;
-  border: 1px solid rgba(255,255,255,0.12);
-  flex-shrink: 0;
-}
-.hero-stat {
-  padding: 10px 22px;
-  border-right: 1px solid rgba(255,255,255,0.12);
-  text-align: center;
-}
-.hero-stat:last-child { border-right: none; }
-.hero-stat-n {
-  font-family: var(--serif);
-  font-size: 20px;
-  font-weight: 300;
-  color: #fff;
-  line-height: 1;
-  margin-bottom: 2px;
-}
-.hero-stat-l {
-  font-family: var(--mono);
-  font-size: 7px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.3);
-}
-
-.cards {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  flex-shrink: 0;
-  border-top: 1px solid var(--rule);
-}
 .card {
-  background: var(--bg);
-  padding: 20px 28px;
-  border-right: 1px solid var(--rule);
+  max-width: 720px;
+  width: 100%;
 }
-.card:last-child { border-right: none; }
-.card-num {
-  font-family: var(--mono);
-  font-size: 7.5px;
-  letter-spacing: 0.2em;
-  color: var(--g);
-  margin-bottom: 6px;
-  text-transform: uppercase;
-}
-.card-title {
-  font-family: var(--serif);
-  font-size: 16px;
-  font-weight: 400;
-  color: var(--b);
-  margin-bottom: 4px;
+
+h1 {
+  font-size: clamp(22px, 4vw, 36px);
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 20px;
   line-height: 1.2;
 }
-.card-desc {
-  font-size: 11px;
-  color: var(--mute);
-  line-height: 1.55;
+
+.body-text {
+  font-size: clamp(14px, 2vw, 17px);
+  color: rgba(255,255,255,0.55);
+  line-height: 1.6;
+  margin-bottom: 40px;
+  max-width: 640px;
 }
 
-.subscribe {
-  flex: 1;
-  background: var(--b2);
+.form-row {
   display: flex;
-  align-items: center;
+  gap: 0;
+  margin-bottom: 16px;
 }
-.subscribe-inner {
-  width: 100%;
-  padding: 0 40px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 56px;
-  align-items: center;
-}
-.sub-eyebrow {
-  font-family: var(--mono);
-  font-size: 8px;
-  letter-spacing: 0.26em;
-  text-transform: uppercase;
-  color: var(--g2);
-  margin-bottom: 8px;
-}
-.sub-desc {
-  font-size: 12px;
-  color: rgba(255,255,255,0.5);
-  line-height: 1.7;
-  max-width: 340px;
-}
-.sub-form-full { display: flex; flex-direction: column; gap: 10px; }
-.sub-row { display: flex; gap: 0; }
-.sub-input {
+
+input[type="email"] {
   flex: 1;
-  height: 42px;
+  padding: 14px 20px;
+  font-size: 15px;
   background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.15);
   border-right: none;
-  padding: 0 14px;
-  font-family: var(--sans);
-  font-size: 13px;
-  font-weight: 300;
   color: #fff;
   outline: none;
-  transition: border-color 0.15s;
+  font-family: inherit;
 }
-.sub-input::placeholder { color: rgba(255,255,255,0.32); }
-.sub-input:focus { border-color: var(--g2); background: rgba(255,255,255,0.12); }
-.sub-btn {
-  height: 42px;
-  background: var(--g);
-  border: 1px solid var(--g);
-  padding: 0 22px;
-  font-family: var(--mono);
-  font-size: 8.5px;
-  font-weight: 400;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+
+input[type="email"]::placeholder {
+  color: rgba(255,255,255,0.35);
+}
+
+button[type="submit"] {
+  padding: 14px 28px;
+  background: #B8922A;
   color: #fff;
+  border: none;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
   cursor: pointer;
-  transition: background 0.15s;
+  font-family: inherit;
   white-space: nowrap;
 }
-.sub-btn:hover { background: var(--g2); border-color: var(--g2); }
-.sub-btn:disabled { opacity: 0.6; cursor: default; }
 
-.gdpr-row { display: flex; align-items: flex-start; gap: 9px; }
-.gdpr-check { width: 13px; height: 13px; accent-color: var(--g); flex-shrink: 0; margin-top: 2px; }
-.gdpr-text {
-  font-family: var(--mono);
-  font-size: 7.5px;
-  letter-spacing: 0.05em;
-  color: rgba(255,255,255,0.32);
+button[type="submit"]:hover { background: #c9a030; }
+button[type="submit"]:disabled { opacity: 0.6; cursor: default; }
+
+.gdpr {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 13px;
+  color: rgba(255,255,255,0.45);
   line-height: 1.5;
+  margin-bottom: 48px;
+  max-width: 640px;
 }
-.gdpr-text a { color: rgba(255,255,255,0.55); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.2); }
+
+.gdpr input[type="checkbox"] {
+  margin-top: 2px;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: #B8922A;
+}
+
+.gdpr a {
+  color: rgba(255,255,255,0.65);
+  text-decoration: underline;
+}
+
+.footer-text {
+  font-size: clamp(14px, 2vw, 17px);
+  color: rgba(255,255,255,0.45);
+  line-height: 1.6;
+  max-width: 640px;
+}
 
 .msg {
-  font-family: var(--mono);
-  font-size: 8.5px;
-  letter-spacing: 0.08em;
-  padding: 8px 12px;
-  display: none;
+  margin-top: 14px;
+  font-size: 14px;
+  min-height: 20px;
 }
-.msg.ok   { background: rgba(26,94,58,0.25); color: #7ecfa0; border: 1px solid rgba(126,207,160,0.25); }
-.msg.err  { background: rgba(150,30,30,0.25); color: #f4a0a0; border: 1px solid rgba(244,160,160,0.25); }
-.msg.show { display: block; }
+.msg.ok  { color: #7ecfa0; }
+.msg.err { color: #e07070; }
 
-.site-footer {
-  flex-shrink: 0;
-  padding: 12px 40px;
-  border-top: 1px solid rgba(255,255,255,0.10);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: var(--b);
+@media (max-width: 480px) {
+  .form-row { flex-direction: column; }
+  input[type="email"] { border-right: 1px solid rgba(255,255,255,0.15); border-bottom: none; }
+  button[type="submit"] { padding: 14px; }
 }
-.site-footer-brand {
-  font-family: var(--mono);
-  font-size: 8px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.28);
-}
-.site-footer-links { display: flex; gap: 18px; }
-.site-footer-links a {
-  font-family: var(--mono);
-  font-size: 8px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.28);
-  text-decoration: none;
-}
-.site-footer-links a:hover { color: var(--g2); }
 </style>
+</head>
+<body>
+<div class="card">
+  <h1>Free daily digest for luxury professionals</h1>
 
-<header class="site-header">
-  <div class="site-header-brand">Hydra Brief</div>
-  <div class="site-header-right">Daily intelligence · Free</div>
-</header>
+  <p class="body-text">Every morning, one email. Twenty-plus sources collapsed into the stories that matter — deduplicated, summarised, and sent before your day starts.</p>
 
-<div class="layout">
-  <section class="hero">
-    <div class="hero-left">
-      <div class="hero-eyebrow">Hydra Advisory · Milan</div>
-      <h1 class="hero-title">The luxury<br>industry,<br><em>once a day.</em></h1>
-      <p class="hero-sub">Free daily digest for luxury professionals</p>
-      <p class="hero-desc">Every morning, one email. Twenty-plus sources collapsed into the stories that matter — deduplicated, summarised, and sent before your day starts.</p>
+  <form id="form" onsubmit="submit(event)">
+    <div class="form-row">
+      <input type="email" id="email" placeholder="Your email address" required autocomplete="email">
+      <button type="submit" id="btn">SUBSCRIBE</button>
     </div>
-    <div class="hero-right">
-      <div class="hero-stat"><div class="hero-stat-n">20+</div><div class="hero-stat-l">Sources scanned</div></div>
-      <div class="hero-stat"><div class="hero-stat-n">8am</div><div class="hero-stat-l">Daily send</div></div>
-      <div class="hero-stat"><div class="hero-stat-n">2 min</div><div class="hero-stat-l">To read</div></div>
-      <div class="hero-stat"><div class="hero-stat-n">Free</div><div class="hero-stat-l">Always</div></div>
-    </div>
-  </section>
+    <label class="gdpr">
+      <input type="checkbox" id="gdpr" required>
+      <span>I agree to receive the Hydra Brief daily email. My data will be processed in accordance with Hydra Advisory's <a href="https://hydra-advisory.com/privacy" target="_blank">Privacy Policy</a> and GDPR policy. I can unsubscribe at any time with a single click.</span>
+    </label>
+    <div class="msg" id="msg"></div>
+  </form>
 
-  <div class="cards">
-    <div class="card">
-      <div class="card-num">01</div>
-      <div class="card-title">One story, told once</div>
-      <div class="card-desc">The same story from six sources, collapsed into one. Best source credited, others noted.</div>
-    </div>
-    <div class="card">
-      <div class="card-num">02</div>
-      <div class="card-title">Business angle only</div>
-      <div class="card-desc">Executive moves, M&amp;A, earnings, openings, regulation. No runway reviews, no noise.</div>
-    </div>
-    <div class="card">
-      <div class="card-num">03</div>
-      <div class="card-title">Market signals included</div>
-      <div class="card-desc">EUR/CNY, gold, equity moves, and a daily proprietary number — contextualised, not just listed.</div>
-    </div>
-  </div>
-
-  <section class="subscribe">
-    <div class="subscribe-inner">
-      <div class="sub-left">
-        <div class="sub-eyebrow">Subscribe · Free</div>
-        <p class="sub-desc">Join luxury executives, investors, and brand operators who start their day with Hydra Brief. Free, always. Unsubscribe in one click.</p>
-      </div>
-      <div class="sub-right">
-        <form class="sub-form-full" id="sub-form" onsubmit="handleSubscribe(event)">
-          <div class="sub-row">
-            <input class="sub-input" type="email" id="sub-email" placeholder="Your email address" required>
-            <button class="sub-btn" type="submit" id="sub-btn">Subscribe</button>
-          </div>
-          <div class="gdpr-row">
-            <input class="gdpr-check" type="checkbox" id="gdpr" required>
-            <label class="gdpr-text" for="gdpr">
-              I agree to receive the Hydra Brief daily email. My data will be processed in accordance with Hydra Advisory's <a href="#">Privacy Policy</a> and GDPR policy. I can unsubscribe at any time with a single click.
-            </label>
-          </div>
-          <div class="msg ok" id="msg-ok">You're subscribed. First edition arrives tomorrow morning.</div>
-          <div class="msg err" id="msg-err">Something went wrong. Please try again or email info@hydra-advisory.com</div>
-        </form>
-      </div>
-    </div>
-  </section>
+  <p class="footer-text">Join luxury executives, investors, and brand operators who start their day with Hydra Brief. Free, always. Unsubscribe in one click.</p>
 </div>
 
-<footer class="site-footer">
-  <div class="site-footer-brand">Hydra Advisory · Via Cerva 1, 20122 Milan · info@hydra-advisory.com</div>
-  <div class="site-footer-links">
-    <a href="#">Privacy Policy</a>
-    <a href="#">GDPR</a>
-    <a href="https://hydra-advisory.us11.list-manage.com/unsubscribe">Unsubscribe</a>
-  </div>
-</footer>
-
 <script>
-async function handleSubscribe(e) {
+async function submit(e) {
   e.preventDefault();
-  const email = document.getElementById('sub-email').value.trim();
-  const btn   = document.getElementById('sub-btn');
-  const ok    = document.getElementById('msg-ok');
-  const err   = document.getElementById('msg-err');
-  ok.classList.remove('show');
-  err.classList.remove('show');
+  const btn = document.getElementById('btn');
+  const msg = document.getElementById('msg');
+  const email = document.getElementById('email').value.trim();
   btn.disabled = true;
-  btn.textContent = 'Subscribing…';
+  btn.textContent = 'SUBSCRIBING…';
+  msg.className = 'msg';
+  msg.textContent = '';
   try {
     const res = await fetch('/subscribe', {
       method: 'POST',
@@ -411,20 +165,19 @@ async function handleSubscribe(e) {
     });
     const data = await res.json();
     if (data.ok) {
-      ok.classList.add('show');
-      document.getElementById('sub-form').reset();
-      btn.textContent = 'Subscribed ✓';
-      btn.style.background = '#1A5E3A';
-      btn.style.borderColor = '#1A5E3A';
+      msg.className = 'msg ok';
+      msg.textContent = 'You're subscribed. See you tomorrow morning.';
+      btn.textContent = 'SUBSCRIBED';
     } else {
-      err.classList.add('show');
-      btn.disabled = false;
-      btn.textContent = 'Subscribe';
+      throw new Error(data.message || 'Something went wrong.');
     }
-  } catch {
-    err.classList.add('show');
+  } catch (err) {
+    msg.className = 'msg err';
+    msg.textContent = err.message;
     btn.disabled = false;
-    btn.textContent = 'Subscribe';
+    btn.textContent = 'SUBSCRIBE';
   }
 }
 </script>
+</body>
+</html>
