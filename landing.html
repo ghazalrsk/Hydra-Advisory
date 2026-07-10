@@ -4,13 +4,13 @@
 
 body {
   min-height: 100vh;
-  background: radial-gradient(ellipse at 50% 40%, #3d1225 0%, #1a0509 100%);
+  background: #F2EDE4;
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
-  color: #fff;
-  padding: 48px 24px;
+  color: #1a1a1a;
+  padding: 80px 24px;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -19,18 +19,27 @@ body {
   width: 100%;
 }
 
+.logo {
+  margin-bottom: 44px;
+}
+.logo svg {
+  width: 240px;
+  height: auto;
+  display: block;
+}
+
 h1 {
-  font-size: clamp(24px, 4vw, 38px);
+  font-size: clamp(26px, 4vw, 40px);
   font-weight: 600;
-  color: #ffffff;
+  color: #1a1a1a;
   margin-bottom: 18px;
   line-height: 1.2;
   letter-spacing: -0.01em;
 }
 
 .body-text {
-  font-size: clamp(14px, 1.8vw, 17px);
-  color: rgba(255,255,255,0.5);
+  font-size: clamp(16px, 2vw, 18px);
+  color: #555;
   line-height: 1.65;
   margin-bottom: 44px;
   max-width: 600px;
@@ -43,28 +52,28 @@ h1 {
 
 input[type="email"] {
   flex: 1;
-  padding: 15px 20px;
-  font-size: 15px;
-  background: rgba(255,255,255,0.07);
-  border: 1px solid rgba(255,255,255,0.14);
+  padding: 16px 20px;
+  font-size: 16px;
+  background: #fff;
+  border: 1px solid #ccc;
   border-right: none;
-  color: #fff;
+  color: #1a1a1a;
   outline: none;
   font-family: inherit;
   -webkit-appearance: none;
 }
 
-input[type="email"]::placeholder { color: rgba(255,255,255,0.3); }
-input[type="email"]:focus { border-color: rgba(184,146,42,0.5); background: rgba(255,255,255,0.1); }
+input[type="email"]::placeholder { color: #aaa; }
+input[type="email"]:focus { border-color: #3D0C1F; }
 
 button[type="submit"] {
-  padding: 15px 30px;
-  background: #B8922A;
+  padding: 16px 30px;
+  background: #3D0C1F;
   color: #fff;
   border: none;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   cursor: pointer;
   font-family: inherit;
@@ -72,7 +81,7 @@ button[type="submit"] {
   transition: background 0.15s;
 }
 
-button[type="submit"]:hover:not(:disabled) { background: #ca9f30; }
+button[type="submit"]:hover:not(:disabled) { background: #5c1530; }
 button[type="submit"]:disabled { opacity: 0.55; cursor: default; }
 
 .gdpr {
@@ -80,7 +89,7 @@ button[type="submit"]:disabled { opacity: 0.55; cursor: default; }
   align-items: flex-start;
   gap: 12px;
   font-size: 13px;
-  color: rgba(255,255,255,0.38);
+  color: #888;
   line-height: 1.55;
   margin-bottom: 52px;
   max-width: 600px;
@@ -92,88 +101,87 @@ button[type="submit"]:disabled { opacity: 0.55; cursor: default; }
   width: 15px;
   height: 15px;
   cursor: pointer;
-  accent-color: #B8922A;
+  accent-color: #3D0C1F;
 }
 
-.gdpr a { color: rgba(255,255,255,0.55); text-decoration: underline; }
-
-.logo {
-  margin-bottom: 40px;
-}
-.logo svg {
-  width: 220px;
-  height: auto;
-  display: block;
-}
+.gdpr a { color: #555; text-decoration: underline; }
 
 .footer-text {
-  font-size: clamp(14px, 1.8vw, 17px);
-  color: rgba(255,255,255,0.38);
+  font-size: clamp(16px, 2vw, 18px);
+  color: #888;
   line-height: 1.65;
   max-width: 600px;
 }
 
 .msg {
   margin-top: 12px;
-  font-size: 13px;
+  font-size: 14px;
   min-height: 18px;
-  letter-spacing: 0.01em;
 }
-.msg.ok  { color: #7ecfa0; }
-.msg.err { color: #e08080; }
+.msg.ok  { color: #2a7a4f; }
+.msg.err { color: #c0392b; }
 
 footer {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 14px 24px;
+  padding: 12px 24px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 16px;
   font-size: 11px;
-  color: rgba(255,255,255,0.25);
-  border-top: 1px solid rgba(255,255,255,0.07);
+  color: #aaa;
+  background: #F2EDE4;
+  border-top: 1px solid #ddd;
   flex-wrap: wrap;
 }
 
-footer a { color: rgba(255,255,255,0.35); text-decoration: none; }
-footer a:hover { color: rgba(255,255,255,0.6); }
+footer a { color: #888; text-decoration: none; }
+footer a:hover { color: #1a1a1a; }
 
 .footer-left { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
-.footer-right { text-align: right; }
+.footer-right { text-align: right; max-width: 420px; }
 
-@media (max-width: 480px) {
+@media (max-width: 600px) {
+  body { padding: 40px 20px 100px; align-items: flex-start; }
+  .logo svg { width: 180px; }
   .form-row { flex-direction: column; }
-  input[type="email"] { border-right: 1px solid rgba(255,255,255,0.14); border-bottom: none; }
-  button[type="submit"] { padding: 14px; letter-spacing: 0.16em; }
-  footer { flex-direction: column; align-items: flex-start; gap: 6px; }
-  .footer-right { text-align: left; }
+  input[type="email"] {
+    border-right: 1px solid #ccc;
+    border-bottom: none;
+    font-size: 16px;
+    padding: 16px;
+  }
+  button[type="submit"] { padding: 16px; font-size: 13px; }
+  footer { flex-direction: column; align-items: flex-start; gap: 4px; }
+  .footer-right { text-align: left; max-width: 100%; }
 }
 </style>
 
 <div class="card">
   <div class="logo">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2297.5 752.3" style="fill:none;stroke:white;stroke-miterlimit:10;">
-      <path stroke-width="9" d="M1044.3,237.3v119.2h-12.4v-55h-74.6v55h-12.6V237.3h12.6v53.1h74.6v-53.1H1044.3z"/>
-      <path stroke-width="9" d="M1150,315.3v41.2h-12.4v-41.2l-47.7-78h13.4l40.9,66.9l40.9-66.9h12.6L1150,315.3z"/>
-      <path stroke-width="9" d="M1243.4,237.3h48.5c38.1,0,63.8,24.5,63.8,59.6s-25.7,59.6-63.8,59.6h-48.5V237.3z M1291.2,345.6c31.7,0,52.1-20.1,52.1-48.7c0-28.6-20.4-48.7-52.1-48.7H1256v97.4H1291.2z"/>
-      <path stroke-width="9" d="M1491.1,356.5l-27.2-38.3c-3.1,0.3-6.1,0.5-9.5,0.5h-32v37.8h-12.6V237.3h44.6c30.3,0,48.7,15.3,48.7,40.9c0,18.7-9.9,31.8-27.2,37.5l29.1,40.9H1491.1z M1490.4,278.2c0-19.1-12.6-30-36.4-30h-31.7V308h31.7C1477.8,308,1490.4,296.9,1490.4,278.2z"/>
-      <path stroke-width="9" d="M1639.5,324.6h-66.4l-14.3,31.8h-13.1l54.5-119.2h12.4l54.5,119.2h-13.3L1639.5,324.6z M1634.9,314.4l-28.6-64l-28.6,64H1634.9z"/>
-      <path stroke-width="9" d="M1142.5,517.1h-66.4l-14.3,31.8h-13.1l54.5-119.2h12.4l54.5,119.2h-13.3L1142.5,517.1z M1137.9,506.9l-28.6-64l-28.6,64H1137.9z"/>
-      <path stroke-width="9" d="M1215.9,429.8h48.5c38.1,0,63.8,24.5,63.8,59.6s-25.7,59.6-63.8,59.6h-48.5V429.8z M1263.7,538.1c31.7,0,52.1-20.1,52.1-48.7c0-28.6-20.4-48.7-52.1-48.7h-35.2v97.4H1263.7z"/>
-      <path stroke-width="9" d="M1477.1,429.8L1424.4,549h-12.4l-52.8-119.2h13.6l45.6,103.5l46-103.5H1477.1z"/>
-      <path stroke-width="9" d="M1522.9,429.8h12.6V549h-12.6V429.8z"/>
-      <path stroke-width="9" d="M1588.2,534.5l4.9-9.7c8.5,8.3,23.7,14.5,39.3,14.5c22.3,0,32-9.4,32-21.1c0-32.7-73.4-12.6-73.4-56.7c0-17.5,13.6-32.7,43.9-32.7c13.5,0,27.4,3.9,36.9,10.6l-4.3,10c-10.2-6.6-22.1-9.9-32.7-9.9c-21.8,0-31.5,9.7-31.5,21.6c0,32.7,73.4,12.9,73.4,56.4c0,17.5-14,32.5-44.4,32.5C1614.6,550,1597,543.7,1588.2,534.5z"/>
-      <path stroke-width="9" d="M1719.6,489.4c0-34.7,26.6-60.6,62.7-60.6c35.8,0,62.5,25.7,62.5,60.6S1818,550,1782.2,550C1746.1,550,1719.6,524.1,1719.6,489.4z M1832.1,489.4c0-28.4-21.3-49.4-49.9-49.4c-28.8,0-50.2,20.9-50.2,49.4c0,28.4,21.5,49.4,50.2,49.4C1810.8,538.7,1832.1,517.8,1832.1,489.4z"/>
-      <path stroke-width="9" d="M1980,549l-27.2-38.3c-3.1,0.3-6.1,0.5-9.5,0.5h-32V549h-12.6V429.8h44.6c30.3,0,48.7,15.3,48.7,40.9c0,18.7-9.9,31.8-27.2,37.5l29.1,40.9H1980z M1979.4,470.7c0-19.1-12.6-30-36.4-30h-31.7v59.8h31.7C1966.8,500.4,1979.4,489.4,1979.4,470.7z"/>
-      <path stroke-width="9" d="M2085.3,507.8V549h-12.4v-41.2l-47.7-78h13.5l40.9,66.9l40.9-66.9h12.6L2085.3,507.8z"/>
-      <path stroke-width="9" d="M695,237.5h32.4l142,310.7h-34.6l-37.3-83L695,237.5z"/>
-      <path stroke-width="9" d="M617.3,465.2l-37.3,83h-34.6l142-310.7h32.4L617.3,465.2z"/>
-      <path stroke-width="9" d="M414.8,236.8h32.5v311.5h-32.5V236.8z M219.9,548.2h-32.9V236.8h32.9V548.2z"/>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2297.5 752.3" style="fill:#1a1a1a;stroke:none;">
+      <path d="M1044.3,237.3v119.2h-12.4v-55h-74.6v55h-12.6V237.3h12.6v53.1h74.6v-53.1H1044.3z"/>
+      <path d="M1150,315.3v41.2h-12.4v-41.2l-47.7-78h13.4l40.9,66.9l40.9-66.9h12.6L1150,315.3z"/>
+      <path d="M1243.4,237.3h48.5c38.1,0,63.8,24.5,63.8,59.6s-25.7,59.6-63.8,59.6h-48.5V237.3z M1291.2,345.6c31.7,0,52.1-20.1,52.1-48.7c0-28.6-20.4-48.7-52.1-48.7H1256v97.4H1291.2z"/>
+      <path d="M1491.1,356.5l-27.2-38.3c-3.1,0.3-6.1,0.5-9.5,0.5h-32v37.8h-12.6V237.3h44.6c30.3,0,48.7,15.3,48.7,40.9c0,18.7-9.9,31.8-27.2,37.5l29.1,40.9H1491.1z M1490.4,278.2c0-19.1-12.6-30-36.4-30h-31.7V308h31.7C1477.8,308,1490.4,296.9,1490.4,278.2z"/>
+      <path d="M1639.5,324.6h-66.4l-14.3,31.8h-13.1l54.5-119.2h12.4l54.5,119.2h-13.3L1639.5,324.6z M1634.9,314.4l-28.6-64l-28.6,64H1634.9z"/>
+      <path d="M1142.5,517.1h-66.4l-14.3,31.8h-13.1l54.5-119.2h12.4l54.5,119.2h-13.3L1142.5,517.1z M1137.9,506.9l-28.6-64l-28.6,64H1137.9z"/>
+      <path d="M1215.9,429.8h48.5c38.1,0,63.8,24.5,63.8,59.6s-25.7,59.6-63.8,59.6h-48.5V429.8z M1263.7,538.1c31.7,0,52.1-20.1,52.1-48.7c0-28.6-20.4-48.7-52.1-48.7h-35.2v97.4H1263.7z"/>
+      <path d="M1477.1,429.8L1424.4,549h-12.4l-52.8-119.2h13.6l45.6,103.5l46-103.5H1477.1z"/>
+      <path d="M1522.9,429.8h12.6V549h-12.6V429.8z"/>
+      <path d="M1588.2,534.5l4.9-9.7c8.5,8.3,23.7,14.5,39.3,14.5c22.3,0,32-9.4,32-21.1c0-32.7-73.4-12.6-73.4-56.7c0-17.5,13.6-32.7,43.9-32.7c13.5,0,27.4,3.9,36.9,10.6l-4.3,10c-10.2-6.6-22.1-9.9-32.7-9.9c-21.8,0-31.5,9.7-31.5,21.6c0,32.7,73.4,12.9,73.4,56.4c0,17.5-14,32.5-44.4,32.5C1614.6,550,1597,543.7,1588.2,534.5z"/>
+      <path d="M1719.6,489.4c0-34.7,26.6-60.6,62.7-60.6c35.8,0,62.5,25.7,62.5,60.6S1818,550,1782.2,550C1746.1,550,1719.6,524.1,1719.6,489.4z M1832.1,489.4c0-28.4-21.3-49.4-49.9-49.4c-28.8,0-50.2,20.9-50.2,49.4c0,28.4,21.5,49.4,50.2,49.4C1810.8,538.7,1832.1,517.8,1832.1,489.4z"/>
+      <path d="M1980,549l-27.2-38.3c-3.1,0.3-6.1,0.5-9.5,0.5h-32V549h-12.6V429.8h44.6c30.3,0,48.7,15.3,48.7,40.9c0,18.7-9.9,31.8-27.2,37.5l29.1,40.9H1980z M1979.4,470.7c0-19.1-12.6-30-36.4-30h-31.7v59.8h31.7C1966.8,500.4,1979.4,489.4,1979.4,470.7z"/>
+      <path d="M2085.3,507.8V549h-12.4v-41.2l-47.7-78h13.5l40.9,66.9l40.9-66.9h12.6L2085.3,507.8z"/>
+      <path d="M695,237.5h32.4l142,310.7h-34.6l-37.3-83L695,237.5z"/>
+      <path d="M617.3,465.2l-37.3,83h-34.6l142-310.7h32.4L617.3,465.2z"/>
+      <path d="M414.8,236.8h32.5v311.5h-32.5V236.8z M219.9,548.2h-32.9V236.8h32.9V548.2z"/>
     </svg>
   </div>
+
   <h1>Free daily digest for luxury professionals</h1>
   <p class="body-text">Every morning, one email. Twenty-plus sources collapsed into the stories that matter — deduplicated, summarised, and sent before your day starts.</p>
 
