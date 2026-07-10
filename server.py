@@ -47,7 +47,10 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    return send_file(os.path.join(os.path.dirname(__file__), "landing.html"))
+    resp = send_file(os.path.join(os.path.dirname(__file__), "landing.html"))
+    resp.headers["Cache-Control"] = "no-store, no-cache, must-revalidate"
+    resp.headers["Pragma"] = "no-cache"
+    return resp
 
 
 @app.route("/subscribe", methods=["POST"])
