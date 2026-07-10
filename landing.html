@@ -8,11 +8,11 @@ body {
   min-height: 100vh;
   background: #F2EDE4;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
   color: #1a1a1a;
-  padding: 80px 24px;
+  padding: 60px 24px 100px;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -148,8 +148,12 @@ footer a:hover { color: #1a1a1a; }
 .footer-right { text-align: right; max-width: 420px; }
 
 @media (max-width: 600px) {
-  body { padding: 40px 20px 100px; align-items: flex-start; }
-  .logo svg { width: 180px; }
+  body { padding: 36px 20px 100px; }
+  .logo svg { width: 200px; }
+  .logo { margin-bottom: 32px; }
+  h1 { font-size: 36px; }
+  .body-text { font-size: 17px; }
+  .footer-text { font-size: 17px; }
   .form-row { flex-direction: column; }
   input[type="email"] {
     border-right: 1px solid #ccc;
@@ -165,7 +169,7 @@ footer a:hover { color: #1a1a1a; }
 
 <div class="card">
   <div class="logo">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2297.5 752.3" style="fill:#1a1a1a;stroke:none;">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="187 236 1963 314" style="fill:#1a1a1a;stroke:none;">
       <path d="M1044.3,237.3v119.2h-12.4v-55h-74.6v55h-12.6V237.3h12.6v53.1h74.6v-53.1H1044.3z"/>
       <path d="M1150,315.3v41.2h-12.4v-41.2l-47.7-78h13.4l40.9,66.9l40.9-66.9h12.6L1150,315.3z"/>
       <path d="M1243.4,237.3h48.5c38.1,0,63.8,24.5,63.8,59.6s-25.7,59.6-63.8,59.6h-48.5V237.3z M1291.2,345.6c31.7,0,52.1-20.1,52.1-48.7c0-28.6-20.4-48.7-52.1-48.7H1256v97.4H1291.2z"/>
