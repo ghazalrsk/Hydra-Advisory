@@ -152,10 +152,9 @@ footer a:hover { color: #1a1a1a; }
 
 @media (max-width: 600px) {
   body {
-    height: 100svh;
-    min-height: unset;
-    padding: 28px 28px 70px;
-    align-items: center;
+    min-height: 100vh;
+    padding: 0 28px;
+    align-items: stretch;
     justify-content: center;
     overflow-y: auto;
   }
@@ -164,15 +163,16 @@ footer a:hover { color: #1a1a1a; }
     display: flex;
     flex-direction: column;
     justify-content: center;
+    min-height: 100vh;
+    padding: 40px 0 80px;
     width: 100%;
-    height: 100%;
   }
   .logo { display: flex; justify-content: center; margin-bottom: 28px; margin-left: 0; }
   .logo svg { max-width: 220px; }
-  h1 { font-size: 54px; line-height: 1.05; margin-bottom: 20px; }
-  .body-text { font-size: 22px; max-width: 100%; margin-bottom: 32px; line-height: 1.55; }
-  .footer-text { font-size: 16px; max-width: 100%; }
-  .gdpr { text-align: left; font-size: 14px; margin-bottom: 28px; }
+  h1 { font-size: 48px; line-height: 1.05; margin-bottom: 18px; }
+  .body-text { font-size: 21px; max-width: 100%; margin-bottom: 28px; line-height: 1.55; }
+  .footer-text { display: none; }
+  .gdpr { text-align: left; font-size: 14px; margin-bottom: 24px; }
   .form-row { flex-direction: column; margin-bottom: 12px; }
   input[type="email"] {
     border-right: 1px solid #ccc;
