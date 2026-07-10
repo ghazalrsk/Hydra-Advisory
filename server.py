@@ -177,7 +177,10 @@ def run_pipeline(test_email: str = ""):
         else:
             articles = filtered
 
-        stocks = fetch_stock_prices()
+        all_stocks = fetch_stock_prices()
+        # Pre-select top 3 gainers + bottom 3 losers to keep Claude's input small
+        sorted_stocks = sorted(all_stocks, key=lambda s: s.get("raw_change", 0), reverse=True)
+        stocks = sorted_stocks[:3] + sorted_stocks[-3:]
         numbers_timestamp = now.strftime("%-d %b %Y close")
         digest = process_with_claude(articles, stocks, today, numbers_timestamp, is_monday=is_monday)
         html = build_email_html(digest, today)

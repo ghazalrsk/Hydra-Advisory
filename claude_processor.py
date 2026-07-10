@@ -27,7 +27,7 @@ def process_with_claude(articles: list[dict], stocks: list[dict], today: str, nu
         try:
             message = client.messages.create(
                 model="claude-opus-4-5",
-                max_tokens=4000,
+                max_tokens=6000,
                 messages=[{"role": "user", "content": prompt}],
             )
             raw = message.content[0].text
@@ -179,8 +179,8 @@ Stories about other brands are included only if there is a clear market-wide imp
 SECTION E — NUMBERS
 ════════════════════════════════════════
 
-The STOCK DATA below covers the full luxury sector universe — selected programmatically, not by you.
-Return ALL stocks given, in the same order given, under "numbers". Do not add, drop, or reorder them.
+The STOCK DATA below contains exactly 6 stocks: the 3 top gainers and 3 biggest decliners in the luxury sector — selected programmatically, not by you.
+Return all 6, in the same order given, under "numbers". Do not add, drop, or reorder them.
 For each stock, write a MAXIMUM 5-word fragment explaining WHY it moved (using the articles as context). No full sentence, no period needed — just the reason.
   CORRECT: "Gains tied to easing trade tensions"
   WRONG: "Shares rallied today amid broader luxury sector gains following the announcement of easing trade tensions between major markets"
