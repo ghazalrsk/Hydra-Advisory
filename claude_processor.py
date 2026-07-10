@@ -8,6 +8,7 @@ Claude deduplicates, selects, summarises, and returns structured JSON.
 import os
 import json
 import re
+import time
 import logging
 import anthropic
 from sources import SECTOR_DIARY
@@ -19,14 +20,34 @@ def process_with_claude(articles: list[dict], stocks: list[dict], today: str, nu
     client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
     prompt = _build_prompt(articles, stocks, today, is_monday)
     log.info(f"  Sending {len(articles)} articles to Claude...")
-    message = client.messages.create(
-        model="claude-opus-4-5",
-        max_tokens=4000,
-        messages=[{"role": "user", "content": prompt}],
-    )
-    raw = message.content[0].text
+
+    # Retry up to 4 times on overload (529)
+    raw = None
+    for attempt in range(4):
+        try:
+            message = client.messages.create(
+                model="claude-opus-4-5",
+                max_tokens=4000,
+                messages=[{"role": "user", "content": prompt}],
+            )
+            raw = message.content[0].text
+            break
+        except anthropic.OverloadedError:
+            wait = 15 * (2 ** attempt)
+            log.warning(f"  Claude overloaded (attempt {attempt+1}/4), retrying in {wait}s...")
+            time.sleep(wait)
+
+    if raw is None:
+        raise RuntimeError("Claude API overloaded after 4 retries")
+
     result = _parse_response(raw)
     result["numbers_timestamp"] = numbers_timestamp
+
+    # Merge raw_change back from original stock data (Claude doesn't echo it)
+    raw_change_map = {s["ticker"]: s.get("raw_change", 0) for s in stocks}
+    for item in result.get("numbers", []):
+        item["raw_change"] = raw_change_map.get(item.get("ticker", ""), 0)
+
     result = _validate_and_fix_headlines(client, result)
     return result
 
