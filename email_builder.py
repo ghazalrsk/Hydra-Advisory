@@ -285,10 +285,14 @@ def _build_diary(items: list) -> str:
 def _build_numbers(items: list, timestamp: str) -> str:
     if not items:
         return ""
-    ts_label = f'<a href="#" style="color:{MU};text-decoration:none;pointer-events:none;cursor:default;">{_esc(timestamp)} · vs. previous day close</a>'
-    ts_span = f'<div style="font-size:12px;font-weight:400;letter-spacing:0;text-transform:none;color:{MU};margin:-4px 0 18px 0;">{ts_label}</div>'
+    ts_span = f'<div style="font-size:12px;font-weight:400;letter-spacing:0;text-transform:none;color:{MU};margin:-4px 0 18px 0;">as of {_esc(timestamp)}</div>'
     html = f'<div class="section-label">Important Numbers</div>{ts_span}'
-    for item in items[:6]:
+
+    sorted_items    = sorted(items, key=lambda x: x.get("raw_change", 0), reverse=True)
+    outperformers   = sorted_items[:3]
+    underperformers = sorted_items[-3:]
+
+    def _stock_row(item):
         name      = _esc(item.get("name", ""))
         ticker    = _esc(item.get("ticker", ""))
         price     = _esc(item.get("price", ""))
@@ -296,8 +300,7 @@ def _build_numbers(items: list, timestamp: str) -> str:
         direction = item.get("direction", "flat")
         context   = _esc(_truncate_words(item.get("context", ""), 6))
         colour    = GR if direction == "up" else (RD if direction == "down" else MU)
-
-        html += (
+        return (
             f'<div style="padding:7px 0;border-bottom:1px solid #eeeeee;">'
             f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>'
             f'<td class="num-name" style="font-size:17px;color:{IN};">{name} <span class="num-ticker">&middot; {ticker}</span></td>'
@@ -306,6 +309,21 @@ def _build_numbers(items: list, timestamp: str) -> str:
             f'<div style="font-size:12px;color:{MU};margin-top:2px;">{context}</div>'
             f'</div>'
         )
+
+    def _sub_label(title):
+        return (
+            f'<div style="font-size:12px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:{B};margin:16px 0 4px 0;">{title}</div>'
+            f'<hr style="border:none;border-top:1px solid rgba(61,12,31,0.25);margin:0 0 4px 0;">'
+        )
+
+    html += _sub_label("Session Leaders")
+    for item in outperformers:
+        html += _stock_row(item)
+
+    html += _sub_label("Session Laggards")
+    for item in underperformers:
+        html += _stock_row(item)
+
     return html
 
 

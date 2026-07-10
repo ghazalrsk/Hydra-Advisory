@@ -15,12 +15,8 @@ Article pool rules:
 import feedparser
 import logging
 import math
+import os
 import requests
-try:
-    import yfinance as yf
-    _YF_AVAILABLE = True
-except ImportError:
-    _YF_AVAILABLE = False
 from datetime import datetime, timedelta, timezone
 from sources import NEWS_SOURCES, STOCK_TICKERS
 
@@ -94,21 +90,50 @@ def fetch_all_articles(is_monday: bool = False) -> list[dict]:
     return articles
 
 
-def _parse_closes_yf(ticker: str):
-    """Try Yahoo Finance via yfinance. Returns (today_close, prev_close) or raises."""
-    data = yf.Ticker(ticker)
-    hist = data.history(period="2d")
+def _parse_closes_polygon(ticker: str):
+    """Primary: Polygon.io previous-day close. Returns (today_close, prev_close) or raises."""
+    api_key = os.environ.get("POLYGON_API_KEY", "")
+    if not api_key:
+        raise ValueError("no POLYGON_API_KEY")
+    # Polygon uses plain US tickers; skip non-US tickers (they contain a dot)
+    base = ticker.split(".")[0]
+    if "." in ticker and not ticker.endswith(".US"):
+        raise ValueError(f"non-US ticker {ticker}, skip Polygon")
+    url = f"https://api.polygon.io/v2/aggs/ticker/{base}/prev?adjusted=true&apiKey={api_key}"
+    resp = requests.get(url, timeout=10)
+    resp.raise_for_status()
+    data = resp.json()
+    results = data.get("results") or []
+    if len(results) < 1:
+        raise ValueError("no results from Polygon")
+    today = float(results[0]["c"])
+    prev  = float(results[0]["o"])   # open as proxy for prev close
+    if math.isnan(today) or math.isnan(prev) or prev == 0:
+        raise ValueError("NaN or zero")
+    return today, prev
+
+
+def _parse_closes_fmp(ticker: str):
+    """Secondary: Financial Modeling Prep EOD. Returns (today_close, prev_close) or raises."""
+    api_key = os.environ.get("FMP_API_KEY", "")
+    if not api_key:
+        raise ValueError("no FMP_API_KEY")
+    url = f"https://financialmodelingprep.com/api/v3/historical-price-full/{ticker}?timeseries=2&apikey={api_key}"
+    resp = requests.get(url, timeout=10)
+    resp.raise_for_status()
+    data = resp.json()
+    hist = data.get("historical", [])
     if len(hist) < 2:
-        raise ValueError("insufficient data")
-    prev  = float(hist["Close"].iloc[-2])
-    today = float(hist["Close"].iloc[-1])
-    if math.isnan(prev) or math.isnan(today) or prev == 0:
+        raise ValueError("insufficient FMP data")
+    today = float(hist[0]["close"])
+    prev  = float(hist[1]["close"])
+    if math.isnan(today) or math.isnan(prev) or prev == 0:
         raise ValueError("NaN or zero")
     return today, prev
 
 
 def _parse_closes_stooq(ticker: str):
-    """Fallback: Stooq CSV API. Returns (today_close, prev_close) or raises."""
+    """Tertiary fallback: Stooq CSV API. Returns (today_close, prev_close) or raises."""
     url  = f"https://stooq.com/q/d/l/?s={ticker.lower()}&i=d"
     resp = requests.get(url, timeout=10, headers={"User-Agent": "Mozilla/5.0"})
     resp.raise_for_status()
@@ -127,9 +152,10 @@ def _parse_closes_stooq(ticker: str):
 
 def fetch_stock_prices(top_n: int = 6) -> list[dict]:
     """
-    Primary: Yahoo Finance via yfinance.
-    Fallback: Stooq CSV API (used only if Yahoo returns no/NaN data).
-    Returns top_n by highest absolute daily % change.
+    Primary:   Polygon.io (US tickers only on free plan).
+    Secondary: Financial Modeling Prep (all tickers including European).
+    Tertiary:  Stooq CSV API.
+    Returns all fetched stocks; caller selects top/bottom performers.
     """
     stocks = []
 
@@ -138,6 +164,7 @@ def fetch_stock_prices(top_n: int = 6) -> list[dict]:
         ".MI": "€",
         ".SW": "CHF",
         ".L":  "£",
+        ".HK": "HK$",
         ".US": "$",
         "":    "$",
     }
@@ -145,12 +172,19 @@ def fetch_stock_prices(top_n: int = 6) -> list[dict]:
     for name, ticker in STOCK_TICKERS.items():
         today_close = prev_close = None
         source = "?"
+
         try:
-            if _YF_AVAILABLE:
-                today_close, prev_close = _parse_closes_yf(ticker)
-                source = "Yahoo"
+            today_close, prev_close = _parse_closes_polygon(ticker)
+            source = "Polygon"
         except Exception as e:
-            log.warning(f"  Yahoo failed for {ticker}: {e} — trying Stooq")
+            log.info(f"  Polygon skipped for {ticker}: {e}")
+
+        if today_close is None:
+            try:
+                today_close, prev_close = _parse_closes_fmp(ticker)
+                source = "FMP"
+            except Exception as e:
+                log.warning(f"  FMP failed for {ticker}: {e} — trying Stooq")
 
         if today_close is None:
             try:
@@ -160,25 +194,25 @@ def fetch_stock_prices(top_n: int = 6) -> list[dict]:
                 log.warning(f"  Stooq also failed for {ticker}: {e} — skipping")
                 continue
 
+        suffix = f".{ticker.split('.')[-1]}" if "." in ticker else ""
+        currency   = currency_map.get(suffix, "$")
         pct_change = ((today_close - prev_close) / prev_close) * 100
-        currency   = currency_map.get(f".{ticker.split('.')[-1]}", "€")
         direction  = "up" if pct_change > 0.1 else ("down" if pct_change < -0.1 else "flat")
         sign       = "▲ +" if pct_change > 0 else ("▼ " if pct_change < 0 else "")
 
         stocks.append({
-            "name":      name,
-            "ticker":    ticker,
-            "price":     f"{currency}{today_close:,.2f}",
-            "change":    f"{sign}{pct_change:.1f}%",
-            "direction": direction,
-            "currency":  currency,
-            "raw_price": round(today_close, 2),
+            "name":       name,
+            "ticker":     ticker,
+            "price":      f"{currency}{today_close:,.2f}",
+            "change":     f"{sign}{pct_change:.1f}%",
+            "direction":  direction,
+            "currency":   currency,
+            "raw_price":  round(today_close, 2),
             "raw_change": round(pct_change, 2),
         })
         log.info(f"  {name} ({ticker}) [{source}]: {currency}{today_close:.2f} {sign}{pct_change:.1f}%")
 
-    stocks.sort(key=lambda s: abs(s["raw_change"]), reverse=True)
-    return stocks[:top_n]
+    return stocks
 
 
 # ── Helpers ──────────────────────────────────────────────────────────────
