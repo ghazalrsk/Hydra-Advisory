@@ -17,6 +17,11 @@ import logging
 import math
 import os
 import requests
+try:
+    import yfinance as yf
+    _YF_AVAILABLE = True
+except ImportError:
+    _YF_AVAILABLE = False
 from datetime import datetime, timedelta, timezone
 from sources import NEWS_SOURCES, STOCK_TICKERS
 
@@ -191,7 +196,23 @@ def fetch_stock_prices(top_n: int = 6) -> list[dict]:
                 today_close, prev_close = _parse_closes_stooq(ticker)
                 source = "Stooq"
             except Exception as e:
-                log.warning(f"  Stooq also failed for {ticker}: {e} — skipping")
+                log.warning(f"  Stooq failed for {ticker}: {e} — trying yfinance")
+
+        if today_close is None:
+            try:
+                if not _YF_AVAILABLE:
+                    raise ValueError("yfinance not installed")
+                data = yf.Ticker(ticker)
+                hist = data.history(period="2d")
+                if len(hist) < 2:
+                    raise ValueError("insufficient yf data")
+                prev_close  = float(hist["Close"].iloc[-2])
+                today_close = float(hist["Close"].iloc[-1])
+                if math.isnan(prev_close) or math.isnan(today_close) or prev_close == 0:
+                    raise ValueError("NaN or zero")
+                source = "yfinance"
+            except Exception as e:
+                log.warning(f"  yfinance also failed for {ticker}: {e} — skipping")
                 continue
 
         suffix = f".{ticker.split('.')[-1]}" if "." in ticker else ""
