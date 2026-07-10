@@ -23,9 +23,12 @@ body {
 
 .logo {
   margin-bottom: 44px;
+  margin-left: 0;
+  padding-left: 0;
 }
 .logo svg {
-  width: 240px;
+  width: 100%;
+  max-width: 280px;
   height: auto;
   display: block;
 }
@@ -148,18 +151,21 @@ footer a:hover { color: #1a1a1a; }
 .footer-right { text-align: right; max-width: 420px; }
 
 @media (max-width: 600px) {
-  body { padding: 36px 20px 100px; }
-  .logo svg { width: 200px; }
-  .logo { margin-bottom: 32px; }
-  h1 { font-size: 36px; }
-  .body-text { font-size: 17px; }
-  .footer-text { font-size: 17px; }
+  body { padding: 56px 24px 100px; align-items: center; justify-content: flex-start; }
+  .card { text-align: center; }
+  .logo { display: flex; justify-content: center; margin-bottom: 32px; }
+  .logo svg { max-width: 220px; }
+  h1 { font-size: 40px; }
+  .body-text { font-size: 18px; max-width: 100%; }
+  .footer-text { font-size: 18px; max-width: 100%; }
+  .gdpr { text-align: left; }
   .form-row { flex-direction: column; }
   input[type="email"] {
     border-right: 1px solid #ccc;
     border-bottom: none;
     font-size: 16px;
     padding: 16px;
+    text-align: left;
   }
   button[type="submit"] { padding: 16px; font-size: 13px; }
   footer { flex-direction: column; align-items: flex-start; gap: 4px; }
