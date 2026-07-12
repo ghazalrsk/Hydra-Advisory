@@ -300,10 +300,11 @@ def _build_numbers(items: list, timestamp: str) -> str:
         direction = item.get("direction", "flat")
         context   = _esc(_truncate_words(item.get("context", ""), 6))
         colour    = GR if direction == "up" else (RD if direction == "down" else MU)
+        yf_url = f"https://finance.yahoo.com/quote/{item.get('ticker', '')}"
         return (
             f'<div style="padding:7px 0;border-bottom:1px solid #eeeeee;">'
             f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>'
-            f'<td class="num-name" style="font-size:17px;color:{IN};">{name} <span class="num-ticker">&middot; {ticker}</span></td>'
+            f'<td class="num-name" style="font-size:17px;color:{IN};"><a href="{yf_url}" style="color:{IN};text-decoration:none;">{name}</a> <span class="num-ticker">&middot; {ticker}</span></td>'
             f'<td align="right" class="num-name" style="font-size:17px;color:{IN};white-space:nowrap;">{price} <span class="num-change" style="color:{colour};font-size:14px;">{change}</span></td>'
             f'</tr></table>'
             f'<div style="font-size:12px;color:{MU};margin-top:2px;">{context}</div>'
