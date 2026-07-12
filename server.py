@@ -147,7 +147,7 @@ def ics():
 def run_pipeline(test_email: str = ""):
     log.info("── Pipeline starting ──")
     try:
-        from datetime import datetime, timezone
+        from datetime import datetime, timezone, timedelta
         from collector import fetch_all_articles, fetch_stock_prices
         from claude_processor import process_with_claude
         from email_builder import build_email_html
@@ -181,7 +181,16 @@ def run_pipeline(test_email: str = ""):
         # Pre-select top 3 gainers + bottom 3 losers to keep Claude's input small
         sorted_stocks = sorted(all_stocks, key=lambda s: s.get("raw_change", 0), reverse=True)
         stocks = sorted_stocks[:3] + sorted_stocks[-3:]
-        numbers_timestamp = now.strftime("%-d %b %Y close")
+        # Use last trading day's date (skip weekends)
+        last_trading = now.date()
+        while last_trading.weekday() >= 5:  # 5=Sat, 6=Sun
+            last_trading -= timedelta(days=1)
+        # If sending before market close (before ~18:00 UTC), use previous trading day
+        if now.hour < 18:
+            last_trading -= timedelta(days=1)
+            while last_trading.weekday() >= 5:
+                last_trading -= timedelta(days=1)
+        numbers_timestamp = last_trading.strftime("%-d %b %Y close")
         digest = process_with_claude(articles, stocks, today, numbers_timestamp, is_monday=is_monday)
         html = build_email_html(digest, today)
 
