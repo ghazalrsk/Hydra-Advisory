@@ -302,19 +302,19 @@ def _build_numbers(items: list, timestamp: str) -> str:
         colour    = GR if direction == "up" else (RD if direction == "down" else MU)
         yf_url = f"https://finance.yahoo.com/quote/{item.get('ticker', '')}"
         return (
-            f'<div style="padding:7px 0;border-bottom:1px solid #eeeeee;">'
+            f'<div style="padding:3px 0;border-bottom:1px solid #eeeeee;">'
             f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>'
-            f'<td class="num-name" style="font-size:17px;color:{IN};"><a href="{yf_url}" style="color:{IN};text-decoration:none;">{name}</a> <span class="num-ticker">&middot; {ticker}</span></td>'
-            f'<td align="right" class="num-name" style="font-size:17px;color:{IN};white-space:nowrap;">{price} <span class="num-change" style="color:{colour};font-size:14px;">{change}</span></td>'
+            f'<td class="num-name" style="font-size:15px;color:{IN};"><a href="{yf_url}" style="color:{IN};text-decoration:none;">{name}</a> <span class="num-ticker">&middot; {ticker}</span></td>'
+            f'<td align="right" class="num-name" style="font-size:15px;color:{IN};white-space:nowrap;">{price} <span class="num-change" style="color:{colour};font-size:13px;">{change}</span></td>'
             f'</tr></table>'
-            f'<div style="font-size:12px;color:{MU};margin-top:2px;">{context}</div>'
+            f'<div style="font-size:11px;color:{MU};margin-top:1px;margin-bottom:2px;">{context}</div>'
             f'</div>'
         )
 
     def _sub_label(title):
         return (
-            f'<div style="font-size:12px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:{B};margin:16px 0 4px 0;">{title}</div>'
-            f'<hr style="border:none;border-top:1px solid rgba(61,12,31,0.25);margin:0 0 4px 0;">'
+            f'<div style="font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:{B};margin:10px 0 2px 0;">{title}</div>'
+            f'<hr style="border:none;border-top:1px solid rgba(61,12,31,0.25);margin:0 0 2px 0;">'
         )
 
     html += _sub_label("Session Leaders")
