@@ -285,7 +285,7 @@ def _build_diary(items: list) -> str:
 def _build_numbers(items: list, timestamp: str) -> str:
     if not items:
         return ""
-    ts_span = f'<div style="font-size:12px;font-weight:400;letter-spacing:0;text-transform:none;color:{MU};margin:-4px 0 18px 0;">as of {_esc(timestamp)}</div>'
+    ts_span = f'<div style="font-size:12px;font-weight:400;letter-spacing:0;text-transform:none;color:{MU};margin:2px 0 6px 0;">as of {_esc(timestamp)}</div>'
     html = f'<div class="section-label">Important Numbers</div>{ts_span}'
 
     sorted_items    = sorted(items, key=lambda x: x.get("raw_change", 0), reverse=True)
@@ -313,7 +313,7 @@ def _build_numbers(items: list, timestamp: str) -> str:
 
     def _sub_label(title):
         return (
-            f'<div style="font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:{B};margin:10px 0 2px 0;">{title}</div>'
+            f'<div style="font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:{B};margin:6px 0 2px 0;">{title}</div>'
             f'<hr style="border:none;border-top:1px solid rgba(61,12,31,0.25);margin:0 0 2px 0;">'
         )
 
