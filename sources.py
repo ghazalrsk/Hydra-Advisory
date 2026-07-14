@@ -55,14 +55,14 @@ NEWS_SOURCES = [
         "tier": 2,
     },
     {
-        "name": "South China Morning Post",
-        "rss": "https://www.scmp.com/rss/91/feed",
+        "name": "Luxury Daily",
+        "rss": "https://www.luxurydaily.com/feed/",
         "section": "news",
         "tier": 2,
     },
     {
-        "name": "Nikkei Asia",
-        "rss": "https://asia.nikkei.com/rss/feed/nar",
+        "name": "The Drinks Business",
+        "rss": "https://www.thedrinksbusiness.com/feed/",
         "section": "news",
         "tier": 2,
     },
@@ -100,6 +100,24 @@ NEWS_SOURCES = [
     {
         "name": "Richemont News",
         "rss": "https://www.richemont.com/media/press-releases/rss/",
+        "section": "news",
+        "tier": 3,
+    },
+    {
+        "name": "Skift",
+        "rss": "https://skift.com/feed/",
+        "section": "news",
+        "tier": 3,
+    },
+    {
+        "name": "Dezeen",
+        "rss": "https://www.dezeen.com/feed/",
+        "section": "news",
+        "tier": 3,
+    },
+    {
+        "name": "Fashion United",
+        "rss": "https://fashionunited.com/rss",
         "section": "news",
         "tier": 3,
     },

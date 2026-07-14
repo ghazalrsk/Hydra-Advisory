@@ -86,12 +86,12 @@ TIER 1 — Reuters, Financial Times, Il Sole 24 Ore
   → Always the primary_source, regardless of who broke the story first.
   → If a Tier 1 source covered it, it is the primary. No exceptions.
 
-TIER 2 — Business of Fashion, WWD, Pambianco, MFF, SCMP, Nikkei Asia
+TIER 2 — Business of Fashion, WWD, Pambianco, MFF, Luxury Daily, The Drinks Business
   → Primary only when NO Tier 1 source covers the same story.
   → Among Tier 2 sources covering the same story, prefer BoF for brand/creative news,
-    WWD for US/retail news, Pambianco/MFF for Italian-only stories, SCMP/Nikkei for Asia.
+    WWD for US/retail news, Pambianco/MFF for Italian-only stories, Luxury Daily for cross-sector luxury, The Drinks Business for wines & spirits.
 
-TIER 3 — Vogue Business, Fashion Network, Luxury Society, brand newsrooms (LVMH, Kering, Richemont)
+TIER 3 — Vogue Business, Fashion Network, Luxury Society, Skift, Dezeen, Fashion United, brand newsrooms (LVMH, Kering, Richemont)
   → NEVER the primary_source. Place in "also" list only.
   → Brand newsrooms: include in "also" only if no editorial source covered the story,
     and label as "Brand announcement" in that edge case only.
@@ -131,10 +131,10 @@ INDUSTRY PRIORITY — apply this before anything else:
 Hydra Brief serves a luxury advisory boutique. The digest must stay within the luxury, high-end fashion, and premium goods industry first. Fill all available slots with stories from this universe before considering anything outside it.
 
 Priority order for story selection — work through these in order until all slots are filled:
-  1. Luxury, fashion, high-end goods — always first. Stories about the brand universe, luxury M&A, luxury retail, luxury market data, watches, jewellery, leather goods, couture, premium beauty.
-  2. Broader financial/macro news with a direct luxury demand implication (e.g. China tariffs, consumer confidence in key luxury markets, currency moves affecting luxury pricing).
-  3. Adjacent business news relevant to luxury executives — retail, consumer goods, hospitality, art market, real estate in key luxury cities, high-end travel.
-  4. General business, economic, or geopolitical news that any senior executive would want to know — use this tier to fill any remaining slots if tiers 1–3 are exhausted.
+  1. Luxury, fashion, high-end goods — always first. Stories about the brand universe, luxury M&A, luxury retail, luxury market data, watches, jewellery, leather goods, couture, premium beauty, wines & spirits, luxury hospitality, premium real estate.
+  2. Broader financial/macro news with a DIRECT, NAMED luxury demand implication (e.g. China tariffs explicitly affecting luxury imports, consumer confidence data from Bain/McKinsey, currency moves explicitly affecting luxury pricing). The luxury link must be stated in the article — do not infer it.
+  3. Adjacent premium business: high-end hospitality (5-star/ultra-luxury hotels), premium F&B (fine wine, spirits, Michelin), luxury real estate, art market, premium travel operators. Only if no more tier-1 stories exist.
+  4. General business or macro news — MAXIMUM 1 item, only as absolute last resort if tiers 1–3 genuinely leave fewer than 10 stories. Stories about tech companies, Asian politics, defence, general consumer electronics, or mass-market retail do NOT qualify under any tier.
 
 CRITICAL: All slots must always be filled. Never leave a slot empty because "no qualifying luxury story exists." Work through the priority tiers until every slot is filled. The email must always send.
 
@@ -150,8 +150,11 @@ ALWAYS REJECT:
 - Travel content not linked to retail or brand expansion
 - Brand content or advertorial disguised as editorial
 - Sports sponsorships unless a new major strategic deal
-- General tech or finance news with no luxury link
-- Geopolitical or defence news (missile tests, military deals, nuclear policy) — reject entirely unless there is an explicit, named luxury market impact
+- General tech or finance news with no luxury link (Huawei, Samsung, Tesla, chip stocks, etc.)
+- Geopolitical or defence news — reject entirely (missile tests, military deals, nuclear policy, territorial disputes, elections, sanctions unless they explicitly name a luxury brand or luxury market)
+- Asian general news not involving a luxury brand or luxury market data (Chinese automakers, Korean tech, Japanese politics, Singapore courts, etc.)
+- Mass-market retail, fast fashion, or consumer electronics
+- Legal/court cases not involving a luxury brand directly
 
 ════════════════════════════════════════
 SECTION C — DEDUPLICATION
