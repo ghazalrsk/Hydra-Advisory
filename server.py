@@ -217,10 +217,9 @@ def run_pipeline(test_email: str = ""):
                 from mailchimp_sender import send_via_mailchimp
                 send_via_mailchimp(html, today)
             log.info(f"Email sent to full list via {provider}")
-
-        # Update memory with today's published stories
-        memory = mark_published(digest, memory)
-        save_memory(memory)
+            # Only update story memory on real sends, not test emails
+            memory = mark_published(digest, memory)
+            save_memory(memory)
 
     except Exception as e:
         log.error(f"Pipeline failed: {e}", exc_info=True)
