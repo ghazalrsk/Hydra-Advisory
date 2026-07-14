@@ -48,6 +48,9 @@ def process_with_claude(articles: list[dict], stocks: list[dict], today: str, nu
     # Override diary with pre-selected events directly — don't trust Claude to echo them correctly
     result["diary"] = upcoming_events
 
+    # Hard-enforce per-source caps regardless of what Claude returned
+    result = _enforce_source_caps(result)
+
     # Merge raw_change back from original stock data (Claude doesn't echo it)
     raw_change_map = {s["ticker"]: s.get("raw_change", 0) for s in stocks}
     for item in result.get("numbers", []):
@@ -326,6 +329,28 @@ RETURN THIS EXACT JSON — no other text:
   ]
 }}
 """
+
+
+SOURCE_CAPS = {
+    "the drinks business": 1,
+}
+
+def _enforce_source_caps(result: dict) -> dict:
+    """Hard-cap how many items any single source may contribute across lead_items + news."""
+    counts = {}
+    for section, field in [("lead_items", "primary_source"), ("news", "primary_source")]:
+        kept = []
+        for item in result.get(section, []):
+            src = item.get(field, "").lower()
+            cap = SOURCE_CAPS.get(src)
+            if cap is not None:
+                counts[src] = counts.get(src, 0) + 1
+                if counts[src] > cap:
+                    log.info(f"  Source cap: dropped extra {item.get(field)} item (cap={cap})")
+                    continue
+            kept.append(item)
+        result[section] = kept
+    return result
 
 
 _BAD_ENDINGS = {
