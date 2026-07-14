@@ -11,7 +11,7 @@ import re
 import time
 import logging
 import anthropic
-from sources import SECTOR_DIARY
+from sources import select_upcoming_events
 
 log = logging.getLogger("hydra-summary.claude")
 
@@ -53,9 +53,10 @@ def process_with_claude(articles: list[dict], stocks: list[dict], today: str, nu
 
 
 def _build_prompt(articles: list[dict], stocks: list[dict], today: str, is_monday: bool = False) -> str:
+    from datetime import date
     articles_text = json.dumps(articles, ensure_ascii=False, indent=2)
     stocks_text   = json.dumps(stocks,   ensure_ascii=False, indent=2)
-    diary_text    = json.dumps(SECTOR_DIARY, ensure_ascii=False, indent=2)
+    diary_text    = json.dumps(select_upcoming_events(date.today(), n=3), ensure_ascii=False, indent=2)
 
     monday_note = """
 ════════════════════════════════════════
@@ -261,8 +262,9 @@ Brand name standards:
 - "Kering" — not "the French group"
 
 SECTOR DIARY:
-From the diary list provided, select the 3–4 most immediately upcoming events closest to today's date.
-Each diary item must carry the "link" field copied exactly from the matching entry in the SECTOR DIARY list below.
+The 3 events below have already been pre-selected as the nearest upcoming or ongoing events.
+Copy them into the "diary" array exactly as provided — do not add, remove, or reorder them.
+Each diary item must carry the "link" field copied exactly from the entry below.
 
 ════════════════════════════════════════
 ARTICLES ({len(articles)} total):
