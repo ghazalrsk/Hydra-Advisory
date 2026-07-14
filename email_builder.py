@@ -105,6 +105,8 @@ _SOURCE_ABBR = {
     "bof": "BoF",
     "wwd": "WWD",
     "vogue business": "VB",
+    "bloomberg pursuits": "Bloomberg",
+    "bloomberg": "Bloomberg",
     "pambianco news": "PAMB",
     "pambianco": "PAMB",
     "mff — moda finanza fashion": "MFF",
@@ -114,6 +116,11 @@ _SOURCE_ABBR = {
     "reuters": "Reuters",
     "financial times — luxury": "FT",
     "financial times": "FT",
+    "luxury daily": "LuxDaily",
+    "the drinks business": "Drinks Biz",
+    "skift": "Skift",
+    "dezeen": "Dezeen",
+    "fashion united": "FashUnited",
     "south china morning post": "SCMP",
     "nikkei asia": "Nikkei",
     "fashion network": "FashNet",
@@ -136,7 +143,7 @@ def _inline_src(primary: str, link: str, also: list) -> str:
     if not primary:
         return ""
     src = f'<a href="{link}" class="src-link">{_abbr(primary)}</a>' if link else f'<span class="item-src">{_abbr(primary)}</span>'
-    also_part = "/" + "/".join(_abbr(_esc(s)) for s in also[:2]) if also else ""
+    also_part = "/" + "/".join(_esc(_abbr(s)) for s in also[:2]) if also else ""
     return f'<span class="item-src" style="white-space:nowrap;padding-left:5px;">{src}{also_part}</span>'
 
 
@@ -186,11 +193,19 @@ def _parse_diary_dates(dates: str):
     return None
 
 
-def _calendar_links(event: str, desc: str, dates: str) -> dict:
-    parsed = _parse_diary_dates(dates)
-    if not parsed:
-        return {}
-    start, end = parsed
+def _calendar_links(event: str, desc: str, dates: str, start_iso: str = "", end_iso: str = "") -> dict:
+    if start_iso and end_iso:
+        try:
+            from datetime import date
+            start = date.fromisoformat(start_iso)
+            end   = date.fromisoformat(end_iso)
+        except ValueError:
+            return {}
+    else:
+        parsed = _parse_diary_dates(dates)
+        if not parsed:
+            return {}
+        start, end = parsed
     gcal_end = end + timedelta(days=1)
 
     google = (
@@ -258,7 +273,7 @@ def _build_diary(items: list) -> str:
         desc  = _esc(item.get("description", ""))
         dates = _esc(item.get("dates", ""))
         link  = item.get("link", "")
-        cal   = _calendar_links(item.get("event", ""), item.get("description", ""), item.get("dates", ""))
+        cal   = _calendar_links(item.get("event", ""), item.get("description", ""), item.get("dates", ""), item.get("start", ""), item.get("end", ""))
 
         event_html = f'<a href="{link}" style="color:{IN};text-decoration:none;">{event}</a>' if link else event
 
@@ -289,8 +304,9 @@ def _build_numbers(items: list, timestamp: str) -> str:
     html = f'<div class="section-label">Important Numbers</div>{ts_span}'
 
     sorted_items    = sorted(items, key=lambda x: x.get("raw_change", 0), reverse=True)
-    outperformers   = sorted_items[:3]
-    underperformers = sorted_items[-3:]
+    mid             = len(sorted_items) // 2
+    outperformers   = sorted_items[:min(3, mid)]
+    underperformers = sorted_items[max(mid, len(sorted_items) - 3):]
 
     def _stock_row(item):
         name      = _esc(item.get("name", ""))

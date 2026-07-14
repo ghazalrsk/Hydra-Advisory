@@ -17,8 +17,10 @@ log = logging.getLogger("hydra-summary.claude")
 
 
 def process_with_claude(articles: list[dict], stocks: list[dict], today: str, numbers_timestamp: str = "", is_monday: bool = False) -> dict:
+    from datetime import date
     client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
-    prompt = _build_prompt(articles, stocks, today, is_monday)
+    upcoming_events = select_upcoming_events(date.today(), n=3)
+    prompt = _build_prompt(articles, stocks, today, is_monday, upcoming_events)
     log.info(f"  Sending {len(articles)} articles to Claude...")
 
     # Retry up to 4 times on overload (529)
@@ -43,6 +45,9 @@ def process_with_claude(articles: list[dict], stocks: list[dict], today: str, nu
     result = _parse_response(raw)
     result["numbers_timestamp"] = numbers_timestamp
 
+    # Override diary with pre-selected events directly — don't trust Claude to echo them correctly
+    result["diary"] = upcoming_events
+
     # Merge raw_change back from original stock data (Claude doesn't echo it)
     raw_change_map = {s["ticker"]: s.get("raw_change", 0) for s in stocks}
     for item in result.get("numbers", []):
@@ -52,11 +57,10 @@ def process_with_claude(articles: list[dict], stocks: list[dict], today: str, nu
     return result
 
 
-def _build_prompt(articles: list[dict], stocks: list[dict], today: str, is_monday: bool = False) -> str:
-    from datetime import date
+def _build_prompt(articles: list[dict], stocks: list[dict], today: str, is_monday: bool = False, upcoming_events: list = None) -> str:
     articles_text = json.dumps(articles, ensure_ascii=False, indent=2)
     stocks_text   = json.dumps(stocks,   ensure_ascii=False, indent=2)
-    diary_text    = json.dumps(select_upcoming_events(date.today(), n=3), ensure_ascii=False, indent=2)
+    diary_text    = json.dumps(upcoming_events or [], ensure_ascii=False, indent=2)
 
     monday_note = """
 ════════════════════════════════════════
