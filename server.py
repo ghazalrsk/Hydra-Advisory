@@ -180,7 +180,12 @@ def run_pipeline(test_email: str = ""):
         all_stocks = fetch_stock_prices()
         # Pre-select top 3 gainers + bottom 3 losers to keep Claude's input small
         sorted_stocks = sorted(all_stocks, key=lambda s: s.get("raw_change", 0), reverse=True)
-        stocks = sorted_stocks[:3] + sorted_stocks[-3:]
+        seen = set()
+        stocks = []
+        for s in sorted_stocks[:3] + sorted_stocks[-3:]:
+            if s["ticker"] not in seen:
+                seen.add(s["ticker"])
+                stocks.append(s)
         # Use last trading day's date (skip weekends)
         last_trading = now.date()
         while last_trading.weekday() >= 5:  # 5=Sat, 6=Sun
