@@ -82,16 +82,16 @@ SECTION A — SOURCE TIERS & ATTRIBUTION
 
 Every article in the pool carries a "tier" field. Attribution rules are strict:
 
-TIER 1 — Reuters, Financial Times, Il Sole 24 Ore
+TIER 1 — Reuters, Financial Times, Il Sole 24 Ore, Bloomberg Pursuits, Vogue Business, WWD
   → Always the primary_source, regardless of who broke the story first.
   → If a Tier 1 source covered it, it is the primary. No exceptions.
 
-TIER 2 — Business of Fashion, WWD, Pambianco, MFF, Luxury Daily, The Drinks Business
+TIER 2 — Business of Fashion, Pambianco, MFF, Luxury Daily, The Drinks Business
   → Primary only when NO Tier 1 source covers the same story.
   → Among Tier 2 sources covering the same story, prefer BoF for brand/creative news,
-    WWD for US/retail news, Pambianco/MFF for Italian-only stories, Luxury Daily for cross-sector luxury, The Drinks Business for wines & spirits.
+    Pambianco/MFF for Italian-only stories, Luxury Daily for cross-sector luxury, The Drinks Business for wines & spirits.
 
-TIER 3 — Vogue Business, Fashion Network, Luxury Society, Skift, Dezeen, Fashion United, brand newsrooms (LVMH, Kering, Richemont)
+TIER 3 — Fashion Network, Luxury Society, Skift, Dezeen, Fashion United, brand newsrooms (LVMH, Kering, Richemont)
   → NEVER the primary_source. Place in "also" list only.
   → Brand newsrooms: include in "also" only if no editorial source covered the story,
     and label as "Brand announcement" in that edge case only.

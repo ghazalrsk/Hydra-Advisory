@@ -29,16 +29,28 @@ NEWS_SOURCES = [
         "section": "news",
         "tier": 1,
     },
-    # ── Tier 2: Trade press — primary when Tier 1 absent ─────────────────
     {
-        "name": "Business of Fashion",
-        "rss": "https://www.businessoffashion.com/feed/",
+        "name": "Bloomberg Pursuits",
+        "rss": "https://feeds.bloomberg.com/luxury/news.rss",
         "section": "news",
-        "tier": 2,
+        "tier": 1,
+    },
+    {
+        "name": "Vogue Business",
+        "rss": "https://www.voguebusiness.com/feed",
+        "section": "news",
+        "tier": 1,
     },
     {
         "name": "WWD",
         "rss": "https://wwd.com/feed/",
+        "section": "news",
+        "tier": 1,
+    },
+    # ── Tier 2: Trade press — primary when Tier 1 absent ─────────────────
+    {
+        "name": "Business of Fashion",
+        "rss": "https://www.businessoffashion.com/feed/",
         "section": "news",
         "tier": 2,
     },
@@ -67,12 +79,6 @@ NEWS_SOURCES = [
         "tier": 2,
     },
     # ── Tier 3: Context only — "also" attribution, never primary ─────────
-    {
-        "name": "Vogue Business",
-        "rss": "https://www.voguebusiness.com/feed",
-        "section": "news",
-        "tier": 3,
-    },
     {
         "name": "Fashion Network",
         "rss": "https://us.fashionnetwork.com/rss/news.xml",
