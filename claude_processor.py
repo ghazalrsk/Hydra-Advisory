@@ -143,6 +143,9 @@ Priority order for story selection — work through these in order until all slo
 
 CRITICAL: All slots must always be filled. Never leave a slot empty because "no qualifying luxury story exists." Work through the priority tiers until every slot is filled. The email must always send.
 
+SOURCE CAPS — hard limits on how many items per source may appear in the final email:
+- The Drinks Business: maximum 1 item total across lead_items and news combined. Pick only the single most relevant story to luxury/premium F&B strategy or M&A — skip pure trade/retail wine news.
+
 ALWAYS REJECT:
 - Celebrity wearing a brand (unless it is a new ambassador deal)
 - Street style coverage of any kind
