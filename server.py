@@ -201,6 +201,8 @@ def run_pipeline(test_email: str = ""):
 
         import os as _os
         provider = _os.environ.get("EMAIL_PROVIDER", "mailchimp").lower()
+        preview_email = _os.environ.get("PREVIEW_EMAIL", "").strip()
+
         if test_email:
             if provider == "zoho":
                 from zoho_sender import send_test_email_zoho
@@ -210,6 +212,19 @@ def run_pipeline(test_email: str = ""):
                 send_test_email(html, today, test_email)
             log.info(f"Test email sent to {test_email} via {provider}")
         else:
+            # Send preview copy before the main list
+            if preview_email:
+                try:
+                    if provider == "zoho":
+                        from zoho_sender import send_test_email_zoho
+                        send_test_email_zoho(html, today, preview_email)
+                    else:
+                        from mailchimp_sender import send_test_email
+                        send_test_email(html, today, preview_email)
+                    log.info(f"Preview sent to {preview_email}")
+                except Exception as pe:
+                    log.warning(f"Preview send failed: {pe}")
+
             if provider == "zoho":
                 from zoho_sender import send_via_zoho
                 send_via_zoho(html, today)
@@ -256,7 +271,7 @@ def trigger_sync():
 
 if __name__ == "__main__":
     scheduler = BackgroundScheduler(timezone="UTC")
-    scheduler.add_job(run_pipeline, "cron", day_of_week="mon-fri", hour=6, minute=0)
+    scheduler.add_job(run_pipeline, "cron", day_of_week="mon-fri", hour=5, minute=45)
     scheduler.start()
     log.info("Scheduler started — pipeline runs Mon–Fri at 06:00 UTC")
 
