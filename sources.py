@@ -209,7 +209,7 @@ SECTOR_DIARY = [
     {"event": "Paris Haute Couture FW26/27 · Paris", "description": "Couture presentations", "dates": "6–9 Jul 2026", "start": "2026-07-06", "end": "2026-07-09", "link": "https://www.fhcm.paris"},
     {"event": "Cosmoprof North America · Las Vegas", "description": "Beauty trade fair", "dates": "13–15 Jul 2026", "start": "2026-07-13", "end": "2026-07-15", "link": "https://cosmoprofnorthamerica.com"},
     {"event": "Monaco Red Cross Gala · Monaco", "description": "77th edition of the annual charity gala", "dates": "18 Jul 2026", "start": "2026-07-18", "end": "2026-07-18", "link": "https://croix-rouge.mc/en/evenements/le-gala/"},
-    {"event": "Il Palio di Siena · Siena", "description": "Historic horse race · Run 3 Jul, next instalment 16 Aug 2026", "dates": "16 Aug 2026", "start": "2026-07-19", "end": "2026-08-16", "link": "https://palio.comune.siena.it/"},
+    {"event": "Milano Summer Fashion Exhibitions · Milan", "description": "Summer fashion exhibitions", "dates": "25 Jul 2026", "start": "2026-07-25", "end": "2026-07-25", "link": ""},
     # ── AUGUST ───────────────────────────────────────────────────────────
     {"event": "Copenhagen Fashion Week SS27 · Copenhagen", "description": "Women's & menswear", "dates": "3–7 Aug 2026", "start": "2026-08-03", "end": "2026-08-07", "link": "https://copenhagenfashionweek.com"},
     {"event": "Tokyo Fashion Week SS27 · Tokyo", "description": "Women's & menswear", "dates": "31 Aug–5 Sep 2026", "start": "2026-08-31", "end": "2026-09-05", "link": "https://rakutenfashionweek.tokyo"},
