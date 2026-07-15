@@ -72,12 +72,13 @@ NEWS_SOURCES = [
         "section": "news",
         "tier": 2,
     },
-    {
-        "name": "The Drinks Business",
-        "rss": "https://www.thedrinksbusiness.com/feed/",
-        "section": "news",
-        "tier": 2,
-    },
+    # The Drinks Business temporarily disabled
+    # {
+    #     "name": "The Drinks Business",
+    #     "rss": "https://www.thedrinksbusiness.com/feed/",
+    #     "section": "news",
+    #     "tier": 2,
+    # },
     # ── Tier 3: Context only — "also" attribution, never primary ─────────
     {
         "name": "Fashion Network",
