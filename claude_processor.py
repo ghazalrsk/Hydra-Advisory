@@ -165,6 +165,7 @@ ALWAYS REJECT:
 - Geopolitical or defence news — reject entirely (missile tests, military deals, nuclear policy, territorial disputes, elections, sanctions unless they explicitly name a luxury brand or luxury market)
 - Asian general news not involving a luxury brand or luxury market data (Chinese automakers, Korean tech, Japanese politics, Singapore courts, etc.)
 - Mass-market retail, fast fashion, or consumer electronics
+- Mass-market travel platforms or booking services (Omio, Booking.com, Expedia, Airbnb, etc.) — only luxury/ultra-premium travel operators qualify
 - Legal/court cases not involving a luxury brand directly
 
 ════════════════════════════════════════
