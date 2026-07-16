@@ -304,9 +304,9 @@ def _build_numbers(items: list, timestamp: str) -> str:
     html = f'<div class="section-label">Important Numbers</div>{ts_span}'
 
     sorted_items    = sorted(items, key=lambda x: x.get("raw_change", 0), reverse=True)
-    mid             = len(sorted_items) // 2
-    outperformers   = sorted_items[:min(3, mid)]
-    underperformers = sorted_items[max(mid, len(sorted_items) - 3):]
+    outperformers   = sorted_items[:3]
+    leader_tickers  = {i.get("ticker") for i in outperformers}
+    underperformers = [i for i in reversed(sorted_items) if i.get("ticker") not in leader_tickers][:3]
 
     def _stock_row(item):
         name      = _esc(item.get("name", ""))
