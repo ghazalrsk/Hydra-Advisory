@@ -182,7 +182,7 @@ def run_pipeline(test_email: str = ""):
         sorted_stocks = sorted(all_stocks, key=lambda s: s.get("raw_change", 0), reverse=True)
         seen = set()
         stocks = []
-        for s in sorted_stocks[:3] + sorted_stocks[-3:]:
+        for s in sorted_stocks[:2] + sorted_stocks[-2:]:
             if s["ticker"] not in seen:
                 seen.add(s["ticker"])
                 stocks.append(s)
