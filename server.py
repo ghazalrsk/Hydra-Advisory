@@ -227,8 +227,6 @@ def run_pipeline(test_email: str = ""):
 
 @app.route("/trigger")
 def trigger():
-    if os.environ.get("PAUSE_SENDS"):
-        return "Sends are paused. Remove the PAUSE_SENDS environment variable to re-enable.", 503
     test_email = request.args.get("email", "")
     threading.Thread(target=run_pipeline, args=(test_email,), daemon=True).start()
     if test_email:
@@ -257,16 +255,13 @@ def trigger_sync():
 # ── Entry point ───────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    if not os.environ.get("PAUSE_SENDS"):
-        scheduler = BackgroundScheduler(timezone="UTC")
-        preview_email = os.environ.get("PREVIEW_EMAIL", "").strip()
-        if preview_email:
-            scheduler.add_job(run_pipeline, "cron", day_of_week="mon-fri", hour=5, minute=45, kwargs={"test_email": preview_email})
-        scheduler.add_job(run_pipeline, "cron", day_of_week="mon-fri", hour=6, minute=0)
-        scheduler.start()
-        log.info("Scheduler started — pipeline runs Mon–Fri at 06:00 UTC")
-    else:
-        log.info("PAUSE_SENDS is set — scheduler disabled, no emails will send")
+    scheduler = BackgroundScheduler(timezone="UTC")
+    preview_email = os.environ.get("PREVIEW_EMAIL", "").strip()
+    if preview_email:
+        scheduler.add_job(run_pipeline, "cron", day_of_week="mon-fri", hour=5, minute=45, kwargs={"test_email": preview_email})
+    scheduler.add_job(run_pipeline, "cron", day_of_week="mon-fri", hour=6, minute=0)
+    scheduler.start()
+    log.info("Scheduler started — pipeline runs Mon–Fri at 06:00 UTC")
 
     port = int(os.environ.get("PORT", 8080))
     log.info(f"Starting Flask on port {port}")
