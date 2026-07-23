@@ -258,7 +258,7 @@ if __name__ == "__main__":
     scheduler = BackgroundScheduler(timezone="UTC")
     preview_email = os.environ.get("PREVIEW_EMAIL", "").strip()
     if preview_email:
-        scheduler.add_job(run_pipeline, "cron", day_of_week="mon-fri", hour=5, minute=45, kwargs={"test_email": preview_email})
+        scheduler.add_job(run_pipeline, "cron", day_of_week="mon-fri", hour=5, minute=20, kwargs={"test_email": preview_email})
     scheduler.add_job(run_pipeline, "cron", day_of_week="mon-fri", hour=6, minute=0)
     scheduler.start()
     log.info("Scheduler started — pipeline runs Mon–Fri at 06:00 UTC")
