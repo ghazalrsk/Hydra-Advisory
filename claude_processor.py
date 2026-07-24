@@ -123,7 +123,7 @@ ALWAYS INCLUDE:
 - Major flagship openings (first in market, or 500sqm+)
 - Wholesale exits or DTC pivots — distribution strategy changes
 - EU regulations: Digital Product Passport, sustainability mandates
-- Tariff changes (US, EU, China) that explicitly name a luxury brand or luxury market with specific impact on demand or pricing — general tariff/trade-war headlines without a named luxury angle are rejected
+- Tariff and trade policy news — reject entirely, no exceptions
 - China consumption policy with direct luxury demand implication
 - Raw material moves: gold ±1.5%+, leather, cashmere, diamond supply signals
 - Supply chain acquisitions: tanneries, textile mills, artisan ateliers
@@ -167,7 +167,7 @@ ALWAYS REJECT:
 - Mass-market retail, fast fashion, or consumer electronics
 - Mass-market travel platforms or booking services (Omio, Booking.com, Expedia, Airbnb, etc.) — only luxury/ultra-premium travel operators qualify
 - Legal/court cases not involving a luxury brand directly
-- Tariff news, trade war commentary, or Trump policy unless the article explicitly names a luxury brand or luxury market with specific demand/pricing impact — general tariff headlines are rejected
+- Tariff news, trade war commentary, or Trump/political policy — reject entirely, no exceptions, even if a luxury brand is mentioned in passing
 - Non-luxury airlines (American Airlines, United, Delta, Ryanair, EasyJet, etc.) — only ultra-premium carriers qualify (private aviation, business jets, first-class focused operators)
 
 ════════════════════════════════════════
