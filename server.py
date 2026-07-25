@@ -76,17 +76,25 @@ def subscribe():
         })
         log.info(f"New subscriber: {email}")
 
-        # Send today's edition as a welcome email if available
-        from datetime import date as _date
-        if _today_email["html"] and _today_email["date"] == _date.today().isoformat():
+        # Send latest edition as a welcome email
+        # Use in-memory cache first, fall back to JSONBin-persisted edition
+        edition_html = None
+        if _today_email["html"]:
+            edition_html = _today_email["html"]
+        else:
+            from edition_cache import load_edition
+            cached = load_edition()
+            edition_html = cached.get("html")
+
+        if edition_html:
             try:
                 provider = os.environ.get("EMAIL_PROVIDER", "mailchimp").lower()
                 if provider == "zoho":
                     from zoho_sender import send_test_email_zoho
-                    send_test_email_zoho(_today_email["html"], _today_email["date"], email)
+                    send_test_email_zoho(edition_html, "Latest Edition", email)
                 else:
                     from mailchimp_sender import send_test_email
-                    send_test_email(_today_email["html"], _today_email["date"], email)
+                    send_test_email(edition_html, "Latest Edition", email)
                 log.info(f"Welcome edition sent to {email}")
                 return jsonify({"ok": True, "preview": True})
             except Exception as we:
@@ -241,6 +249,8 @@ def run_pipeline(test_email: str = ""):
             from datetime import date as _date
             _today_email["html"] = html
             _today_email["date"] = _date.today().isoformat()
+            from edition_cache import save_edition
+            save_edition(html, today)
             # Only update story memory on real sends, not test emails
             memory = mark_published(digest, memory)
             save_memory(memory)
