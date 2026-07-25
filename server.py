@@ -42,6 +42,9 @@ log = logging.getLogger("hydra-server")
 
 app = Flask(__name__)
 
+# In-memory cache of today's sent email HTML (reset each day after the real send)
+_today_email = {"html": None, "date": None}
+
 
 # ── Flask endpoints ───────────────────────────────────────────────────────
 
@@ -72,7 +75,24 @@ def subscribe():
             "status": "subscribed",
         })
         log.info(f"New subscriber: {email}")
-        return jsonify({"ok": True})
+
+        # Send today's edition as a welcome email if available
+        from datetime import date as _date
+        if _today_email["html"] and _today_email["date"] == _date.today().isoformat():
+            try:
+                provider = os.environ.get("EMAIL_PROVIDER", "mailchimp").lower()
+                if provider == "zoho":
+                    from zoho_sender import send_test_email_zoho
+                    send_test_email_zoho(_today_email["html"], _today_email["date"], email)
+                else:
+                    from mailchimp_sender import send_test_email
+                    send_test_email(_today_email["html"], _today_email["date"], email)
+                log.info(f"Welcome edition sent to {email}")
+                return jsonify({"ok": True, "preview": True})
+            except Exception as we:
+                log.warning(f"Welcome email failed for {email}: {we}")
+
+        return jsonify({"ok": True, "preview": False})
     except Exception as e:
         err = str(getattr(e, "text", e))
         if "already a list member" in err.lower():
@@ -217,6 +237,10 @@ def run_pipeline(test_email: str = ""):
                 from mailchimp_sender import send_via_mailchimp
                 send_via_mailchimp(html, today)
             log.info(f"Email sent to full list via {provider}")
+            # Cache today's HTML for welcome emails to new subscribers
+            from datetime import date as _date
+            _today_email["html"] = html
+            _today_email["date"] = _date.today().isoformat()
             # Only update story memory on real sends, not test emails
             memory = mark_published(digest, memory)
             save_memory(memory)

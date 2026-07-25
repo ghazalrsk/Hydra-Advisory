@@ -257,7 +257,11 @@ async function handleSubmit(e) {
     const data = await res.json();
     if (data.ok) {
       msg.className = 'msg ok';
-      msg.textContent = 'You\'re subscribed. See you tomorrow morning.';
+      if (data.preview) {
+        msg.textContent = 'You\'re in. We\'ve sent you today\'s edition — check your inbox.';
+      } else {
+        msg.textContent = 'You\'re subscribed. Your first edition arrives tomorrow morning.';
+      }
       btn.textContent = 'Subscribed';
     } else {
       throw new Error(data.message || 'Something went wrong.');
