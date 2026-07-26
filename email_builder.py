@@ -251,7 +251,7 @@ def _build_news(items: list) -> str:
     if not items:
         return ""
     html = '<div class="section-label">News</div>'
-    for item in items[:15]:
+    for item in items[:10]:
         headline = _esc(item.get("headline", ""))
         link     = item.get("link", "")
         primary  = item.get("primary_source", "")

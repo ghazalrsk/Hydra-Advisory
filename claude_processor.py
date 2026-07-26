@@ -29,7 +29,7 @@ def process_with_claude(articles: list[dict], stocks: list[dict], today: str, nu
         try:
             message = client.messages.create(
                 model="claude-opus-4-5",
-                max_tokens=8000,
+                max_tokens=6000,
                 messages=[{"role": "user", "content": prompt}],
             )
             raw = message.content[0].text
@@ -142,7 +142,7 @@ Priority order for story selection — work through these in order until all slo
   1. Luxury, fashion, high-end goods — always first. Stories about the brand universe, luxury M&A, luxury retail, luxury market data, watches, jewellery, leather goods, couture, premium beauty, wines & spirits, luxury hospitality, premium real estate.
   2. Broader financial/macro news with a DIRECT, NAMED luxury demand implication (e.g. China tariffs explicitly affecting luxury imports, consumer confidence data from Bain/McKinsey, currency moves explicitly affecting luxury pricing). The luxury link must be stated in the article — do not infer it.
   3. Adjacent premium business: high-end hospitality (5-star/ultra-luxury hotels), premium F&B (fine wine, spirits, Michelin), luxury real estate, art market, premium travel operators. Only if no more tier-1 stories exist.
-  4. General business or macro news — MAXIMUM 1 item, only as absolute last resort if tiers 1–3 genuinely leave fewer than 15 stories. Stories about tech companies, Asian politics, defence, general consumer electronics, or mass-market retail do NOT qualify under any tier.
+  4. General business or macro news — MAXIMUM 1 item, only as absolute last resort if tiers 1–3 genuinely leave fewer than 10 stories. Stories about tech companies, Asian politics, defence, general consumer electronics, or mass-market retail do NOT qualify under any tier.
 
 CRITICAL: All slots must always be filled. Never leave a slot empty because "no qualifying luxury story exists." Work through the priority tiers until every slot is filled. The email must always send.
 
@@ -260,8 +260,8 @@ Every headline must obey ALL of the following without exception:
    Use brand abbreviations: LVMH, BoF, H1, Q1, CEO, M&A.
    Drop articles (a, an, the) to save space where natural.
 
-Return exactly 15 news items (after lead_items are excluded, per SECTION C).
-If the article pool contains fewer than 15 clearly luxury-relevant stories, include the next most relevant stories that have any connection to luxury demand, luxury consumers, or the business of fashion and premium goods — do not leave slots empty.
+Return exactly 10 news items (after lead_items are excluded, per SECTION C).
+If the article pool contains fewer than 10 clearly luxury-relevant stories, include the next most relevant stories that have any connection to luxury demand, luxury consumers, or the business of fashion and premium goods — do not leave slots empty.
 
 BANNED WORDS — never use:
 iconic · stunning · exciting · bold · groundbreaking · luxury powerhouse · giant · titan

@@ -29,7 +29,7 @@ log = logging.getLogger("hydra-summary.collector")
 
 HOURS_LOOKBACK_NORMAL = 26
 HOURS_LOOKBACK_MONDAY = 72
-MAX_PER_SOURCE = 5
+MAX_PER_SOURCE = 3
 
 
 def fetch_all_articles(is_monday: bool = False) -> list[dict]:
