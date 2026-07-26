@@ -199,7 +199,7 @@ def run_pipeline(test_email: str = ""):
         # Filter out stories already covered in recent editions
         # If memory filter leaves too few, fall back to the full unfiltered pool
         filtered = filter_seen(articles, memory)
-        if len(filtered) < 5:
+        if len(filtered) < 20:
             log.warning(f"Only {len(filtered)} articles after memory filter — using full pool of {len(articles)}")
             articles = articles
         else:
