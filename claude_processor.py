@@ -29,7 +29,7 @@ def process_with_claude(articles: list[dict], stocks: list[dict], today: str, nu
         try:
             message = client.messages.create(
                 model="claude-opus-4-5",
-                max_tokens=6000,
+                max_tokens=10000,
                 messages=[{"role": "user", "content": prompt}],
             )
             raw = message.content[0].text
