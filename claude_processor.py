@@ -164,7 +164,7 @@ ALWAYS REJECT:
 - General tech or finance news with no luxury link (Huawei, Samsung, Tesla, chip stocks, etc.)
 - Geopolitical or defence news — reject entirely (missile tests, military deals, nuclear policy, territorial disputes, elections, sanctions unless they explicitly name a luxury brand or luxury market)
 - Asian general news not involving a luxury brand or luxury market data (Chinese automakers, Korean tech, Japanese politics, Singapore courts, etc.)
-- Mass-market retail, fast fashion, or consumer electronics
+- Mass-market retail, fast fashion, or consumer electronics (including Shein, Zara, H&M, Primark, and similar fast fashion brands)
 - Mass-market travel platforms or booking services (Omio, Booking.com, Expedia, Airbnb, etc.) — only luxury/ultra-premium travel operators qualify
 - Legal/court cases not involving a luxury brand directly
 - Tariff news, trade war commentary, or Trump/political policy — reject entirely, no exceptions, even if a luxury brand is mentioned in passing
