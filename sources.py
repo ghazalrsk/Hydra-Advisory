@@ -110,12 +110,7 @@ NEWS_SOURCES = [
         "section": "news",
         "tier": 3,
     },
-    {
-        "name": "Skift",
-        "rss": "https://skift.com/feed/",
-        "section": "news",
-        "tier": 3,
-    },
+    # Skift removed — too much general travel news, not luxury-focused
     {
         "name": "Dezeen",
         "rss": "https://www.dezeen.com/feed/",
