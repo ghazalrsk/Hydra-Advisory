@@ -77,9 +77,10 @@ def fetch_all_articles(is_monday: bool = False) -> list[dict]:
 
                 source_articles.append(article)
 
-            # Sort newest first, cap at MAX_PER_SOURCE
+            # Sort newest first, cap at MAX_PER_SOURCE (higher for Tier 1)
             source_articles.sort(key=lambda a: a["published"], reverse=True)
-            kept = source_articles[:MAX_PER_SOURCE]
+            cap = 8 if tier == 1 else MAX_PER_SOURCE
+            kept = source_articles[:cap]
             articles.extend(kept)
             log.info(f"  {source['name']:40s} tier={tier} → {len(kept)}/{len(source_articles)} articles")
 

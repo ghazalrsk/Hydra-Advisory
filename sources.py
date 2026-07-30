@@ -111,12 +111,7 @@ NEWS_SOURCES = [
         "tier": 3,
     },
     # Skift removed — too much general travel news, not luxury-focused
-    {
-        "name": "Dezeen",
-        "rss": "https://www.dezeen.com/feed/",
-        "section": "news",
-        "tier": 3,
-    },
+    # Dezeen removed — general architecture/design, not luxury-focused
     {
         "name": "Fashion United",
         "rss": "https://fashionunited.com/rss",
