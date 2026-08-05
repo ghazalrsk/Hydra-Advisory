@@ -150,7 +150,8 @@ SOURCE CAPS — hard limits on how many items per source may appear in the final
 - The Drinks Business: maximum 1 item total across lead_items and news combined. Pick only the single most relevant story to luxury/premium F&B strategy or M&A — skip pure trade/retail wine news.
 
 ALWAYS REJECT:
-- Celebrity wearing a brand (unless it is a new ambassador deal)
+- Celebrity wearing a brand
+- Brand ambassador announcements, brand face reveals, or celebrity endorsement deals
 - Street style coverage of any kind
 - Fashion week runway reviews with no business context
 - Pure aesthetic or design commentary
