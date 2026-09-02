@@ -214,6 +214,7 @@ SECTOR_DIARY = [
     {"event": "Maison&Objet September · Paris", "description": "Design & interiors trade fair", "dates": "10–14 Sep 2026", "start": "2026-09-10", "end": "2026-09-14", "link": "https://www.maison-objet.com"},
     {"event": "London Design Festival · London", "description": "Design week", "dates": "12–20 Sep 2026", "start": "2026-09-12", "end": "2026-09-20", "link": "https://londondesignfestival.com"},
     {"event": "London Fashion Week SS27 · London", "description": "Women's RTW", "dates": "17–21 Sep 2026", "start": "2026-09-17", "end": "2026-09-21", "link": "https://londonfashionweek.co.uk"},
+    {"event": "Milan Beauty Week · Milan", "description": "Milan's international beauty industry event", "dates": "17–20 Sep 2026", "start": "2026-09-17", "end": "2026-09-20", "link": "https://milanbeautyweek.com"},
     {"event": "Milan Fashion Week SS27 · Milan", "description": "Women's RTW", "dates": "22–28 Sep 2026", "start": "2026-09-22", "end": "2026-09-28", "link": "https://cameramoda.it"},
     {"event": "ILTM North America · Nassau", "description": "Luxury travel market", "dates": "28 Sep–1 Oct 2026", "start": "2026-09-28", "end": "2026-10-01", "link": "https://www.iltm.com/north-america"},
     {"event": "Paris Fashion Week SS27 · Paris", "description": "Women's RTW", "dates": "28 Sep–6 Oct 2026", "start": "2026-09-28", "end": "2026-10-06", "link": "https://www.fhcm.paris"},

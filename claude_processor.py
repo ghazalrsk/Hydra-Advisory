@@ -152,6 +152,8 @@ SOURCE CAPS — hard limits on how many items per source may appear in the final
 ALWAYS REJECT:
 - Celebrity wearing a brand
 - Brand ambassador announcements, brand face reveals, or celebrity endorsement deals
+- Designer or celebrity personal lifestyle brands (e.g. Victoria Beckham, Kylie Jenner, etc.) unless the story is about a significant M&A, financial result, or major retail expansion
+- Food & beverage conglomerate news not directly tied to luxury (Nestlé, Unilever, P&G vitamins/supplements, mass-market consumer goods)
 - Street style coverage of any kind
 - Fashion week runway reviews with no business context
 - Pure aesthetic or design commentary
