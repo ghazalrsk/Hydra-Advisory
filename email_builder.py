@@ -87,6 +87,7 @@ body {{ margin:0; padding:0; background:#f5f5f5; {FONT} }}
   {numbers_html}
 
   <div class="footer" style="text-align:center;">
+    <p style="margin:0 0 16px;font-size:13px;color:#888888;">If you found this edition valuable, we'd be honoured if you passed it along to a colleague.<br><a href="https://hydra-advisory-production.up.railway.app" style="color:#aaaaaa;text-decoration:underline;">Forward this edition →</a></p>
     Hydra Brief is a curated summary of important industry news of the day.<br>
     Provided by <a href="https://hydra-advisory.com" style="color:#aaaaaa;">Hydra Advisory</a>.<br><br>
     <a href="*|UNSUB|*" style="color:#aaaaaa;">Unsubscribe</a> &nbsp;·&nbsp; Via Cerva 1, Milan, 20122<br>
